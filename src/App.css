@@ -1,16 +1,19 @@
 body {
   min-width: 100vw;
   min-height: 100vh;
-  height: 100%;
+  max-height: fit-content;
   display: flex;
   flex-direction: column;
-}
-
-header, footer {
-  flex: none;
+  overflow-x: hidden;
 }
 
 main {
   flex: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  min-height: 100vh;
+  max-height: fit-content;
+  height: fit-content;
 }

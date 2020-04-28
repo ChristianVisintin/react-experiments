@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Col, Jumbotron, Row } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
 
 //Components
@@ -7,9 +7,10 @@ import Contact from "./footer/Contact";
 import RecentProjects from "./footer/RecentProjects";
 import Newsletter from "./footer/Newsletter";
 
-const FooterJumbotron = styled(Jumbotron)`
+const FooterContainer = styled(Container)`
   background-color: #20242a;
   color: white;
+  padding: 2em;
 `;
 
 const FooterCopyright = styled(Col)`
@@ -28,7 +29,7 @@ const FooterCopyrightText = styled.h2`
 export default function Footer() {
   return (
     <footer>
-      <FooterJumbotron fluid>
+      <FooterContainer fluid>
         <Container fluid>
           {/* Row 1 is made up of 3 columns */}
           <Row>
@@ -53,7 +54,7 @@ export default function Footer() {
             </FooterCopyright>
           </Row>
         </Container>
-      </FooterJumbotron>
+      </FooterContainer>
     </footer>
   );
 }

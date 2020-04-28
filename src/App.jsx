@@ -35,6 +35,7 @@ export default class App extends Component {
                   <main className="page-content">
                     <Route path="/about" component={About} />
                     <Route path="/home" component={Home} />
+                    <Route exact path="/" component={Home} />
                     <Route path="/projects" component={Projects} />
                   </main>
                 </HashRouter>
