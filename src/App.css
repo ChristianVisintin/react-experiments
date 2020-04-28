@@ -1,5 +1,16 @@
 body {
-  padding-top: 70px;
   min-width: 100vw;
   min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  flex: none;
+}
+
+main {
+  flex: auto;
+  -webkit-overflow-scrolling: touch;
 }
