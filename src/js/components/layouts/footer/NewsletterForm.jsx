@@ -19,12 +19,12 @@ export default function NewsletterForm() {
     <Container fluid>
       <Form>
         <Row>
-          <Col xs={8}>
+          <Col style={{paddingLeft: 0}} xs={8}>
             <Form.Group controlId="newsletterForm">
               <Form.Control type="email" placeholder="Your email address" />
             </Form.Group>
           </Col>
-          <Col xs={4}>
+          <Col style={{paddingLeft: 0}} xs={4}>
             <SubscribeButton variant="danger" type="submit">
               Sign up
             </SubscribeButton>

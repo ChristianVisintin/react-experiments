@@ -28,12 +28,12 @@ export default function Newsletter() {
   return (
     <Container>
       <Row>
-        <Col>
+        <Col className="d-none d-md-block">
           <Header>Newsletter</Header>
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="d-none d-md-block">
           <NewsletterForm />
         </Col>
       </Row>

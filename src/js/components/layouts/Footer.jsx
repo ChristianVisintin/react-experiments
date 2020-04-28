@@ -33,13 +33,13 @@ export default function Footer() {
           {/* Row 1 is made up of 3 columns */}
           <Row>
             {/* Contacts, Recent projects, Newsletter and social */}
-            <Col xs={4}>
+            <Col className="d-none d-md-block" xs={4}>
               <Contact />
             </Col>
-            <Col xs={4}>
+            <Col className="d-none d-md-block" xs={4}>
               <RecentProjects />
             </Col>
-            <Col xs={3}>
+            <Col md={4} xs={12}>
               <Newsletter />
             </Col>
           </Row>
