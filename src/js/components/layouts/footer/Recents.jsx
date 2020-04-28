@@ -17,6 +17,10 @@ const Line = styled.span`
   opacity: 0.6;
   color: white;
   text-decoration: none;
+  ${Line}:hover {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 class Recents extends React.Component {

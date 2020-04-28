@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 //Layouts
 import HomeSlideshow from '../HomeSlideshow';
