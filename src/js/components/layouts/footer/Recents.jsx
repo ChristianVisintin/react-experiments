@@ -15,6 +15,8 @@ const Header = styled.h1`
 const Line = styled.span`
   font-size: 1em;
   opacity: 0.6;
+  color: white;
+  text-decoration: none;
 `;
 
 class Recents extends React.Component {
@@ -29,19 +31,12 @@ class Recents extends React.Component {
 
   render() {
     let recentRecipes = [...this.props.recipes];
-    //Sort recipes by date (by the newest)
-    recentRecipes.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      if (dateA < dateB) return 1;
-      if (dateA > dateB) return -1;
-      return 0;
-    });
+    //Get first 5 recipes
     recentRecipes = recentRecipes.splice(0, 5);
     const recipeItems = recentRecipes.map(recipe => 
       <Row key={recipe.id}>
         <Col>
-        <Line>{recipe.title}</Line>
+        <a href={"/#/recipe/" + recipe.id}><Line>{recipe.title}</Line></a>
         </Col>
       </Row>
     );
