@@ -12,3 +12,8 @@ This project is just a React website where I've implemented different libraries 
 - Styled-components
 - FormatJS
 - React-anime
+
+## Requirements
+
+- json-server <https://github.com/typicode/json-server>. Used to gather data from recipes.json
+  - Start with json-server --watch recipes.json
