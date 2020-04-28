@@ -16,7 +16,7 @@ import Footer from "./js/components/layouts/Footer";
 //Pages
 import About from "./js/components/pages/About";
 import Home from "./js/components/pages/Home";
-import Projects from "./js/components/pages/Projects";
+import Recipes from "./js/components/pages/Recipes";
 
 export default class App extends Component {
   render() {
@@ -36,7 +36,7 @@ export default class App extends Component {
                     <Route path="/about" component={About} />
                     <Route path="/home" component={Home} />
                     <Route exact path="/" component={Home} />
-                    <Route path="/projects" component={Projects} />
+                    <Route path="/recipes" component={Recipes} />
                   </main>
                 </HashRouter>
                 {/*Footer is visible for all pages in / */}

@@ -39,10 +39,10 @@ export default function Menu() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <NavbarBrand href="#home">
-              <HomeTitle>Veeso.it</HomeTitle>
+              <HomeTitle>Veeso</HomeTitle>
             </NavbarBrand>
-            <Nav.Link href="#projects">
-              <HomeRef>Projects</HomeRef>
+            <Nav.Link href="#recipes">
+              <HomeRef>Recipes</HomeRef>
             </Nav.Link>
             <Nav.Link href="#about">
               <HomeRef>About</HomeRef>
@@ -50,7 +50,7 @@ export default function Menu() {
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-secondary">Search</Button>
+            <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>

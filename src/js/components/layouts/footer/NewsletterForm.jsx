@@ -7,12 +7,6 @@ import {
   FormControl,
   Row,
 } from "react-bootstrap";
-import styled from "styled-components";
-
-const SubscribeButton = styled(Button)`
-  background-color: #B73239;
-  border-color: #A73239;
-`
 
 export default function NewsletterForm() {
   return (
@@ -25,9 +19,9 @@ export default function NewsletterForm() {
             </Form.Group>
           </Col>
           <Col style={{paddingLeft: 0}} xs={4}>
-            <SubscribeButton variant="danger" type="submit">
+            <Button variant="success" type="submit">
               Sign up
-            </SubscribeButton>
+            </Button>
           </Col>
         </Row>
       </Form>

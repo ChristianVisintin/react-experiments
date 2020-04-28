@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 //Components
 import Contact from "./footer/Contact";
-import RecentProjects from "./footer/RecentProjects";
+import Recents from "./footer/Recents";
 import Newsletter from "./footer/Newsletter";
 
 const FooterContainer = styled(Container)`
@@ -38,7 +38,7 @@ export default function Footer() {
               <Contact />
             </Col>
             <Col className="d-none d-md-block" xs={4}>
-              <RecentProjects />
+              <Recents />
             </Col>
             <Col md={4} xs={12}>
               <Newsletter />

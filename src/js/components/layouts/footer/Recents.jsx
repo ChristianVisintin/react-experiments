@@ -12,11 +12,11 @@ const Line = styled.span`
   opacity: 0.6;
 `
 
-export default function RecentProjects() {
+export default function Recents() {
   return (
     <Container>
       <Row>
-        <Col><Header>Recent Projects</Header></Col>
+        <Col><Header>Recent Recipes</Header></Col>
       </Row>
     </Container>
   )
