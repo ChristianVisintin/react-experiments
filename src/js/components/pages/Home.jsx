@@ -10,6 +10,8 @@ import { fetchRecipes } from "../../actions/recipeActions";
 import Menu from "../layouts/Menu";
 import Footer from "../layouts/Footer";
 import Waiting from "../Waiting";
+//Layouts
+const Recipe = React.lazy(() => import("../layouts/Recipe"));
 //Pages
 const About = React.lazy(() => import("./About"));
 const Front = React.lazy(() => import("./Front"));
@@ -18,10 +20,16 @@ const Recipes = React.lazy(() => import("./Recipes"));
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      recipesLoaded: false
+    };
   }
 
   componentDidMount() {
-    this.props.fetchRecipes();
+    this.props.fetchRecipes().then(() => {
+      //Once recipes have been loaded, set recipes loaded to true
+      this.setState({recipesLoaded: true});
+    });
   }
 
   render() {
@@ -37,6 +45,39 @@ class Home extends React.Component {
               <Route path="/home" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route exact path="/" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} />)} />
+              <Route path="/recipe/" render={props => {
+                //If recipes are not loaded yet, return Waiting
+                if (!this.state.recipesLoaded) {
+                  return (
+                    <Waiting />
+                  )
+                }
+                const locationTokens = props.location.pathname.split("/");
+                const recipeId = locationTokens[locationTokens.length - 1];
+                let recipe = null;
+                for (const r of this.props.recipes) {
+                  if (recipeId == r.id) {
+                    recipe = r;
+                  }
+                }
+                //Get related recipes (NOTE: max 3 recipes with at least one category in common)
+                let relatedRecipes = [];
+                for (const r of this.props.recipes) {
+                  if (r.id === recipe.id) {
+                    continue;
+                  }
+                  const found = r.category.some(i => recipe.category.indexOf(i) >= 0);
+                  if (found) {
+                    relatedRecipes.push(r);
+                  }
+                  if (relatedRecipes.length === 3) {
+                    break;
+                  }
+                }
+                return (
+                  <Recipe recipe={recipe} related={relatedRecipes} />
+                )
+              }} />
             </React.Suspense>
           </main>
         </HashRouter>
