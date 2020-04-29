@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Route, HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./js/store/index";
 //Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 //Components
 import Menu from "./js/components/layouts/Menu";
