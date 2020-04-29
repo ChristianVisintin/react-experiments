@@ -1,11 +1,7 @@
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-//Actions
-import { fetchRecipes } from "../../../actions/recipeActions";
 
 const Header = styled.h1`
   font-size: 1.2em;
@@ -23,14 +19,10 @@ const Line = styled.span`
   }
 `;
 
-class Recents extends React.Component {
+export default class Recents extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.props.fetchRecipes();
   }
 
   render() {
@@ -58,12 +50,5 @@ class Recents extends React.Component {
 }
 
 Recents.propTypes = {
-  fetchRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.array.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  recipes: state.recipes.items
-});
-
-export default connect(mapStateToProps, { fetchRecipes })(Recents);

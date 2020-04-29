@@ -1,19 +1,10 @@
 import React from "react";
 import { Carousel, Image } from "react-bootstrap";
-import styled from "styled-components";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-//Actions
-import { fetchRecipes } from "../actions/recipeActions";
-
-class HomeSlideshow extends React.Component {
+export default class HomeSlideshow extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.props.fetchRecipes();
   }
 
   render() {
@@ -52,12 +43,5 @@ class HomeSlideshow extends React.Component {
 }
 
 HomeSlideshow.propTypes = {
-  fetchRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.array.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  recipes: state.recipes.items,
-});
-
-export default connect(mapStateToProps, { fetchRecipes })(HomeSlideshow);

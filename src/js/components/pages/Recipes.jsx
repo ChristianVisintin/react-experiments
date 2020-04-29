@@ -1,11 +1,7 @@
 import React from "react";
 import { Card, CardColumns, Col, Container, Nav, Row } from "react-bootstrap";
 import styled from "styled-components";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-//Actions
-import { fetchRecipes } from "../../actions/recipeActions";
 
 //Components
 
@@ -18,16 +14,12 @@ const CardLink = styled.a`
   }
 `
 
-class Recipes extends React.Component {
+export default class Recipes extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {category: "all"};
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.fetchRecipes();
   }
 
   handleCategorySelect(e) {
@@ -88,12 +80,5 @@ class Recipes extends React.Component {
 }
 
 Recipes.propTypes = {
-  fetchRecipes: PropTypes.func.isRequired,
-  recipes: PropTypes.array.isRequired,
+  recipes: PropTypes.array.isRequired
 };
-
-const mapStateToProps = (state) => ({
-  recipes: state.recipes.items,
-});
-
-export default connect(mapStateToProps, { fetchRecipes })(Recipes);

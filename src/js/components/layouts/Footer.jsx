@@ -26,7 +26,7 @@ const FooterCopyrightText = styled.h2`
   opacity: 0.6;
 `;
 
-export default function Footer() {
+export default function Footer(props) {
   return (
     <footer>
       <FooterContainer fluid>
@@ -38,7 +38,7 @@ export default function Footer() {
               <Contact />
             </Col>
             <Col className="d-none d-md-block" xs={4}>
-              <Recents />
+              <Recents recipes={props.recipes} />
             </Col>
             <Col md={4} xs={12}>
               <Newsletter />
