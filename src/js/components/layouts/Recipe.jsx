@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
