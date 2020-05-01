@@ -40,16 +40,16 @@ export default function Newsletter() {
       <Row>
         <Col>
           <a href="https://github.com/ChristianVisintin/react-experiments">
-            <SocialImage width="20" height="20" src={Facebook} />
+            <SocialImage width="48" height="48" src={Facebook} />
           </a>
           <a href="https://github.com/ChristianVisintin/react-experiments">
-            <SocialImage width="20" height="20" src={Instagram} />
+            <SocialImage width="48" height="48" src={Instagram} />
           </a>
           <a href="https://www.linkedin.com/in/christian-visintin/">
-            <SocialImage width="20" height="20" src={Linkedin} />
+            <SocialImage width="48" height="48" src={Linkedin} />
           </a>
           <a href="https://github.com/ChristianVisintin">
-            <SocialImage width="20" height="20" src={Github} />
+            <SocialImage width="48" height="48" src={Github} />
           </a>
         </Col>
       </Row>
