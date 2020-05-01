@@ -22,10 +22,14 @@ const HomeRef = styled.h2`
   color: #606060;
 `;
 
+const MenuBar = styled(Navbar)`
+  padding-right: 2em;
+`
+
 export default function Menu() {
   return (
     <header>
-      <Navbar bg="light" expand="lg" className="menu-nav">
+      <MenuBar bg="light" expand="lg" className="menu-nav">
         <NavbarBrand href="#home">
           <img
             src={Logo}
@@ -53,7 +57,7 @@ export default function Menu() {
             <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
-      </Navbar>
+      </MenuBar>
     </header>
   );
 }

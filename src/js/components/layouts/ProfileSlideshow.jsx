@@ -14,6 +14,7 @@ const ProfileCard = styled(Card)`
   padding: 1em 2em 1em 2em;
   border: 1px solid #c0c0c0;
   text-align: center;
+  min-height: 75vh;
 `;
 
 const ProfilePicture = styled(Card.Img)`

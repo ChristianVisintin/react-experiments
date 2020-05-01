@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import styled from "styled-components";
 import { animated, useSpring, useChain } from 'react-spring';
 import { easeCubicInOut } from 'd3-ease';
@@ -7,29 +7,25 @@ import { easeCubicInOut } from 'd3-ease';
 //Components
 
 import ProfileSlideshow from '../layouts/ProfileSlideshow';
+import AboutMain from "../layouts/AboutMain";
+
+//AboutContainer
+const AboutContainer = styled(Container)`
+  background-image: url("/assets/images/gfx/fruits-eating-food-on-wood-326268.jpg");
+`
 
 //Titles
-
 const Greeting = styled.h1`
   text-align: center;
-  color: #606060;
+  color: #F0F0F0;
+  font-size: 5em;
 `
 
 const Welcome = styled.h2`
   text-align: center;
-  color: #A0A0A0
+  color: #FFFFFF;
+  font-size: 3em;
 `
-
-//Main components
-
-const MainCard = styled(Card)`
-  margin-top: 3em;
-  margin-bottom: 3em;
-  margin-left: 2em;
-  padding: 1em 4em 1em 4em;
-  border: 2px solid #c0c0c0;
-  text-align: center;
-`;
 
 export default function About() {
 
@@ -78,12 +74,9 @@ export default function About() {
   const mainTabAnimation = useSpring({from: {transform: "translate(120%, 0)"}, to: {transform: "translate(0%, 0)"}, config: { duration: 700, easing: easeCubicInOut }, ref: mainTabAnimationRef});
   //Chain animations
   useChain([fadeAnimationRef, profileTabAnimationRef, mainTabAnimationRef], [0, 0.5, 1]);
-
-  //Build profiles
-  
   
   return (
-    <Container fluid className="w-100 row align-items-center">
+    <AboutContainer fluid className="w-100 row align-items-center">
       <Container className="w-50 col-md-6 offset-md-3">
         <animated.div style={fadeAnimation}>
           <Greeting>Hi There!</Greeting>
@@ -98,12 +91,10 @@ export default function About() {
         </Col>
         <Col sm={9}>
           <animated.div style={mainTabAnimation}>
-            <MainCard className="w-100">
-
-            </MainCard>
+            <AboutMain />
           </animated.div>
         </Col>
       </Container>
-    </Container>
+    </AboutContainer>
   )
 }
