@@ -75,7 +75,7 @@ export default function ProfileSlideshow(props) {
   });
 
   return (
-    <Carousel className="d-block" interval="10000" onSlid={ev => setAnimatedProfile(ev)}>
+    <Carousel className="d-block dark-carousel" interval="10000" onSlid={ev => setAnimatedProfile(ev)}>
       {profilesObj}
     </Carousel>
   );

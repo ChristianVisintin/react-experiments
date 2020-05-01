@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardColumns, Col, Container, Nav, Row } from "react-bootstrap";
+import { Badge, Card, CardColumns, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -39,19 +39,22 @@ export default class Recipes extends React.Component {
       return this.state.category === "all" ? item : item.category.includes(this.state.category);
     });
     //Prepare recipe cards
-    const recipeCards = filteredRecipes.map((recipe) => (
+    const recipeCards = filteredRecipes.map((recipe) => {
+      const isNew = ((new Date().getTime()) - new Date(recipe.date).getTime()) < 2592000000;
+      const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
+      return(
       <Card className="border" key={recipe.id}>
         <CardLink href={"/#/recipe/" + recipe.id}>
           <Card.Img className="border" variant="top" src={recipe.img} />
           <Card.Body>
-            <Card.Title>{recipe.title}</Card.Title>
+            <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
             <Card.Text>
               {this.formatDate(recipe.date)}
             </Card.Text>
           </Card.Body>
         </CardLink>
       </Card>
-    ));
+    )});
     return (
       <React.Fragment>
         <Nav className="justify-content-center" activeKey="all" onSelect={this.handleCategorySelect}>

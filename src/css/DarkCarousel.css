@@ -1,5 +1,5 @@
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
+.dark-carousel .carousel-control-prev-icon,
+.dark-carousel .carousel-control-next-icon {
   height: 100px;
   width: 100px;
   outline: black;
@@ -8,13 +8,13 @@
   background-image: none;
 }
 
-.carousel-control-next-icon:after {
+.dark-carousel .carousel-control-next-icon:after {
   content: ">";
   font-size: 55px;
   color: #101010;
 }
 
-.carousel-control-prev-icon:after {
+.dark-carousel .carousel-control-prev-icon:after {
   content: "<";
   font-size: 55px;
   color: #101010;
