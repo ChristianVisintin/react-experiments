@@ -14,6 +14,11 @@ const CardLink = styled.a`
   }
 `
 
+const CardContainer = styled.div`
+  padding-left: 1em;
+  padding-right: 1em;
+`
+
 export default class Recipes extends React.Component {
 
   constructor(props) {
@@ -43,17 +48,19 @@ export default class Recipes extends React.Component {
       const isNew = ((new Date().getTime()) - new Date(recipe.date).getTime()) < 2592000000;
       const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
       return(
-      <Card className="border" key={recipe.id}>
-        <CardLink href={"/#/recipe/" + recipe.id}>
-          <Card.Img className="border" variant="top" src={recipe.img} />
-          <Card.Body>
-            <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
-            <Card.Text>
-              {this.formatDate(recipe.date)}
-            </Card.Text>
-          </Card.Body>
-        </CardLink>
-      </Card>
+      <div key={recipe.id} className="col-sm-4">
+        <Card className="border">
+          <CardLink href={"/#/recipe/" + recipe.id}>
+            <Card.Img className="border" variant="top" src={recipe.img} />
+            <Card.Body>
+              <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
+              <Card.Text>
+                {this.formatDate(recipe.date)}
+              </Card.Text>
+            </Card.Body>
+          </CardLink>
+        </Card>
+      </div>
     )});
     return (
       <React.Fragment>
@@ -74,9 +81,9 @@ export default class Recipes extends React.Component {
             <Nav.Link eventKey="dessert">Desserts</Nav.Link>
           </Nav.Item>
         </Nav>
-        <CardColumns>
+        <CardContainer className="row">
           {recipeCards}
-        </CardColumns>
+        </CardContainer>
       </React.Fragment>
     );
   }
