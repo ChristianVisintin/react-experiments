@@ -51,7 +51,7 @@ export default class Recipes extends React.Component {
       <div key={recipe.id} className="col-sm-4">
         <Card className="border">
           <CardLink href={"/#/recipe/" + recipe.id}>
-            <Card.Img className="border" variant="top" src={recipe.img} />
+            <Card.Img className="border" variant="top" src={recipe.img[0]} />
             <Card.Body>
               <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
               <Card.Text>

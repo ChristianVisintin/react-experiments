@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row } from "react-bootstrap";
+import { Card, Carousel, Row } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -48,12 +48,20 @@ export default class Recipe extends React.Component {
           <Card.Link href={"/#/recipe/" + recipe.id}>{recipe.title}</Card.Link>
       </React.Fragment>
     ));
+    //Prepare pictures
+    const recipePictures = this.props.recipe.img.map(img => (
+      <Carousel.Item key={img}>
+        <RecipePicture className="border" variant="top" src={img} />
+      </Carousel.Item>
+    ));
     return (
       <div className="row align-items-center">
         <RecipeCard className="col-md-6 offset-md-3">
           <RecipeDate>{this.formatDate(recipe.date)}</RecipeDate>
           <RecipeTitle>{recipe.title}</RecipeTitle>
-          <RecipePicture className="border" variant="top" src={recipe.img} />
+          <Carousel className="d-block" interval="5000">
+            {recipePictures}
+          </Carousel>
           <Card.Body>
             <Card.Text>{recipe.body}</Card.Text>
           </Card.Body>

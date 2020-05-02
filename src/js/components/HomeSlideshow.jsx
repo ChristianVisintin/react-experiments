@@ -24,7 +24,7 @@ export default class HomeSlideshow extends React.Component {
     const slideshow = recipes.map((recipe) => (
       <Carousel.Item key={recipe.id}>
         <a href={"/#/recipe/" + recipe.id}>
-          <Image className="d-block w-100" src={recipe.img} />
+          <Image className="d-block w-100" src={recipe.img[0]} />
           <Carousel.Caption>
             <h1 style={{textShadow: "0px 0 black, 0 0.3px black, 1px 0 black, 0 0 black"}}>
               {recipe.title}
