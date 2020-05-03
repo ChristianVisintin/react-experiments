@@ -19,6 +19,10 @@ const CardContainer = styled.div`
   padding-right: 1em;
 `
 
+const RecipeCard = styled(Card)`
+  margin-top: 2em;
+`
+
 export default class Recipes extends React.Component {
 
   constructor(props) {
@@ -39,17 +43,25 @@ export default class Recipes extends React.Component {
 
   render() {
     //Prepare recipes to display
-    const filteredRecipes = this.props.recipes.filter((item) => {
+    let filteredRecipes = this.props.recipes.filter((item) => {
       //If category is all, don't check, otherwise check if category is in recipe category list
       return this.state.category === "all" ? item : item.category.includes(this.state.category);
     });
+    //If search is NOT null, search for a recipe
+    if (this.props.search) {
+      filteredRecipes = filteredRecipes.filter((item) => {
+        //Check if search is contained in name
+        const name = item.title.toLowerCase();
+        return name.includes(this.props.search);
+      });
+    }
     //Prepare recipe cards
     const recipeCards = filteredRecipes.map((recipe) => {
       const isNew = ((new Date().getTime()) - new Date(recipe.date).getTime()) < 2592000000;
       const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
       return(
       <div key={recipe.id} className="col-sm-4">
-        <Card className="border">
+        <RecipeCard className="border">
           <CardLink href={"/#/recipe/" + recipe.id}>
             <Card.Img className="border" variant="top" src={recipe.img[0]} />
             <Card.Body>
@@ -59,7 +71,7 @@ export default class Recipes extends React.Component {
               </Card.Text>
             </Card.Body>
           </CardLink>
-        </Card>
+        </RecipeCard>
       </div>
     )});
     return (
@@ -80,6 +92,14 @@ export default class Recipes extends React.Component {
           <Nav.Item>
             <Nav.Link eventKey="dessert">Desserts</Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link hidden={this.props.search === null} onClick={this.props.resetSearch}>
+              <Badge variant="secondary">
+                {this.props.search}&nbsp;
+                <Badge variant="light">X</Badge>
+              </Badge>
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
         <CardContainer className="row">
           {recipeCards}
@@ -90,5 +110,7 @@ export default class Recipes extends React.Component {
 }
 
 Recipes.propTypes = {
-  recipes: PropTypes.array.isRequired
+  recipes: PropTypes.array.isRequired,
+  resetSearch: PropTypes.func.isRequired,
+  search: PropTypes.string
 };

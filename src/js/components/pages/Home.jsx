@@ -21,8 +21,11 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipesLoaded: false
+      recipesLoaded: false,
+      userSearch: null
     };
+    this.search = this.search.bind(this);
+    this.resetSearch = this.resetSearch.bind(this);
   }
 
   componentDidMount() {
@@ -32,11 +35,42 @@ class Home extends React.Component {
     });
   }
 
+  /**
+   * @description go to search layout
+   * @param {String} subject 
+   */
+
+  search(subject) {
+    subject = subject.toLowerCase();
+    this.setState({userSearch: subject});
+    //Move to recipes
+    window.location = "/#/recipes";
+  }
+
+  /**
+   * @description reset search
+   */
+
+  resetSearch() {
+    //Reset search
+    this.setState({userSearch: null});
+  }
+
+  /**
+   * @description Get hash final token from location
+   * @param {String} url 
+   */
+
+  getHash(url) {
+    const locationTokens = url.split("/");
+    return locationTokens[locationTokens.length - 1];
+  }
+
   render() {
     return (
       <React.Fragment>
         {/* Menu is for all pages in / */}
-        <Menu />
+        <Menu searchHnd={this.search} />
         {/* HashRouter for page to display */}
         <HashRouter>
           <main className="page-content">
@@ -44,7 +78,7 @@ class Home extends React.Component {
               <Route path="/about" component={About} />
               <Route path="/home" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route exact path="/" render={props => (<Front recipes={this.props.recipes} /> )} />
-              <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} />)} />
+              <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} search={this.state.userSearch} resetSearch={this.resetSearch} />)} />
               <Route path="/recipe/" render={props => {
                 //If recipes are not loaded yet, return Waiting
                 if (!this.state.recipesLoaded) {
@@ -52,8 +86,7 @@ class Home extends React.Component {
                     <Waiting />
                   )
                 }
-                const locationTokens = props.location.pathname.split("/");
-                const recipeId = locationTokens[locationTokens.length - 1];
+                const recipeId = this.getHash(props.location.pathname);
                 let recipe = null;
                 for (const r of this.props.recipes) {
                   if (recipeId == r.id) {

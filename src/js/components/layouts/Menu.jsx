@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -8,6 +8,7 @@ import {
   Button,
 } from "react-bootstrap";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 //Resources
 import Logo from "../../../assets/images/icons/logo.svg";
@@ -26,7 +27,22 @@ const MenuBar = styled(Navbar)`
   padding-right: 2em;
 `
 
-export default function Menu() {
+export default function Menu(props) {
+
+  const [searched, setSearch] = useState('');
+
+  const search = () => {
+    //Save subject
+    const subject = searched;
+    if (subject.length === 0) {
+      return;
+    }
+    //Set searched to empty
+    //Call Home search hnd
+    props.searchHnd(subject);
+    setSearch('');
+  }
+
   return (
     <header>
       <MenuBar bg="light" expand="lg" className="menu-nav">
@@ -53,8 +69,8 @@ export default function Menu() {
             </Nav.Link>
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searched} onChange={(ev) => setSearch(ev.target.value)} />
+            <Button variant="outline-success" onClick={search}>Search</Button>
           </Form>
         </Navbar.Collapse>
       </MenuBar>
@@ -62,4 +78,6 @@ export default function Menu() {
   );
 }
 
-//TODO: implement form search
+Menu.propTypes = {
+  searchHnd: PropTypes.func.isRequired
+};
