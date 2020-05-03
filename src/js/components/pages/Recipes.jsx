@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Card, CardColumns, Nav } from "react-bootstrap";
+import { Badge, Card, Nav, Row } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -23,16 +23,26 @@ const RecipeCard = styled(Card)`
   margin-top: 2em;
 `
 
+const RecipeHashTagContainer = styled(Row)`
+  margin-left: 1em;
+  padding-bottom: 0.5em;
+`
+
 export default class Recipes extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {category: "all"};
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
+    this.handleHashtagSearch = this.handleHashtagSearch.bind(this);
   }
 
   handleCategorySelect(e) {
     this.setState({category: e});
+  }
+
+  handleHashtagSearch(hashtag) {
+    this.props.searchHnd(hashtag);
   }
 
   formatDate(dt) {
@@ -50,15 +60,23 @@ export default class Recipes extends React.Component {
     //If search is NOT null, search for a recipe
     if (this.props.search) {
       filteredRecipes = filteredRecipes.filter((item) => {
-        //Check if search is contained in name
+        //Check if search is contained in name or in tags
         const name = item.title.toLowerCase();
-        return name.includes(this.props.search);
+        const inHashTags = item.tags.includes(this.props.search);
+        return name.includes(this.props.search) || inHashTags;
       });
     }
     //Prepare recipe cards
     const recipeCards = filteredRecipes.map((recipe) => {
       const isNew = ((new Date().getTime()) - new Date(recipe.date).getTime()) < 2592000000;
       const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
+      //Build hash tags
+      const hashtags = recipe.tags.map((tag, index) => (
+        <CardLink key={index} onClick={() => this.handleHashtagSearch(tag)}>
+          <Badge value={tag} variant="secondary">#{tag}</Badge>
+          &nbsp;
+        </CardLink>
+      ));
       return(
       <div key={recipe.id} className="col-sm-4">
         <RecipeCard className="border">
@@ -71,6 +89,9 @@ export default class Recipes extends React.Component {
               </Card.Text>
             </Card.Body>
           </CardLink>
+          <RecipeHashTagContainer>
+            {hashtags}
+          </RecipeHashTagContainer>
         </RecipeCard>
       </div>
     )});
@@ -112,5 +133,6 @@ export default class Recipes extends React.Component {
 Recipes.propTypes = {
   recipes: PropTypes.array.isRequired,
   resetSearch: PropTypes.func.isRequired,
+  searchHnd: PropTypes.func.isRequired,
   search: PropTypes.string
 };

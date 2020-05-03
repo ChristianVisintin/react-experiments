@@ -78,7 +78,7 @@ class Home extends React.Component {
               <Route path="/about" component={About} />
               <Route path="/home" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route exact path="/" render={props => (<Front recipes={this.props.recipes} /> )} />
-              <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} search={this.state.userSearch} resetSearch={this.resetSearch} />)} />
+              <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} searchHnd={this.search} search={this.state.userSearch} resetSearch={this.resetSearch} />)} />
               <Route path="/recipe/" render={props => {
                 //If recipes are not loaded yet, return Waiting
                 if (!this.state.recipesLoaded) {
