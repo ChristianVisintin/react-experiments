@@ -28,6 +28,12 @@ const RecipeHashTagContainer = styled(Row)`
   padding-bottom: 0.5em;
 `
 
+const RecipeHashTag = styled(Badge)`
+  cursor: pointer;
+  padding: 0.5em;
+  font-size: 0.8em;
+`
+
 export default class Recipes extends React.Component {
 
   constructor(props) {
@@ -59,11 +65,12 @@ export default class Recipes extends React.Component {
     });
     //If search is NOT null, search for a recipe
     if (this.props.search) {
+      const searched = this.props.search.startsWith('#') ? this.props.search.substring(1) : this.props.search;
       filteredRecipes = filteredRecipes.filter((item) => {
         //Check if search is contained in name or in tags
         const name = item.title.toLowerCase();
-        const inHashTags = item.tags.includes(this.props.search);
-        return name.includes(this.props.search) || inHashTags;
+        const inHashTags = item.tags.includes(searched);
+        return name.includes(searched) || inHashTags;
       });
     }
     //Prepare recipe cards
@@ -72,8 +79,8 @@ export default class Recipes extends React.Component {
       const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
       //Build hash tags
       const hashtags = recipe.tags.map((tag, index) => (
-        <CardLink key={index} onClick={() => this.handleHashtagSearch(tag)}>
-          <Badge value={tag} variant="secondary">#{tag}</Badge>
+        <CardLink key={index}>
+          <RecipeHashTag value={tag} onClick={() => this.handleHashtagSearch(tag)} variant="secondary">#{tag}</RecipeHashTag>
           &nbsp;
         </CardLink>
       ));
