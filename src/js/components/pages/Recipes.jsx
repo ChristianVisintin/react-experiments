@@ -2,7 +2,7 @@ import React from "react";
 import { Badge, Card, Nav, Row } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FormattedDate } from "react-intl";
+import { FormattedDate, FormattedMessage } from "react-intl";
 
 //Components
 
@@ -101,19 +101,29 @@ export default class Recipes extends React.Component {
       <React.Fragment>
         <Nav className="justify-content-center" activeKey="all" onSelect={this.handleCategorySelect}>
           <Nav.Item>
-            <Nav.Link eventKey="all">All</Nav.Link>
+            <Nav.Link eventKey="all">
+              <FormattedMessage id="recipes.categories.all" />
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="breakfast">Breakfast</Nav.Link>
+            <Nav.Link eventKey="breakfast">
+            <FormattedMessage id="recipes.categories.breakfast" />
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="lunch">Lunch</Nav.Link>
+            <Nav.Link eventKey="lunch">
+              <FormattedMessage id="recipes.categories.lunch" />
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="dinner">Dinner</Nav.Link>
+            <Nav.Link eventKey="dinner">
+              <FormattedMessage id="recipes.categories.dinner" />
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="dessert">Desserts</Nav.Link>
+            <Nav.Link eventKey="dessert">
+              <FormattedMessage id="recipes.categories.dessert" />
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link hidden={this.props.search === null} onClick={this.props.resetSearch}>

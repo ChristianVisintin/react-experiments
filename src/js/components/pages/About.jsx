@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
-import { Col, Container } from 'react-bootstrap';
+import { Col, Container, Form } from 'react-bootstrap';
 import styled from "styled-components";
 import { animated, useSpring, useChain } from 'react-spring';
 import { easeCubicInOut } from 'd3-ease';
+import { FormattedMessage } from 'react-intl';
 
 //Components
 
@@ -34,28 +35,28 @@ export default function About() {
     {
       id: 0,
       name: "Christian",
-      jobs: ['Amateur Chef', 'Software Developer', 'Tech enthusiast'],
+      jobs: ['about.profiles.christian.amateurChef', 'about.profiles.christian.swdev', 'about.profiles.christian.techEnthusiast'],
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
       img: "/assets/images/about/chris.jpg"
     },
     {
       id: 1,
       name: "Doggo",
-      jobs: ["Full-time Dog", "Food critic"],
+      jobs: ["about.profiles.doggo.fullTimeDog", "about.profiles.doggo.foodCritic"],
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
       img: "/assets/images/about/doggo.jpg"
     },
     {
       id: 2,
       name: "Charlie",
-      jobs: ["Chef", "Cookbooks author"],
+      jobs: ["about.profiles.charlie.chef", "about.profiles.charlie.author"],
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
       img: "/assets/images/about/charlie.jpg"
     },
     {
       id: 3,
       name: "Sarah",
-      jobs: ["Social media manager", "Environmentalist", "Vegan"],
+      jobs: ["about.profiles.sarah.socialMediaManager", "about.profiles.sarah.vegan", "about.profiles.sarah.environmentalist"],
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
       img: "/assets/images/about/sarah.jpg"
     }
@@ -79,8 +80,12 @@ export default function About() {
     <AboutContainer fluid className="w-100 row align-items-center">
       <Container className="w-50 col-md-6 offset-md-3">
         <animated.div style={fadeAnimation}>
-          <Greeting>Hi There!</Greeting>
-          <Welcome>Welcome to Veeso</Welcome>
+          <Greeting>
+            <FormattedMessage id="about.title" />
+          </Greeting>
+          <Welcome>
+          <FormattedMessage id="about.subtitle" />
+          </Welcome>
         </animated.div>
       </Container>
       <Container fluid className="w-100 row">

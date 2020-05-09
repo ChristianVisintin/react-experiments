@@ -4,6 +4,64 @@
       "recipes": "Ricette",
       "about": "About",
       "search": "Cerca"
+    },
+    "footer": {
+      "contact": {
+        "contact": "Contatti",
+        "address": "Via ********* 33",
+        "city": "Udine, Italia",
+        "zip": "CAP: 33100",
+        "mobile": "Cell: 366 167 ****"
+      },
+      "newsletter": {
+        "subscriptionSuccessTitle": "Grazie!",
+        "subscriptionSuccessBody": "Sottoscrizione effettuata con successo",
+        "subscriptionErrorTitle": "Errore",
+        "subscribptionErrorBody": "Non è stato possibile sottoscriversi alla newsletter",
+        "email": "Indirizzo email",
+        "signup": "Iscriviti"
+      },
+      "recents": {
+        "title": "Ricette recenti"
+      }
+    }
+  },
+  "recipes": {
+    "recipes": "Ricette",
+    "categories": {
+      "all": "Tutte",
+      "breakfast": "Colazioni",
+      "lunch": "Pranzi",
+      "dinner": "Cene",
+      "dessert": "Dolci"
+    }
+  },
+  "about": {
+    "title": "Ciao!",
+    "subtitle": "Benvenuto su Veeso",
+    "aboutUs": "Riguardo a noi",
+    "offer": "Che cosa offriamo?",
+    "project": "Il nostro progetto",
+    "goals": "I nostri obiettivi",
+    "profiles": {
+      "christian": {
+        "swdev": "Software Developer",
+        "amateurChef": "Cuoco amatoriale",
+        "techEnthusiast": "Tech Enthusiast"
+      },
+      "doggo": {
+        "foodCritic": "Critico culinario",
+        "fullTimeDog": "Cane a tempo pieno"
+      },
+      "charlie": {
+        "chef": "Chef",
+        "author": "Autore di libri di cucina"
+      },
+      "sarah": {
+        "socialMediaManager": "Social Media Manager",
+        "vegan": "Vegana",
+        "environmentalist": "Ambientalista"
+      }
     }
   }
 }

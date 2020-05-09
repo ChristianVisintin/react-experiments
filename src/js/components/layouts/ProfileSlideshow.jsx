@@ -3,6 +3,7 @@ import { Card, Carousel, Image } from "react-bootstrap";
 import { animated, useChain, useSpring, useTransition } from "react-spring";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import "../../../css/DarkCarousel.css";
 
@@ -61,7 +62,9 @@ export default function ProfileSlideshow(props) {
             <React.Fragment>
               {jobsTransitions.map(({ item, props, key }) => (
                 <animated.div key={key} style={props}>
-                  <Job>{item}</Job>
+                  <Job>
+                    <FormattedMessage id={item} />
+                  </Job>
                 </animated.div>
               ))}
             </React.Fragment>

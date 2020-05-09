@@ -22,12 +22,16 @@ import Home from "./js/components/pages/Home";
 //Translations
 import enTranslations from "./lang/en.json";
 import itTranslations from "./lang/it.json";
-const language = navigator.language.split(/[-_]/)[0]; // language without region code
+let language = navigator.language.split(/[-_]/)[0]; // language without region code
 //Build translations object
 const translations = {
   'en': flatten(enTranslations),
   'it': flatten(itTranslations)
 };
+//Fallback language to english in case it's necessary
+if (! language in translations) {
+  language = 'en';
+}
 
 export default class App extends Component {
   render() {

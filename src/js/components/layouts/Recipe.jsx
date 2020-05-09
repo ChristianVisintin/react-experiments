@@ -3,6 +3,7 @@ import { Badge, Card, Carousel, Row } from "react-bootstrap";
 import { FormattedDate } from "react-intl";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { FormattedMessage } from 'react-intl';
 
 const RecipeCard = styled(Card)`
   margin-top: 3em;
@@ -68,7 +69,9 @@ export default class Recipe extends React.Component {
           <hr />
           <div className="row d-flex flex-row-reverse align-items-end">
             <Row>
-              <Card.Link href="/#/recipes">Recipes</Card.Link>
+              <Card.Link href="/#/recipes">
+                <FormattedMessage id="recipes.recipes" />
+              </Card.Link>
               {relatedRecipes}
             </Row>
           </div>

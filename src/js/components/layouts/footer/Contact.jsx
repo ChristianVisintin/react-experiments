@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import { FormattedMessage } from 'react-intl';
 import styled from "styled-components";
 
 const Header = styled.h1`
@@ -17,7 +18,9 @@ export default function Contact() {
     <Container>
       <Row>
         <Col>
-          <Header>Contact</Header>
+          <Header>
+            <FormattedMessage id="home.footer.contact.contact" />
+          </Header>
         </Col>
       </Row>
       <Row>
@@ -27,17 +30,23 @@ export default function Contact() {
       </Row>
       <Row>
         <Col>
-          <Line>33, ********* Street</Line>
+          <Line>
+            <FormattedMessage id="home.footer.contact.address" />
+          </Line>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Line>Udine, Italy</Line>
+          <Line>
+            <FormattedMessage id="home.footer.contact.city" />
+          </Line>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Line>Zip Code: 33100</Line>
+          <Line>
+            <FormattedMessage id="home.footer.contact.zip" />
+          </Line>
         </Col>
       </Row>
       <Row>
@@ -47,7 +56,9 @@ export default function Contact() {
       </Row>
       <Row>
         <Col>
-          <Line>Mobile: +39 366 167 ****</Line>
+          <Line>
+            <FormattedMessage id="home.footer.contact.mobile" />
+          </Line>
         </Col>
       </Row>
     </Container>

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container, Col, Form, Row, Toast } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from "prop-types";
 
 import { subscribeNewsletter } from "../../../actions/newsletterActions";
 
-export default function NewsletterForm() {
+function NewsletterForm(props) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [toastVisible, showToast] = useState(false);
@@ -16,13 +17,13 @@ export default function NewsletterForm() {
     ev.preventDefault();
     dispatch(subscribeNewsletter(email)).then(() => {
       //Show Toast success
-      setToastTitle("Thank you!");
-      setToastBody("You successfully subscribed to our newsletter");
+      setToastTitle(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionSuccessTitle"}));
+      setToastBody(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionSuccessBody"}));
       setEmail('');
       showToast(true);
     }).catch(() => {
-      setToastTitle("Something went wrong");
-      setToastBody("It was not possible to subscribe you to our newsletter");
+      setToastTitle(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionErrorTitle"}));
+      setToastBody(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionErrorBody"}));
       showToast(true);
     });
   };
@@ -41,12 +42,12 @@ export default function NewsletterForm() {
         <Row>
           <Col style={{ paddingLeft: 0 }} xs={8}>
             <Form.Group controlId="newsletterForm">
-              <Form.Control type="email" placeholder="Your email address" value={email} onChange={(ev) => setEmail(ev.currentTarget.value)} />
+              <Form.Control type="email" placeholder={props.intl.formatMessage({id: "home.footer.newsletter.email"})} value={email} onChange={(ev) => setEmail(ev.currentTarget.value)} />
             </Form.Group>
           </Col>
           <Col style={{ paddingLeft: 0 }} xs={4}>
             <Button variant="success" type="submit" onClick={(ev) => subscribeToNewsletter(ev)}>
-              Sign up
+              <FormattedMessage id="home.footer.newsletter.signup" />
             </Button>
           </Col>
         </Row>
@@ -58,3 +59,5 @@ export default function NewsletterForm() {
 NewsletterForm.propTypes = {
   newsletterSubscription: PropTypes.bool,
 };
+
+export default injectIntl(NewsletterForm);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import { FormattedMessage } from 'react-intl';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -40,7 +41,9 @@ export default class Recents extends React.Component {
       <Container>
         <Row>
           <Col>
-            <Header>Recent Recipes</Header>
+            <Header>
+              <FormattedMessage id="home.footer.recents.title" />
+            </Header>
           </Col>
         </Row>
           {recipeItems}
