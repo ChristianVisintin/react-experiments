@@ -2,6 +2,7 @@ import React from "react";
 import { Badge, Card, Nav, Row } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { FormattedDate } from "react-intl";
 
 //Components
 
@@ -51,12 +52,6 @@ export default class Recipes extends React.Component {
     this.props.searchHnd(hashtag);
   }
 
-  formatDate(dt) {
-    //TODO: implement formatjs
-    let date = new Date(dt);
-    return date.getDate() + " " + date.toLocaleString(window.navigator.language, {month: 'long'}) + " " + date.getFullYear();
-  }
-
   render() {
     //Prepare recipes to display
     let filteredRecipes = this.props.recipes.filter((item) => {
@@ -92,7 +87,7 @@ export default class Recipes extends React.Component {
             <Card.Body>
               <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
               <Card.Text>
-                {this.formatDate(recipe.date)}
+                <FormattedDate value={recipe.date} year="numeric" month="long" day="numeric" />
               </Card.Text>
             </Card.Body>
           </CardLink>

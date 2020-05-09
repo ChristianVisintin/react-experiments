@@ -1,5 +1,6 @@
 import React from "react";
 import { Badge, Card, Carousel, Row } from "react-bootstrap";
+import { FormattedDate } from "react-intl";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -28,18 +29,6 @@ export default class Recipe extends React.Component {
     super(props);
   }
 
-  formatDate(dt) {
-    //TODO: implement formatjs
-    let date = new Date(dt);
-    return (
-      date.getDate() +
-      " " +
-      date.toLocaleString(window.navigator.language, { month: "long" }) +
-      " " +
-      date.getFullYear()
-    );
-  }
-
   render() {
     const recipe = this.props.recipe;
     const relatedRecipes = this.props.related.map(recipe => (
@@ -65,7 +54,9 @@ export default class Recipe extends React.Component {
     return (
       <div className="row align-items-center">
         <RecipeCard className="col-md-6 offset-md-3">
-          <RecipeDate>{this.formatDate(recipe.date)}</RecipeDate>
+          <RecipeDate>
+            <FormattedDate value={recipe.date} year="numeric" month="long" day="numeric" />
+          </RecipeDate>
           <RecipeTitle>{recipe.title}</RecipeTitle>
           <Card.Text>{hashtags}</Card.Text>
           <Carousel className="d-block" interval="5000">

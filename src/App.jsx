@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import { IntlProvider } from 'react-intl';
 
 //Css
 import "./App.css";
@@ -21,19 +21,21 @@ import Home from "./js/components/pages/Home";
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Route
-              exact
-              path="/"
-              render={(props) => (
-                <Home />
-              )}
-            />
-          </div>
-        </Router>
-      </Provider>
+      <IntlProvider locale={navigator.language}>
+        <Provider store={store}>
+          <Router>
+            <div className="App">
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <Home />
+                )}
+              />
+            </div>
+          </Router>
+        </Provider>
+      </IntlProvider>
     );
   }
 }
