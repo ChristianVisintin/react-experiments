@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import { FormattedMessage, injectIntl } from 'react-intl';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -27,7 +28,7 @@ const MenuBar = styled(Navbar)`
   padding-right: 2em;
 `
 
-export default function Menu(props) {
+function Menu(props) {
 
   const [searched, setSearch] = useState('');
 
@@ -62,15 +63,21 @@ export default function Menu(props) {
               <HomeTitle>Veeso</HomeTitle>
             </NavbarBrand>
             <Nav.Link href="#recipes">
-              <HomeRef>Recipes</HomeRef>
+              <HomeRef>
+                <FormattedMessage id="home.menu.recipes" />
+              </HomeRef>
             </Nav.Link>
             <Nav.Link href="#about">
-              <HomeRef>About</HomeRef>
+              <HomeRef>
+                <FormattedMessage id="home.menu.about" />
+              </HomeRef>
             </Nav.Link>
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searched} onChange={(ev) => setSearch(ev.target.value)} />
-            <Button variant="outline-success" onClick={search}>Search</Button>
+            <FormControl type="text" placeholder={props.intl.formatMessage({id: "home.menu.search"})} className="mr-sm-2" value={searched} onChange={(ev) => setSearch(ev.target.value)} />
+            <Button variant="outline-success" onClick={search}>
+              <FormattedMessage id="home.menu.search" />
+            </Button>
           </Form>
         </Navbar.Collapse>
       </MenuBar>
@@ -81,3 +88,5 @@ export default function Menu(props) {
 Menu.propTypes = {
   searchHnd: PropTypes.func.isRequired
 };
+
+export default injectIntl(Menu);
