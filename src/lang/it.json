@@ -26,6 +26,43 @@
       }
     }
   },
+  "cookies": {
+    "alert": {
+      "text": "Facciamo uso di cookie per offrirti la migliore esperienza possibile su questo sito web.",
+      "info": "Ulteriori informazioni",
+      "accept": "Accetta"
+    },
+    "policy": {
+      "title": "Cookie policy per Veeso",
+      "subtitle": "Questa è la cookie policy per Veeso, accessibile da veeso.it",
+      "whatTitle": "Cosa sono i Cookie?",
+      "whatBody": "Com'è ormai pratica comune su quasi tutti i siti professionali, anche questo sito usa cookie. I cookie sono piccoli file che vengono scaricati sul tuo computer al fine di rendere l'esperienza per l'utente migliore. Questa pagina descrive quali informazioni raccolgono, come usarli e perché a volte abbiamo bisogno di immagazzinare queste informazioni. Ti forniremo inoltre informazioni su come tu puoi disabilitare l'utilizzo dei cookie, tuttavia questo potrebbe impedire al sito di funzionare correttamente.",
+      "whatFooter": "Per ulteriori informazioni sui cookie, potresti voler leggere ",
+      "whatFooterLink": "\"Che cosa sono i cookie?\"",
+      "howTitle": "Come utilizziamo i Cookie",
+      "howBody": "Utilizziamo i cookies per diverse ragioni, le quali sono descritte qui sotto. Sfortunatamente nella maggior parte dei casi, non c'è uno standard tra i vari sviluppatori di internet browser per disabilitare i cookie, senza disabilitarli completamente per il sito per i quali sono stati disabilitati. È consigliato pertanto di lasciare attivi i Cookie che non sai se disattivare o meno, almeno se non sei sicuro di averne bisogno o meno.",
+      "disablingTitle": "Disabilitare i cookie",
+      "disablingBody": "Puoi disabilitare i cookie configurando appositamente il tuo web browser (Verifica sull'aiuto del tuo browser). Sii consapevole che disabilitare i cookie avranno effetto sulle funzionalità offerte dal sito e altri siti che frequenti. Disabilitare i cookie spesso risulterà nel disabilitare alcune funzionalità del sito. Quindi ti raccondiamo di non disablitare i cookie.",
+      "usedCookiesTitle": "I Cookie di cui facciamo utilizzo",
+      "usedCookiesList": {
+        "preferences": {
+          "title": "Preferenze del sito",
+          "body": "Al fine di offrirti un'esperienza migliore su questo sito, noi forniamo la funzionalità di impostare le tue preferenze (ad esempio la lingua di visualizzazione. Al fine di salvare le tue preferenze, abbiamo bisogno di utilizzare i cookie."
+        }
+      },
+      "thirdPartyTitle": "Cookie di Terze Parti",
+      "thirdPartyBody": "In alcuni casi eccezionali, faccimao uso anche di cookie forniti da terze parti di fiducia. La sezione seguente fornisce dettagli su quali siano i nostri fornitori di terze parti, che potrebbero salvare cookie sul tuo computer, mentre sei su questo sito.",
+      "thirdPartyList": {
+        "googleAnalytics": {
+          "title": "Google Analytics",
+          "body": "Questo sito fa uso di Google Analytics, che è uno delle più diffuse e affidabile soluzione per la raccolta di statistiche di utilizzo sul web, per aiutarci a comprendere come tu utilizzi il nostro sito e come possiamo migliorare la tua esperienza. Questi cookie potrebbero tracciare per esempio quanto tempo tu stia sul nostro sito, le pagine che visiti, in modo da poter continuare a produrre contenuti migliori. Per ulteriori informazioni sui cookie di Google Analytics, visita la pagina ufficiale di Google Analytics."
+        }
+      },
+      "moreInformationTitle": "Ulteriori informazioni",
+      "moreInformationBody": "Nella speranza di aver chiarito il funzionamento dei cookie, nel caso ci sia ancora qualcosa di cui tu non sia sicuro se abilitare o disabilitare, noi ti consigliamo di lasciarla abilitata, in quanto potrebbe compromettere il funzionamento del sito e la tua esperienza.",
+      "moreInformationContacts": "Comunque se stai ancora cercando ulteriori informazioni, allora puoi contattarci ai recapiti seguenti:"
+    }
+  },
   "recipes": {
     "recipes": "Ricette",
     "categories": {

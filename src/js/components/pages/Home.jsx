@@ -5,10 +5,12 @@ import PropTypes from "prop-types";
 
 //Actions
 import { fetchRecipes } from "../../actions/recipeActions";
+import { getCookies } from "../../actions/cookiesActions";
 
 //Components
 import Menu from "../layouts/Menu";
 import Footer from "../layouts/Footer";
+import CookieAlert from "../layouts/CookieAlert";
 import Waiting from "../Waiting";
 //Layouts
 const Recipe = React.lazy(() => import("../layouts/Recipe"));
@@ -16,8 +18,10 @@ const Recipe = React.lazy(() => import("../layouts/Recipe"));
 const About = React.lazy(() => import("./About"));
 const Front = React.lazy(() => import("./Front"));
 const Recipes = React.lazy(() => import("./Recipes"));
+const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 
 class Home extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +30,7 @@ class Home extends React.Component {
     };
     this.search = this.search.bind(this);
     this.resetSearch = this.resetSearch.bind(this);
+    this.toggleCookiePolicy = this.toggleCookiePolicy.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +38,7 @@ class Home extends React.Component {
       //Once recipes have been loaded, set recipes loaded to true
       this.setState({recipesLoaded: true});
     });
+    this.props.getCookies();
   }
 
   /**
@@ -57,6 +63,13 @@ class Home extends React.Component {
   }
 
   /**
+   * @description show or hide the cookie policy based on its current value
+   */
+  toggleCookiePolicy() {
+    window.location = "/#/cookies";
+  }
+
+  /**
    * @description Get hash final token from location
    * @param {String} url 
    */
@@ -67,6 +80,11 @@ class Home extends React.Component {
   }
 
   render() {
+    //Display cookie alert only when context value is false
+    const cookies = this.props.cookies;
+    const cookieAlert = ("cookiePolicyAccepted" in cookies) ? (cookies.cookiePolicyAccepted ? null : (
+      <CookieAlert showCookiePolicy={this.toggleCookiePolicy} />
+    )) : <CookieAlert showCookiePolicy={this.toggleCookiePolicy} />;
     return (
       <React.Fragment>
         {/* Menu is for all pages in / */}
@@ -76,6 +94,7 @@ class Home extends React.Component {
           <main className="page-content">
             <React.Suspense fallback={<Waiting />}>
               <Route path="/about" component={About} />
+              <Route path="/cookies" component={CookiePolicy} />
               <Route path="/home" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route exact path="/" render={props => (<Front recipes={this.props.recipes} /> )} />
               <Route path="/recipes" render={props => (<Recipes recipes={this.props.recipes} searchHnd={this.search} search={this.state.userSearch} resetSearch={this.resetSearch} />)} />
@@ -116,6 +135,8 @@ class Home extends React.Component {
         </HashRouter>
         {/*Footer is visible for all pages in / */}
         <Footer recipes={this.props.recipes} />
+        {/*Cookie alert and policy are rendered based on the context value*/}
+        {cookieAlert}
       </React.Fragment>
     );
   }
@@ -124,10 +145,17 @@ class Home extends React.Component {
 Home.propTypes = {
   fetchRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.array.isRequired,
+  cookies: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   recipes: state.recipes.items,
+  cookies: state.cookies.items
 });
 
-export default connect(mapStateToProps, { fetchRecipes })(Home);
+const mapDispatchToProps = (dispatch) => ({
+  fetchRecipes: () => dispatch(fetchRecipes()),
+  getCookies: () => dispatch(getCookies())
+});
+
+export default connect(mapStateToProps,  mapDispatchToProps)(Home);
