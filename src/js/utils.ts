@@ -1,21 +1,9 @@
-
-/**
- * @function importFrom
- * @description import all the modules contained in argument
- * @param {*} r 
- * @returns {Object}
- */
-
-export function importFrom(r) {
-  return r.keys().map(r);
-}
-
 /**
  * @function getWidth
  * @returns {Number} returns the page width
  */
 
-export function getWidth() {
+export function getWidth(): number {
   return Math.max(
     document.body.scrollWidth,
     document.documentElement.scrollWidth,
@@ -30,7 +18,7 @@ export function getWidth() {
  * @returns {Number} returns the page height
  */
 
-export function getHeight() {
+export function getHeight(): number {
   return Math.max(
     document.body.scrollHeight,
     document.documentElement.scrollHeight,

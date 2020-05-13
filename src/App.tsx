@@ -5,7 +5,7 @@ import { flatten } from 'flat';
 import "./App.css";
 //Redux
 import { Provider } from "react-redux";
-import store from "./js/store/index";
+import Store from "./js/store/index";
 
 //Bootstrap CSS (@! Use CDN instead - see index.html)
 //import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,7 +25,7 @@ const translations = {
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={Store}>
         <Index translations={translations}/>
       </Provider>
     );

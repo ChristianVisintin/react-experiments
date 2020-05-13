@@ -1,11 +1,11 @@
-import { FETCH_RECIPES } from "../actions/types";
+import { ActionMessage, FETCH_RECIPES } from "../actions/types";
 
 const initialState = {
   items: [],
   item: {},
 };
 
-export default function (state = initialState, action) {
+export default function (state = initialState, action: ActionMessage) {
   switch (action.type) {
     case FETCH_RECIPES:
       return {

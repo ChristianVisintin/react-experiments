@@ -1,3 +1,5 @@
+import { Dispatch } from 'redux';
+
 import { ACCEPT_COOKIE_POLICY, GET_COOKIES, SET_LANGUAGE } from "./types";
 
 import Cookies from 'js-cookie';
@@ -10,9 +12,9 @@ const langCookie = "lang";
  * @description Accept cookie policy
  */
 
-export const acceptCookiePolicy = () => (dispatch) => {
+export const acceptCookiePolicy = () => (dispatch: Dispatch) => {
   //Set cookie policy state
-  Cookies.set(policyCookie, true, { expires: 365 });
+  Cookies.set(policyCookie, 'true', { expires: 365 });
   //Dispatch events
   dispatch({
     type: ACCEPT_COOKIE_POLICY,
@@ -26,7 +28,7 @@ export const acceptCookiePolicy = () => (dispatch) => {
  * @param {String} lang 
  */
 
-export const setLanguage = (lang) => (dispatch) => {
+export const setLanguage = (lang: String) => (dispatch: Dispatch) => {
   if (Cookies.get(policyCookie) !== undefined) {
     Cookies.set(langCookie, lang, { expires: 365 });
   }
@@ -36,12 +38,11 @@ export const setLanguage = (lang) => (dispatch) => {
   });
 };
 
-export const getCookies = () => (dispatch) => {
+export const getCookies = () => (dispatch: Dispatch) => {
   const cookies = {
     lang: Cookies.get(langCookie),
     cookiePolicyAccepted: Cookies.get(policyCookie)
   };
-  console.log(cookies);
   dispatch({
     type: GET_COOKIES,
     payload: cookies
