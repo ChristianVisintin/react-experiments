@@ -46,12 +46,11 @@ export default class Recipe extends React.Component {
     ));
     //Prepare hashtags
     const hashtags = this.props.recipe.tags.map((tag, index) => (
-      <React.Fragment>
-        <Badge key={index} variant="secondary">#{tag}</Badge>
+      <React.Fragment key={index}>
+        <Badge variant="secondary">#{tag}</Badge>
         &nbsp;
       </React.Fragment>
     ));
-    console.log(this.props.recipe.tags);
     return (
       <div className="row align-items-center">
         <RecipeCard className="col-md-6 offset-md-3">
