@@ -1,11 +1,10 @@
 import { ActionMessage, NEWSLETTER_SUBSCRIBE } from "../actions/types";
 
-const initialState = {
-  items: false,
-  item: {},
-};
+import {StoreState } from "./types";
 
-export default function (state = initialState, action: ActionMessage) {
+const initialState: StoreState = new StoreState({}, {});
+
+export default function (state: StoreState = initialState, action: ActionMessage) {
   switch (action.type) {
     case NEWSLETTER_SUBSCRIBE:
       return {

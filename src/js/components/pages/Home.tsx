@@ -1,6 +1,8 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { Action } from 'redux';
+import { ThunkDispatch  } from 'redux-thunk';
 import PropTypes from "prop-types";
 
 //Actions
@@ -13,16 +15,39 @@ import Footer from "../layouts/Footer";
 import CookieAlert from "../layouts/CookieAlert";
 import Waiting from "../Waiting";
 //Layouts
-const Recipe = React.lazy(() => import("../layouts/Recipe"));
+const RecipeTemplate = React.lazy(() => import("../layouts/Recipe"));
 //Pages
 const About = React.lazy(() => import("./About"));
 const Front = React.lazy(() => import("./Front"));
 const Recipes = React.lazy(() => import("./Recipes"));
 const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 
-class Home extends React.Component {
+//Classes
+import Recipe from "../../classes/recipe";
+import CookieStorage from "../../classes/cookieStorage";
+import { StoreState } from "../../reducers/types";
 
-  constructor(props) {
+interface HomeProps {
+  recipes: Array<Recipe>,
+  cookies: CookieStorage,
+  fetchRecipes: Function,
+  getCookies: Function
+};
+
+interface HomeStates {
+  userSearch: string,
+  recipesLoaded: Boolean
+};
+
+class Home extends React.Component<HomeProps, HomeStates> {
+
+  static propTypes = {
+    fetchRecipes: PropTypes.func.isRequired,
+    recipes: PropTypes.array.isRequired,
+    cookies: PropTypes.object.isRequired
+  };
+
+  constructor(props: HomeProps) {
     super(props);
     this.state = {
       recipesLoaded: false,
@@ -46,11 +71,11 @@ class Home extends React.Component {
    * @param {String} subject 
    */
 
-  search(subject) {
+  search(subject: string) {
     subject = subject.toLowerCase();
     this.setState({userSearch: subject});
     //Move to recipes
-    window.location = "/#/recipes";
+    window.location.href = "/#/recipes";
   }
 
   /**
@@ -66,15 +91,16 @@ class Home extends React.Component {
    * @description show or hide the cookie policy based on its current value
    */
   toggleCookiePolicy() {
-    window.location = "/#/cookies";
+    window.location.href = "/#/cookies";
   }
 
   /**
    * @description Get hash final token from location
    * @param {String} url 
+   * @returns {String}
    */
 
-  getHash(url) {
+  getHash(url: string): string {
     const locationTokens = url.split("/");
     return locationTokens[locationTokens.length - 1];
   }
@@ -108,7 +134,7 @@ class Home extends React.Component {
                 const recipeId = this.getHash(props.location.pathname);
                 let recipe = null;
                 for (const r of this.props.recipes) {
-                  if (recipeId == r.id) {
+                  if (recipeId === r.id.toString()) {
                     recipe = r;
                   }
                 }
@@ -127,7 +153,7 @@ class Home extends React.Component {
                   }
                 }
                 return (
-                  <Recipe recipe={recipe} related={relatedRecipes} />
+                  <RecipeTemplate recipe={recipe} related={relatedRecipes} />
                 )
               }} />
             </React.Suspense>
@@ -142,20 +168,23 @@ class Home extends React.Component {
   }
 }
 
-Home.propTypes = {
-  fetchRecipes: PropTypes.func.isRequired,
-  recipes: PropTypes.array.isRequired,
-  cookies: PropTypes.object.isRequired
+interface MapStateToPropsTypes {
+  recipes: StoreState,
+  cookies: StoreState
 };
 
-const mapStateToProps = (state) => ({
+interface MapDispatchToPropsTypes {
+
+};
+
+const mapStateToProps = (state: MapStateToPropsTypes) => ({
   recipes: state.recipes.items,
   cookies: state.cookies.items
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<HomeStates, void, Action>) => ({
   fetchRecipes: () => dispatch(fetchRecipes()),
   getCookies: () => dispatch(getCookies())
 });
 
-export default connect(mapStateToProps,  mapDispatchToProps)(Home);
+export default connect<MapStateToPropsTypes, MapDispatchToPropsTypes>(mapStateToProps, mapDispatchToProps)<any>(Home);

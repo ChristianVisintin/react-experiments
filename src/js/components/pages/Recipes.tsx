@@ -4,12 +4,15 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { FormattedDate, FormattedMessage } from "react-intl";
 
+//Classes
+import Recipe from "../../classes/recipe";
+
 //Components
 
 const CardLink = styled.a`
   text-decoration: none;
   color: #303030;
-  ${CardLink}:hover {
+  :hover {
     text-decoration: none;
     color: #303030;
   }
@@ -35,20 +38,38 @@ const RecipeHashTag = styled(Badge)`
   font-size: 0.8em;
 `
 
-export default class Recipes extends React.Component {
+export interface RecipesProps {
+  recipes: Array<Recipe>,
+  search: string,
+  searchHnd?: Function,
+  resetSearch?: any
+};
 
-  constructor(props) {
+export interface RecipesStates {
+  category: string
+};
+
+export default class Recipes extends React.Component<RecipesProps, RecipesStates> {
+
+  static propTypes = {
+    recipes: PropTypes.array.isRequired,
+    resetSearch: PropTypes.func.isRequired,
+    searchHnd: PropTypes.func.isRequired,
+    search: PropTypes.string
+  };
+
+  constructor(props: RecipesProps) {
     super(props);
     this.state = {category: "all"};
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
     this.handleHashtagSearch = this.handleHashtagSearch.bind(this);
   }
 
-  handleCategorySelect(e) {
+  handleCategorySelect(e: string) {
     this.setState({category: e});
   }
 
-  handleHashtagSearch(hashtag) {
+  handleHashtagSearch(hashtag: string) {
     this.props.searchHnd(hashtag);
   }
 
@@ -80,7 +101,7 @@ export default class Recipes extends React.Component {
         </CardLink>
       ));
       return(
-      <div key={recipe.id} className="col-sm-4">
+      <div key={recipe.id.toString()} className="col-sm-4">
         <RecipeCard className="border">
           <CardLink href={"/#/recipe/" + recipe.id}>
             <Card.Img className="border" variant="top" src={recipe.img[0]} />
@@ -141,10 +162,3 @@ export default class Recipes extends React.Component {
     );
   }
 }
-
-Recipes.propTypes = {
-  recipes: PropTypes.array.isRequired,
-  resetSearch: PropTypes.func.isRequired,
-  searchHnd: PropTypes.func.isRequired,
-  search: PropTypes.string
-};

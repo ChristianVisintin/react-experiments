@@ -4,12 +4,12 @@
 
 export default class Recipe {
   id: Number;
-  title: String;
-  category: Array<String>;
+  title: string;
+  category: Array<string>;
   date: Date;
-  img: Array<String>;
-  body: String;
-  tags: Array<String>;
+  img: Array<string>;
+  body: string;
+  tags: Array<string>;
 
   /**
    * @description Recipe class constructor
@@ -22,7 +22,7 @@ export default class Recipe {
    * @param tags 
    */
 
-  constructor(id: number, title: string, category: Array<String>, date: string, img: Array<String>, body: string, tags: Array<String>) {
+  constructor(id: number, title: string, category: Array<string>, date: string, img: Array<string>, body: string, tags: Array<string>) {
     this.id = id;
     this.title = title;
     this.category = category;

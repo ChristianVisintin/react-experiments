@@ -2,8 +2,19 @@ import React from "react";
 import { Carousel, Image } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-export default class HomeSlideshow extends React.Component {
-  constructor(props) {
+import Recipe from "../classes/recipe";
+
+interface HomeSlideshowProps {
+  recipes: Array<Recipe>
+};
+
+export default class HomeSlideshow extends React.Component<HomeSlideshowProps, {}> {
+
+  static propTypes = {
+    recipes: PropTypes.array.isRequired,
+  };
+
+  constructor(props: HomeSlideshowProps) {
     super(props);
   }
 
@@ -35,13 +46,9 @@ export default class HomeSlideshow extends React.Component {
     ));
 
     return (
-      <Carousel className="border-right border-left border-top d-block w-50" interval="5000">
+      <Carousel className="border-right border-left border-top d-block w-50" interval={5000}>
         {slideshow}
       </Carousel>
     );
   }
 }
-
-HomeSlideshow.propTypes = {
-  recipes: PropTypes.array.isRequired,
-};

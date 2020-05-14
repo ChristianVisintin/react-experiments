@@ -1,11 +1,9 @@
-import { ActionMessage, ACCEPT_COOKIE_POLICY, GET_COOKIES, SET_LANGUAGE } from "../actions/types";
+import { CookiesMessage, ACCEPT_COOKIE_POLICY, GET_COOKIES, SET_LANGUAGE } from "../actions/types";
+import {StoreState } from "./types";
 
-const initialState: object = {
-  items: {},
-  item: {}
-};
+const initialState: StoreState = new StoreState({}, {});
 
-export default function (state = initialState, action: ActionMessage) {
+export default function (state: StoreState = initialState, action: CookiesMessage) {
   switch (action.type) {
     case ACCEPT_COOKIE_POLICY:
       return {

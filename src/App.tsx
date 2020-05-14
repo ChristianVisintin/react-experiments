@@ -11,7 +11,7 @@ import Store from "./js/store/index";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
 //Pages
-import Index from "./js/components/pages/Index";
+import Index, { IndexProps } from "./js/components/pages/Index";
 
 //Translations
 import enTranslations from "./lang/en.json";
@@ -21,12 +21,15 @@ const translations = {
   'en': flatten(enTranslations),
   'it': flatten(itTranslations)
 };
+const props: IndexProps = {
+  translations: translations
+};
 
-export default class App extends Component {
+export default class App extends Component<{}, {}> {
   render() {
     return (
       <Provider store={Store}>
-        <Index translations={translations}/>
+        <Index {...props} />
       </Provider>
     );
   }

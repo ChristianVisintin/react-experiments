@@ -9,7 +9,7 @@ import axios from "axios";
  * @description subscribe to newsletter
  */
 
-export const subscribeNewsletter = (email: String) => async (dispatch: Dispatch) => {
+export const subscribeNewsletter = (email: string) => async (dispatch: Dispatch) => {
   try {
     const response = await axios
       .post("http://localhost:3000/newsletter", {
