@@ -40,9 +40,9 @@ const RecipeHashTag = styled(Badge)`
 
 export interface RecipesProps {
   recipes: Array<Recipe>,
-  search: string,
-  searchHnd?: Function,
-  resetSearch?: any
+  search: string | null,
+  searchHnd: Function,
+  resetSearch: Function
 };
 
 export interface RecipesStates {
@@ -147,7 +147,7 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link hidden={this.props.search === null} onClick={this.props.resetSearch}>
+            <Nav.Link hidden={this.props.search === null} onClick={(ev: any) => this.props.resetSearch()}>
               <Badge variant="secondary">
                 {this.props.search}&nbsp;
                 <Badge variant="light">X</Badge>

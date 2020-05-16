@@ -3,7 +3,7 @@ import { FETCH_RECIPES } from "./types";
 
 import Recipe from '../classes/recipe';
 
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios from 'axios';
 
 /**
  * @function fetchRecipes

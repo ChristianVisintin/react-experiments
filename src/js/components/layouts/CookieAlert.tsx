@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Navbar } from 'react-bootstrap';
 import styled from "styled-components";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps } from 'react-intl';
 import PropTypes from "prop-types";
 
 import { connect } from 'react-redux';
@@ -19,12 +19,18 @@ const MenuButton = styled(Button)`
   margin: 0.5em;
 `
 
-function CookieAlert(props) {
-  const showMoreInfo = (ev) => {
+export interface CookieAlertProps {
+  showCookiePolicy: Function,
+  acceptCookiePolicy: Function,
+  intl: WrappedComponentProps
+};
+
+function CookieAlert(props: CookieAlertProps) {
+  const showMoreInfo = (ev: { preventDefault: () => void; }) => {
     ev.preventDefault();
     props.showCookiePolicy();
   };
-  const acceptCookiePolicy = (ev) => {
+  const submitCookiePolicy = (ev: { preventDefault: () => void; }) => {
     ev.preventDefault();
     props.acceptCookiePolicy();
     //Go back to home
@@ -39,7 +45,7 @@ function CookieAlert(props) {
         <MenuButton variant="secondary" onClick={showMoreInfo}>
           <FormattedMessage id="cookies.alert.info" />
         </MenuButton>
-        <MenuButton variant="info" onClick={acceptCookiePolicy}>
+        <MenuButton variant="info" onClick={submitCookiePolicy}>
           <FormattedMessage id="cookies.alert.accept" />
         </MenuButton>
       </Form>

@@ -21,7 +21,7 @@ export default class HomeSlideshow extends React.Component<HomeSlideshowProps, {
   render() {
     //Get first 3 (or less) random recipes
     let recipes = [];
-    let sortedIndex = [];
+    let sortedIndex:  Array<number> = [];
     for (let i = 0; i < 3 && i < this.props.recipes.length; i++) {
       let randomIndex = Math.floor(Math.random() * this.props.recipes.length);
       //Index can't get sorted twice

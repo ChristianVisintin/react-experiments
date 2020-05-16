@@ -1,13 +1,14 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { Action } from 'redux';
+import { AnyAction } from 'redux';
 import { ThunkDispatch  } from 'redux-thunk';
 import PropTypes from "prop-types";
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 //Actions
 import { fetchRecipes } from "../../actions/recipeActions";
-import { getCookies } from "../../actions/cookiesActions";
+import { getCookies, acceptCookiePolicy } from "../../actions/cookiesActions";
 
 //Components
 import Menu from "../layouts/Menu";
@@ -31,11 +32,12 @@ interface HomeProps {
   recipes: Array<Recipe>,
   cookies: CookieStorage,
   fetchRecipes: Function,
-  getCookies: Function
+  getCookies: Function,
+  intl: WrappedComponentProps
 };
 
 interface HomeStates {
-  userSearch: string,
+  userSearch: string | null,
   recipesLoaded: Boolean
 };
 
@@ -111,8 +113,8 @@ class Home extends React.Component<HomeProps, HomeStates> {
     //Display cookie alert only when context value is false
     const cookies = this.props.cookies;
     const cookieAlert = ("cookiePolicyAccepted" in cookies) ? (cookies.cookiePolicyAccepted ? null : (
-      <CookieAlert showCookiePolicy={this.toggleCookiePolicy} />
-    )) : <CookieAlert showCookiePolicy={this.toggleCookiePolicy} />;
+      <CookieAlert acceptCookiePolicy={acceptCookiePolicy} intl={this.props.intl} showCookiePolicy={this.toggleCookiePolicy} />
+    )) : <CookieAlert acceptCookiePolicy={acceptCookiePolicy} intl={this.props.intl} showCookiePolicy={this.toggleCookiePolicy} />;
     return (
       <React.Fragment>
         {/* Menu is for all pages in / */}
@@ -134,7 +136,7 @@ class Home extends React.Component<HomeProps, HomeStates> {
                   )
                 }
                 const recipeId = this.getHash(props.location.pathname);
-                let recipe = null;
+                let recipe: Recipe = new Recipe("-1", "", [], "1970-01-01T00:00:00Z", [], "", []);
                 for (const r of this.props.recipes) {
                   if (recipeId === r.id.toString()) {
                     recipe = r;
@@ -143,6 +145,9 @@ class Home extends React.Component<HomeProps, HomeStates> {
                 //Get related recipes (NOTE: max 3 recipes with at least one category in common)
                 let relatedRecipes = [];
                 for (const r of this.props.recipes) {
+                  if (recipe === null) {
+                    break;
+                  }
                   if (r.id === recipe.id) {
                     continue;
                   }
@@ -175,18 +180,14 @@ interface MapStateToPropsTypes {
   cookies: StoreState
 };
 
-interface MapDispatchToPropsTypes {
-
-};
-
 const mapStateToProps = (state: MapStateToPropsTypes) => ({
   recipes: state.recipes.items,
   cookies: state.cookies.items
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<HomeStates, void, Action>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => ({
   fetchRecipes: () => dispatch(fetchRecipes()),
   getCookies: () => dispatch(getCookies())
 });
 
-export default connect<MapStateToPropsTypes, MapDispatchToPropsTypes>(mapStateToProps, mapDispatchToProps)<any>(Home);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)<any>(Home));

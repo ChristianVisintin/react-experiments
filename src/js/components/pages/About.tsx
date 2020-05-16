@@ -41,13 +41,13 @@ export default function About() {
   ];
   //Animations
   //Welcome fade
-  const fadeAnimationRef = useRef();
+  const fadeAnimationRef = useRef(null);
   const fadeAnimation = useSpring({opacity: 1, from: { opacity: 0 }, config: { duration: 700 }, ref: fadeAnimationRef});
   //Profile tab animation
-  const profileTabAnimationRef = useRef();
+  const profileTabAnimationRef = useRef(null);
   const profileTabAnimation = useSpring({from: {transform: "translate(-100%, 0)"}, to: {transform: "translate(5%, 0)"}, config: { duration: 700, easing: easeCubicInOut }, ref: profileTabAnimationRef});
   //Main tab
-  const mainTabAnimationRef = useRef();
+  const mainTabAnimationRef = useRef(null);
   //const mainTabAnimation = useSpring({opacity: 1, from: { opacity: 0 }, config: { duration: 1000 }, ref: mainTabAnimationRef});
   const mainTabAnimation = useSpring({from: {transform: "translate(120%, 0)"}, to: {transform: "translate(0%, 0)"}, config: { duration: 700, easing: easeCubicInOut }, ref: mainTabAnimationRef});
   //Chain animations

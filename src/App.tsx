@@ -7,6 +7,7 @@ import "./App.css";
 import { Provider } from "react-redux";
 import Store from "./js/store/index";
 
+
 //Bootstrap CSS (@! Use CDN instead - see index.html)
 //import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,10 +15,13 @@ import Store from "./js/store/index";
 import Index, { IndexProps } from "./js/components/pages/Index";
 
 //Translations
+
+import Translations from "./js/classes/translations";
+
 import enTranslations from "./lang/en.json";
 import itTranslations from "./lang/it.json";
 //Build translations object
-const translations = {
+const translations: Translations = {
   'en': flatten(enTranslations),
   'it': flatten(itTranslations)
 };

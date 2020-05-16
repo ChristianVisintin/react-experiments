@@ -9,18 +9,22 @@ const langCookie = "lang";
 
 import CookieStorage from "../classes/cookieStorage";
 
+import { getNavigatorLanguage } from "../utils";
+
 /**
  * @function acceptCookiePolicy
  * @description Accept cookie policy
  */
 
 export const acceptCookiePolicy = () => (dispatch: Dispatch) => {
+  console.log("ACCEPT");
   //Set cookie policy state
   Cookies.set(policyCookie, 'true', { expires: 365 });
   //Dispatch events
+  const lang = Cookies.get(langCookie);
   dispatch({
     type: ACCEPT_COOKIE_POLICY,
-    payload: new CookieStorage(Cookies.get(langCookie), Cookies.get(policyCookie) !== undefined)
+    payload: new CookieStorage(lang ? lang : "en", Cookies.get(policyCookie) !== undefined)
   });
 };
 
@@ -36,12 +40,13 @@ export const setLanguage = (lang: string) => (dispatch: Dispatch) => {
   }
   dispatch({
     type: SET_LANGUAGE,
-    payload: new CookieStorage(Cookies.get(langCookie), Cookies.get(policyCookie) !== undefined)
+    payload: new CookieStorage(lang, Cookies.get(policyCookie) !== undefined)
   });
 };
 
 export const getCookies = () => (dispatch: Dispatch) => {
-  const cookies = new CookieStorage(Cookies.get(langCookie), Cookies.get(policyCookie) !== undefined);
+  const lang = Cookies.get(langCookie);
+  const cookies = new CookieStorage(lang ? lang : getNavigatorLanguage(), Cookies.get(policyCookie) !== undefined);
   dispatch({
     type: GET_COOKIES,
     payload: cookies

@@ -16,9 +16,11 @@ const Home = React.lazy(() => import("./Home"));
 //Classes
 import CookieStorage from "../../classes/cookieStorage";
 import { StoreState } from "../../reducers/types";
+import Translations from "../../classes/translations";
+import { getNavigatorLanguage } from "../../utils";
 
 export interface IndexProps {
-  translations: object,
+  translations: Translations,
   cookies?: CookieStorage,
   setLanguage?: Function,
   getCookies?: Function
@@ -38,23 +40,27 @@ class Index extends Component<IndexProps, {}> {
   }
 
   getWebLanguage() {
-    if (this.props.cookies.lang in this.props.translations) {
-      return this.props.cookies.lang;
+    const lang = this.props.cookies ? this.props.cookies.lang : "en";
+    if (lang in this.props.translations) {
+      return lang;
     } else {
-      let language: string = navigator.language.split(/[-_]/)[0]; // language without region code
+      let language: string = getNavigatorLanguage();
       if (!(language in this.props.translations)) {
         //Set fallback language
         language = 'en';
       }
       //Try to set cookie, if policy hasn't been accepted it won't be set
-      this.props.setLanguage(language);
+      if (this.props.setLanguage) {
+        this.props.setLanguage(language);
+      }
       return language;
     }
   }
 
   render() {
+    const messages = this.props.translations[this.getWebLanguage()] ? this.props.translations[this.getWebLanguage()] : this.props.translations.en;
     return (
-      <IntlProvider locale={this.getWebLanguage()} messages={this.props.translations[this.getWebLanguage()]}>
+      <IntlProvider locale={this.getWebLanguage()} messages={messages}>
         <Router>
           <div className="App">
             <React.Suspense fallback={<Waiting />}>

@@ -7,6 +7,8 @@ import Contact from "./footer/Contact";
 import Recents from "./footer/Recents";
 import Newsletter from "./footer/Newsletter";
 
+import Recipe from "../../classes/recipe";
+
 const FooterContainer = styled(Container)`
   background-color: #20242a;
   color: white;
@@ -26,7 +28,11 @@ const FooterCopyrightText = styled.h2`
   opacity: 0.6;
 `;
 
-export default function Footer(props) {
+export interface FooterProps {
+  recipes: Array<Recipe>
+};
+
+export default function Footer(props: FooterProps) {
   return (
     <footer>
       <FooterContainer fluid>

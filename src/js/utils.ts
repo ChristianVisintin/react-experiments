@@ -1,6 +1,6 @@
 /**
  * @function getWidth
- * @returns {Number} returns the page width
+ * @returns {number} returns the page width
  */
 
 export function getWidth(): number {
@@ -15,7 +15,7 @@ export function getWidth(): number {
 
 /**
  * @function getHeight
- * @returns {Number} returns the page height
+ * @returns {number} returns the page height
  */
 
 export function getHeight(): number {
@@ -26,4 +26,14 @@ export function getHeight(): number {
     document.documentElement.offsetHeight,
     document.documentElement.clientHeight
   );
+}
+
+/**
+ * @function getNavigatorLanguage
+ * @description returns the current navigator language, without the region code
+ * @returns {string}
+ */
+
+export function getNavigatorLanguage(): string {
+  return navigator.language.split(/[-_]/)[0]; // language without region code
 }
