@@ -5,6 +5,9 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
 
+//Classes
+import Recipe from "../../classes/recipe";
+
 const RecipeCard = styled(Card)`
   margin-top: 3em;
   margin-bottom: 3em;
@@ -25,8 +28,19 @@ const RecipeDate = styled(Card.Title)`
   color: #808080;
 `;
 
-export default class Recipe extends React.Component {
-  constructor(props) {
+export interface RecipeViewProps {
+  recipe: Recipe,
+  related: Array<Recipe>
+};
+
+export default class RecipeView extends React.Component<RecipeViewProps, {}> {
+
+  static propTypes = {
+    recipe: PropTypes.object.isRequired,
+    related: PropTypes.array.isRequired
+  };
+
+  constructor(props: RecipeViewProps) {
     super(props);
   }
 
@@ -59,7 +73,7 @@ export default class Recipe extends React.Component {
           </RecipeDate>
           <RecipeTitle>{recipe.title}</RecipeTitle>
           <Card.Text>{hashtags}</Card.Text>
-          <Carousel className="d-block" interval="5000">
+          <Carousel className="d-block" interval={5000}>
             {recipePictures}
           </Carousel>
           <Card.Body>
@@ -80,8 +94,3 @@ export default class Recipe extends React.Component {
     );
   }
 }
-
-Recipe.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  related: PropTypes.array.isRequired
-};

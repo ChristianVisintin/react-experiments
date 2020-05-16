@@ -7,12 +7,12 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 //Resources
-import Logo from "../../../assets/images/icons/logo.svg";
+import LogoPath from "../../../assets/images/icons/logo.svg";
 
 const HomeTitle = styled.h1`
   font-size: 1.3em;
@@ -28,7 +28,11 @@ const MenuBar = styled(Navbar)`
   padding-right: 2em;
 `
 
-function Menu(props) {
+export interface MenuProps {
+  searchHnd: Function
+}
+
+function Menu(props: MenuProps & WrappedComponentProps) {
 
   const [searched, setSearch] = useState('');
 
@@ -49,7 +53,7 @@ function Menu(props) {
       <MenuBar bg="light" expand="lg" className="menu-nav">
         <NavbarBrand href="#home">
           <img
-            src={Logo}
+            src={LogoPath}
             width="32"
             height="32"
             className="d-inline-block align-top"

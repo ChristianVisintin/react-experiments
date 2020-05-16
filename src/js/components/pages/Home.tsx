@@ -15,7 +15,7 @@ import Footer from "../layouts/Footer";
 import CookieAlert from "../layouts/CookieAlert";
 import Waiting from "../Waiting";
 //Layouts
-const RecipeTemplate = React.lazy(() => import("../layouts/Recipe"));
+const RecipeTemplate = React.lazy(() => import("../layouts/RecipeView"));
 //Pages
 const About = React.lazy(() => import("./About"));
 const Front = React.lazy(() => import("./Front"));
@@ -61,6 +61,8 @@ class Home extends React.Component<HomeProps, HomeStates> {
   componentDidMount() {
     this.props.fetchRecipes().then(() => {
       //Once recipes have been loaded, set recipes loaded to true
+      this.setState({recipesLoaded: true});
+    }).catch(() => {
       this.setState({recipesLoaded: true});
     });
     this.props.getCookies();

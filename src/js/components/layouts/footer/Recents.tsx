@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import Recipe from "../../../classes/recipe";
+
 const Header = styled.h1`
   font-size: 1.2em;
   text-transform: uppercase;
@@ -14,15 +16,23 @@ const Line = styled.span`
   opacity: 0.6;
   color: white;
   text-decoration: none;
-  ${Line}:hover {
+  :hover {
     text-decoration: none;
     color: white;
   }
 `;
 
-export default class Recents extends React.Component {
+export interface RecentsProps {
+  recipes: Array<Recipe>
+};
 
-  constructor(props) {
+export default class Recents extends React.Component<RecentsProps, {}> {
+
+  static propTypes = {
+    recipes: PropTypes.array.isRequired,
+  };  
+
+  constructor(props: RecentsProps) {
     super(props);
   }
 
@@ -51,7 +61,3 @@ export default class Recents extends React.Component {
     );
   }
 }
-
-Recents.propTypes = {
-  recipes: PropTypes.array.isRequired,
-};

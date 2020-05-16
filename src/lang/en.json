@@ -17,7 +17,7 @@
         "subscriptionSuccessTitle": "Thank you!",
         "subscriptionSuccessBody": "You successfully subscribed to our newsletter",
         "subscriptionErrorTitle": "Something went wrong",
-        "subscribptionErrorBody": "It was not possible to subscribe you to our newsletter",
+        "subscriptionErrorBody": "It was not possible to subscribe you to our newsletter",
         "email": "Your email address",
         "signup": "Sign up"
       },

@@ -23,9 +23,6 @@ export const subscribeNewsletter = (email: string) => async (dispatch: Dispatch)
   }
   catch (error) {
     console.error("Could not subscribe to newsletter", error.message);
-    dispatch({
-      type: NEWSLETTER_SUBSCRIBE,
-      payload: false,
-    });
+    throw error;
   }
 };

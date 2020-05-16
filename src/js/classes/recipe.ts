@@ -3,7 +3,7 @@
  */
 
 export default class Recipe {
-  id: Number;
+  id: string;
   title: string;
   category: Array<string>;
   date: Date;
@@ -22,7 +22,7 @@ export default class Recipe {
    * @param tags 
    */
 
-  constructor(id: number, title: string, category: Array<string>, date: string, img: Array<string>, body: string, tags: Array<string>) {
+  constructor(id: string, title: string, category: Array<string>, date: string, img: Array<string>, body: string, tags: Array<string>) {
     this.id = id;
     this.title = title;
     this.category = category;

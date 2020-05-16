@@ -15,11 +15,6 @@ const Header = styled.h1`
   text-transform: uppercase;
 `;
 
-const Line = styled.span`
-  font-size: 1em;
-  opacity: 0.6;
-`;
-
 const SocialImage = styled(Image)`
   margin-right: 0.7em;
 `;

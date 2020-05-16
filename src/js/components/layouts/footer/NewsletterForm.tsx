@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { Button, Container, Col, Form, Row, Toast } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from "prop-types";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { subscribeNewsletter } from "../../../actions/newsletterActions";
 
-function NewsletterForm(props) {
+function NewsletterForm(props: WrappedComponentProps) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [toastVisible, showToast] = useState(false);
   const [toastTitle, setToastTitle] = useState('');
   const [toastBody, setToastBody] = useState('');
 
-  const subscribeToNewsletter = (ev) => {
+  const subscribeToNewsletter = (ev: { preventDefault: () => void; }) => {
     ev.preventDefault();
-    dispatch(subscribeNewsletter(email)).then(() => {
+    subscribeNewsletter(email)(dispatch).then(() => {
       //Show Toast success
       setToastTitle(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionSuccessTitle"}));
       setToastBody(props.intl.formatMessage({id: "home.footer.newsletter.subscriptionSuccessBody"}));
@@ -46,7 +45,7 @@ function NewsletterForm(props) {
             </Form.Group>
           </Col>
           <Col style={{ paddingLeft: 0 }} xs={4}>
-            <Button variant="success" type="submit" onClick={(ev) => subscribeToNewsletter(ev)}>
+            <Button variant="success" type="submit" onClick={(ev: { preventDefault: () => void; }) => subscribeToNewsletter(ev)}>
               <FormattedMessage id="home.footer.newsletter.signup" />
             </Button>
           </Col>
@@ -55,9 +54,5 @@ function NewsletterForm(props) {
     </Container>
   );
 }
-
-NewsletterForm.propTypes = {
-  newsletterSubscription: PropTypes.bool,
-};
 
 export default injectIntl(NewsletterForm);

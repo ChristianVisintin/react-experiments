@@ -5,6 +5,9 @@ import { animated, useSpring, useChain } from 'react-spring';
 import { easeCubicInOut } from 'd3-ease';
 import { FormattedMessage } from 'react-intl';
 
+//Classes
+import Profile from "../../classes/profile";
+
 //Components
 
 import ProfileSlideshow from '../layouts/ProfileSlideshow';
@@ -31,37 +34,11 @@ const Welcome = styled.h2`
 export default function About() {
 
   //Profiles
-  const profiles = [
-    {
-      id: 0,
-      name: "Christian",
-      jobs: ['about.profiles.christian.amateurChef', 'about.profiles.christian.swdev', 'about.profiles.christian.techEnthusiast'],
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
-      img: "/assets/images/about/chris.jpg"
-    },
-    {
-      id: 1,
-      name: "Doggo",
-      jobs: ["about.profiles.doggo.fullTimeDog", "about.profiles.doggo.foodCritic"],
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
-      img: "/assets/images/about/doggo.jpg"
-    },
-    {
-      id: 2,
-      name: "Charlie",
-      jobs: ["about.profiles.charlie.chef", "about.profiles.charlie.author"],
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
-      img: "/assets/images/about/charlie.jpg"
-    },
-    {
-      id: 3,
-      name: "Sarah",
-      jobs: ["about.profiles.sarah.socialMediaManager", "about.profiles.sarah.vegan", "about.profiles.sarah.environmentalist"],
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.",
-      img: "/assets/images/about/sarah.jpg"
-    }
+  const profiles = [ new Profile(0, "Christian", ['about.profiles.christian.amateurChef', 'about.profiles.christian.swdev', 'about.profiles.christian.techEnthusiast'], "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.", "/assets/images/about/chris.jpg"), 
+    new Profile (1, "Doggo", ["about.profiles.doggo.fullTimeDog", "about.profiles.doggo.foodCritic"], "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.", "/assets/images/about/doggo.jpg"),
+    new Profile (2, "Charlie", ["about.profiles.charlie.chef", "about.profiles.charlie.author"], "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.", "/assets/images/about/charlie.jpg"),
+    new Profile (3, "Sarah", ["about.profiles.sarah.socialMediaManager", "about.profiles.sarah.vegan", "about.profiles.sarah.environmentalist"], "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat vestibulum lacus, id pulvinar odio interdum ut. Pellentesque sollicitudin efficitur augue, quis gravida sapien auctor non. Etiam sapien nulla, ornare ut augue.", "/assets/images/about/sarah.jpg")
   ];
-
   //Animations
   //Welcome fade
   const fadeAnimationRef = useRef();

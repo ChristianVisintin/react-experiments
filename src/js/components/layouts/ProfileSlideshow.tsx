@@ -1,9 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Card, Carousel, Image } from "react-bootstrap";
-import { animated, useChain, useSpring, useTransition } from "react-spring";
+import { animated, useSpring, useTransition } from "react-spring";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+
+//Classes
+import Profile from '../../classes/profile';
 
 import "../../../css/DarkCarousel.css";
 
@@ -18,7 +21,7 @@ const ProfileCard = styled(Card)`
   min-height: 75vh;
 `;
 
-const ProfilePicture = styled(Card.Img)`
+const ProfilePicture = styled(Image)`
   margin-left: 12.5%;
   width: 75%;
 `;
@@ -36,12 +39,16 @@ const ProfileDesc = styled(Card.Text)`
   text-align: justify;
 `;
 
-export default function ProfileSlideshow(props) {
+export interface ProfileSlideshowProps {
+  profiles: Array<Profile>
+};
+
+export default function ProfileSlideshow(props: ProfileSlideshowProps) {
   const [animatedProfile, setAnimatedProfile] = useState(0);
 
-  const profilesObj = props.profiles.map((p) => {
+  const profilesObj = props.profiles.map((p, index) => {
     //Build job transition first
-    const jobsTransitions = useTransition(p.jobs, p.key, {
+    const jobsTransitions = useTransition(p.jobs, index, {
       from: { overflow: "hidden", height: 0, opacity: 0 },
       enter: { height: 50, opacity: 1 },
       leave: { height: 0, opacity: 0 },
@@ -54,10 +61,10 @@ export default function ProfileSlideshow(props) {
     
     //Then return carousel item
     return (
-      <Carousel.Item key={p.id}>
+      <Carousel.Item key={p.id.toString()}>
         <ProfileCard className="w-100">
           <ProfileTitle>{p.name}</ProfileTitle>
-          <ProfilePicture as={Image} src={p.img} roundedCircle />
+          <ProfilePicture src={p.img} roundedCircle />
           <Card.Body>
             <React.Fragment>
               {jobsTransitions.map(({ item, props, key }) => (
@@ -78,7 +85,7 @@ export default function ProfileSlideshow(props) {
   });
 
   return (
-    <Carousel className="d-block dark-carousel" interval="10000" onSlid={ev => setAnimatedProfile(ev)}>
+    <Carousel className="d-block dark-carousel" interval={10000} onSlid={(ev: React.SetStateAction<number>) => setAnimatedProfile(ev)}>
       {profilesObj}
     </Carousel>
   );

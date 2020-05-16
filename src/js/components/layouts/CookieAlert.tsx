@@ -28,7 +28,7 @@ function CookieAlert(props) {
     ev.preventDefault();
     props.acceptCookiePolicy();
     //Go back to home
-    window.location = "/";
+    window.location.href = "/";
   };
   return (
     <MenuBar bg="dark" expand="lg" className="menu-nav justify-content-between" fixed="bottom">
