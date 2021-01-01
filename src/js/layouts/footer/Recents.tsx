@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Recipe from "../../classes/recipe";
+import Recipe from "../../lib/data/recipe";
 
 const Header = styled.h1`
   font-size: 1.2em;

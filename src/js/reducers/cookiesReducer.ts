@@ -10,7 +10,7 @@ import {
   SET_LANGUAGE,
 } from "../actions/types";
 import { StoreState } from "./types";
-import CookieStorage from "../classes/cookieStorage";
+import CookieStorage from "../lib/misc/cookie_storage";
 
 const initialState: StoreState = new StoreState({}, {});
 

@@ -1,10 +1,16 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React from 'react';
 import { Container } from 'react-bootstrap';
 
 //Layouts
 import HomeSlideshow from '../components/HomeSlideshow';
 
-import Recipe from "../classes/recipe";
+import Recipe from "../lib/data/recipe";
 
 interface FrontProps {
   recipes: Array<Recipe>

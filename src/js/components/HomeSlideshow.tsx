@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel, Image } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-import Recipe from "../classes/recipe";
+import Recipe from "../lib/data/recipe";
 
 interface HomeSlideshowProps {
   recipes: Array<Recipe>

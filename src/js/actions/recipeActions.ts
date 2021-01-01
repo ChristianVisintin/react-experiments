@@ -1,9 +1,16 @@
-import { Dispatch } from 'redux';
-import { FETCH_RECIPES } from "./types";
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
 
-import Recipe from '../classes/recipe';
+import { Dispatch } from "redux";
+import axios from "axios";
 
-import axios from 'axios';
+import Recipe from "../lib/data/recipe";
+
+// Action names
+export const FETCH_RECIPES: string = "FETCH_RECIPES";
 
 /**
  * @function fetchRecipes
@@ -12,28 +19,34 @@ import axios from 'axios';
 
 export const fetchRecipes = () => async (dispatch: Dispatch) => {
   try {
-    const response = await axios
-      .get("http://localhost:3000/recipes");
+    const response = await axios.get("http://localhost:3000/recipes");
     const recipesData = response.data;
     let recipes: Array<Recipe> = [];
     for (const recipe of recipesData) {
-      recipes.push(new Recipe(recipe.id, recipe.title, recipe.category, recipe.date, recipe.img, recipe.body, recipe.tags));
+      recipes.push(
+        new Recipe(
+          recipe.id,
+          recipe.title,
+          recipe.category,
+          recipe.date,
+          recipe.img,
+          recipe.body,
+          recipe.tags
+        )
+      );
     }
     recipes.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-      if (dateA < dateB)
-        return 1;
-      if (dateA > dateB)
-        return -1;
+      if (dateA < dateB) return 1;
+      if (dateA > dateB) return -1;
       return 0;
     });
     dispatch({
       type: FETCH_RECIPES,
       payload: recipes,
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Could not fetch recipes", error.message);
     throw error;
   }

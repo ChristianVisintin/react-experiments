@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
 
 //Classes
-import Recipe from "../classes/recipe";
+import Recipe from "../lib/data/recipe";
 
 const RecipeCard = styled(Card)`
   margin-top: 3em;

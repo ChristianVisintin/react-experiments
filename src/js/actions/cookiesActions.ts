@@ -1,15 +1,23 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import { Dispatch } from "redux";
-
-import { ACCEPT_COOKIE_POLICY, GET_COOKIES, SET_LANGUAGE } from "./types";
-
 import Cookies from "js-cookie";
 
+import CookieStorage from "../lib/misc/cookie_storage";
+import { getNavigatorLanguage } from "../lib/utils/utils";
+
+// Action names
+export const ACCEPT_COOKIE_POLICY: string = "ACCEPT_COOKIE_POLICY";
+export const GET_COOKIES: string = "GET_COOKIES";
+export const SET_LANGUAGE: string = "SET_LANGUAGE";
+
+// Cookie names
 const policyCookie = "cookiePolicyAccepted";
 const langCookie = "lang";
-
-import CookieStorage from "../classes/cookieStorage";
-
-import { getNavigatorLanguage } from "../lib/utils/utils";
 
 /**
  * @function acceptCookiePolicy
@@ -17,17 +25,12 @@ import { getNavigatorLanguage } from "../lib/utils/utils";
  */
 
 export const acceptCookiePolicy = () => (dispatch: Dispatch) => {
-  console.log("ACCEPT");
   //Set cookie policy state
   Cookies.set(policyCookie, "true", { expires: 365 });
   //Dispatch events
-  const lang = Cookies.get(langCookie);
   dispatch({
     type: ACCEPT_COOKIE_POLICY,
-    payload: new CookieStorage(
-      lang ? lang : "en",
-      Cookies.get(policyCookie) !== undefined
-    ),
+    payload: getCookieStorage(),
   });
 };
 
@@ -43,18 +46,26 @@ export const setLanguage = (lang: string) => (dispatch: Dispatch) => {
   }
   dispatch({
     type: SET_LANGUAGE,
-    payload: new CookieStorage(lang, Cookies.get(policyCookie) !== undefined),
+    payload: getCookieStorage(),
   });
 };
 
 export const getCookies = () => (dispatch: Dispatch) => {
+  dispatch({
+    type: GET_COOKIES,
+    payload: getCookieStorage(),
+  });
+};
+
+/**
+ * @description Get cookie storage from cookies
+ * @returns {CookieStorage}
+ */
+
+function getCookieStorage(): CookieStorage {
   const lang = Cookies.get(langCookie);
-  const cookies = new CookieStorage(
+  return new CookieStorage(
     lang ? lang : getNavigatorLanguage(),
     Cookies.get(policyCookie) !== undefined
   );
-  dispatch({
-    type: GET_COOKIES,
-    payload: cookies,
-  });
-};
+}

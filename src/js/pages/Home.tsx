@@ -29,8 +29,8 @@ const Recipes = React.lazy(() => import("./Recipes"));
 const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 
 //Classes
-import Recipe from "../classes/recipe";
-import CookieStorage from "../classes/cookieStorage";
+import Recipe from "../lib/data/recipe";
+import CookieStorage from "../lib/misc/cookie_storage";
 import { RootState } from "../store/index";
 
 interface OwnProps {}
@@ -53,11 +53,6 @@ interface StateProps {
 type HomeProps = StateProps & OwnProps & DispatchProps;
 
 class Home extends React.Component<HomeProps, OwnStates> {
-  static propTypes = {
-    fetchRecipes: PropTypes.func.isRequired,
-    recipes: PropTypes.array.isRequired,
-    cookies: PropTypes.object.isRequired,
-  };
 
   constructor(props: HomeProps) {
     super(props);

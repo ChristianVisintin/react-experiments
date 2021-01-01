@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { FormattedDate, FormattedMessage } from "react-intl";
 
 //Classes
-import Recipe from "../classes/recipe";
+import Recipe from "../lib/data/recipe";
 
 //Components
 

@@ -72,4 +72,4 @@ CookieAlert.propTypes = {
   acceptCookiePolicy: PropTypes.func.isRequired,
 };
 
-export default connect(null, { acceptCookiePolicy })(injectIntl(CookieAlert));
+export default injectIntl(connect(null, { acceptCookiePolicy })(CookieAlert));

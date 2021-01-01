@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
 
 //Classes
-import Profile from '../classes/profile';
+import Profile from '../lib/misc/profile';
 
 import "../../../css/DarkCarousel.css";
 

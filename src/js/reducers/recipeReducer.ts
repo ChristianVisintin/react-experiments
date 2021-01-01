@@ -6,7 +6,7 @@
 
 import { FETCH_RECIPES } from "../actions/types";
 import { StoreState } from "./types";
-import Recipe from "../classes/recipe";
+import Recipe from "../lib/data/recipe";
 
 const initialState: StoreState = new StoreState([], {});
 

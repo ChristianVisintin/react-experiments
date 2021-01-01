@@ -22,7 +22,7 @@ import Home from "./js/pages/Home";
 
 //Translations
 
-import Translations from "./js/classes/translations";
+import Translations from "./js/lib/misc/translations";
 
 import enTranslations from "./lang/en.json";
 import itTranslations from "./lang/it.json";
