@@ -16,57 +16,59 @@ const CardLink = styled.a`
     text-decoration: none;
     color: #303030;
   }
-`
+`;
 
 const CardContainer = styled.div`
   padding-left: 1em;
   padding-right: 1em;
-`
+`;
 
 const RecipeCard = styled(Card)`
   margin-top: 2em;
-`
+`;
 
 const RecipeHashTagContainer = styled(Row)`
   margin-left: 1em;
   padding-bottom: 0.5em;
-`
+`;
 
 const RecipeHashTag = styled(Badge)`
   cursor: pointer;
   padding: 0.5em;
   font-size: 0.8em;
-`
+`;
 
 export interface RecipesProps {
-  recipes: Array<Recipe>,
-  search: string | null,
-  searchHnd: Function,
-  resetSearch: Function
-};
+  recipes: Array<Recipe>;
+  search: string | null;
+  searchHnd: Function;
+  resetSearch: Function;
+}
 
 export interface RecipesStates {
-  category: string
-};
+  category: string;
+}
 
-export default class Recipes extends React.Component<RecipesProps, RecipesStates> {
-
+export default class Recipes extends React.Component<
+  RecipesProps,
+  RecipesStates
+> {
   static propTypes = {
     recipes: PropTypes.array.isRequired,
     resetSearch: PropTypes.func.isRequired,
     searchHnd: PropTypes.func.isRequired,
-    search: PropTypes.string
+    search: PropTypes.string,
   };
 
   constructor(props: RecipesProps) {
     super(props);
-    this.state = {category: "all"};
+    this.state = { category: "all" };
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
     this.handleHashtagSearch = this.handleHashtagSearch.bind(this);
   }
 
   handleCategorySelect(e: string) {
-    this.setState({category: e});
+    this.setState({ category: e });
   }
 
   handleHashtagSearch(hashtag: string) {
@@ -77,11 +79,15 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
     //Prepare recipes to display
     let filteredRecipes = this.props.recipes.filter((item) => {
       //If category is all, don't check, otherwise check if category is in recipe category list
-      return this.state.category === "all" ? item : item.category.includes(this.state.category);
+      return this.state.category === "all"
+        ? item
+        : item.category.includes(this.state.category);
     });
     //If search is NOT null, search for a recipe
     if (this.props.search) {
-      const searched = this.props.search.startsWith('#') ? this.props.search.substring(1) : this.props.search;
+      const searched = this.props.search.startsWith("#")
+        ? this.props.search.substring(1)
+        : this.props.search;
       filteredRecipes = filteredRecipes.filter((item) => {
         //Check if search is contained in name or in tags
         const name = item.title.toLowerCase();
@@ -91,36 +97,57 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
     }
     //Prepare recipe cards
     const recipeCards = filteredRecipes.map((recipe) => {
-      const isNew = ((new Date().getTime()) - new Date(recipe.date).getTime()) < 2592000000;
+      const isNew =
+        new Date().getTime() - new Date(recipe.date).getTime() < 2592000000;
       const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
       //Build hash tags
       const hashtags = recipe.tags.map((tag, index) => (
         <CardLink key={index}>
-          <RecipeHashTag value={tag} onClick={() => this.handleHashtagSearch(tag)} variant="secondary">#{tag}</RecipeHashTag>
+          <RecipeHashTag
+            value={tag}
+            onClick={() => this.handleHashtagSearch(tag)}
+            variant="secondary"
+          >
+            #{tag}
+          </RecipeHashTag>
           &nbsp;
         </CardLink>
       ));
-      return(
-      <div key={recipe.id.toString()} className="col-sm-4">
-        <RecipeCard className="border">
-          <CardLink href={"/#/recipe/" + recipe.id}>
-            <Card.Img className="border" variant="top" src={recipe.img[0]} />
-            <Card.Body>
-              <Card.Title>{recipe.title}&nbsp;{dateEx}</Card.Title>
-              <Card.Text>
-                <FormattedDate value={recipe.date} year="numeric" month="long" day="numeric" />
-              </Card.Text>
-            </Card.Body>
-          </CardLink>
-          <RecipeHashTagContainer>
-            {hashtags}
-          </RecipeHashTagContainer>
-        </RecipeCard>
-      </div>
-    )});
+      return (
+        <div key={recipe.id.toString()} className="col-sm-4">
+          <RecipeCard className="border">
+            <CardLink href={"/#/recipe/" + recipe.id}>
+              <Card.Img className="border" variant="top" src={recipe.img[0]} />
+              <Card.Body>
+                <Card.Title>
+                  {recipe.title}&nbsp;{dateEx}
+                </Card.Title>
+                <Card.Text>
+                  <FormattedDate
+                    value={recipe.date}
+                    year="numeric"
+                    month="long"
+                    day="numeric"
+                  />
+                </Card.Text>
+              </Card.Body>
+            </CardLink>
+            <RecipeHashTagContainer>{hashtags}</RecipeHashTagContainer>
+          </RecipeCard>
+        </div>
+      );
+    });
     return (
       <React.Fragment>
-        <Nav className="justify-content-center" activeKey="all" onSelect={this.handleCategorySelect}>
+        <Nav
+          className="justify-content-center"
+          activeKey="all"
+          onSelect={(ev) => {
+            if (ev) {
+              this.handleCategorySelect(ev);
+            }
+          }}
+        >
           <Nav.Item>
             <Nav.Link eventKey="all">
               <FormattedMessage id="recipes.categories.all" />
@@ -128,7 +155,7 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="breakfast">
-            <FormattedMessage id="recipes.categories.breakfast" />
+              <FormattedMessage id="recipes.categories.breakfast" />
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
@@ -147,7 +174,10 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link hidden={this.props.search === null} onClick={(ev: any) => this.props.resetSearch()}>
+            <Nav.Link
+              hidden={this.props.search === null}
+              onClick={(ev: any) => this.props.resetSearch()}
+            >
               <Badge variant="secondary">
                 {this.props.search}&nbsp;
                 <Badge variant="light">X</Badge>
@@ -155,9 +185,7 @@ export default class Recipes extends React.Component<RecipesProps, RecipesStates
             </Nav.Link>
           </Nav.Item>
         </Nav>
-        <CardContainer className="row">
-          {recipeCards}
-        </CardContainer>
+        <CardContainer className="row">{recipeCards}</CardContainer>
       </React.Fragment>
     );
   }

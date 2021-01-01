@@ -38,6 +38,17 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
+        test: /\.s(a|c)ss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { modules: true }
+          },
+          'sass-loader'
+        ]
+      },
+      {
         test: /\.(jpg|png|svg|gif|woff|woff2|ttf|otf)$/,
         use: {
           loader: "url-loader",
@@ -56,7 +67,11 @@ module.exports = {
       template: "./src/index.html",
       filename: "./index.html",
     }),
-    new CopyWebpackPlugin([{ from: "src/assets", to: "assets/" }]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "src/assets", to: "assets/" }
+      ]
+    }),
   ],
   optimization: {
     splitChunks: {

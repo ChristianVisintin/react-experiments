@@ -17,3 +17,8 @@ main {
   max-height: fit-content;
   height: fit-content;
 }
+
+.page-content {
+  width: 100%;
+  overflow-y: scroll;
+}

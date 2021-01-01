@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { flatten } from 'flat';
 
 //Css
-import "./App.css";
+import "./App.scss";
 //Redux
 import { Provider } from "react-redux";
 import Store from "./js/store/index";
