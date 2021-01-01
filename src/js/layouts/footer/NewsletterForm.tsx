@@ -3,7 +3,7 @@ import { Button, Container, Col, Form, Row, Toast } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 
-import { subscribeNewsletter } from "../../../actions/newsletterActions";
+import { subscribeNewsletter } from "../../actions/newsletterActions";
 
 function NewsletterForm(props: WrappedComponentProps) {
   const dispatch = useDispatch();

@@ -2,9 +2,9 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 
 //Layouts
-import HomeSlideshow from '../HomeSlideshow';
+import HomeSlideshow from '../components/HomeSlideshow';
 
-import Recipe from "../../classes/recipe";
+import Recipe from "../classes/recipe";
 
 interface FrontProps {
   recipes: Array<Recipe>

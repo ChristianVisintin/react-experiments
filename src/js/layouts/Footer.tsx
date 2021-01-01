@@ -7,7 +7,7 @@ import Contact from "./footer/Contact";
 import Recents from "./footer/Recents";
 import Newsletter from "./footer/Newsletter";
 
-import Recipe from "../../classes/recipe";
+import Recipe from "../classes/recipe";
 
 const FooterContainer = styled(Container)`
   background-color: #20242a;

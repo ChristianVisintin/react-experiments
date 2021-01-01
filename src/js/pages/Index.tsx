@@ -1,6 +1,12 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React, { Component } from "react";
 import { IntlProvider } from 'react-intl';
-import { getCookies, setLanguage } from "../../actions/cookiesActions";
+import { getCookies, setLanguage } from "../actions/cookiesActions";
 import { Action } from 'redux';
 import { ThunkDispatch  } from 'redux-thunk';
 import PropTypes from "prop-types";
@@ -10,14 +16,14 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Components
-import Waiting from "../Waiting";
+import Waiting from "../components/Waiting";
 //Pages
 const Home = React.lazy(() => import("./Home"));
 //Classes
-import CookieStorage from "../../classes/cookieStorage";
-import { StoreState } from "../../reducers/types";
-import Translations from "../../classes/translations";
-import { getNavigatorLanguage } from "../../utils";
+import CookieStorage from "../classes/cookieStorage";
+import { StoreState } from "../reducers/types";
+import Translations from "../classes/translations";
+import { getNavigatorLanguage } from "../utils";
 
 export interface IndexProps {
   translations: Translations,

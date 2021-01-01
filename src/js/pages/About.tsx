@@ -6,7 +6,7 @@ import { easeCubicInOut } from 'd3-ease';
 import { FormattedMessage } from 'react-intl';
 
 //Classes
-import Profile from "../../classes/profile";
+import Profile from "../classes/profile";
 
 //Components
 
