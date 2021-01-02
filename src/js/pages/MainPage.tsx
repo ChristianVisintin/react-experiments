@@ -80,8 +80,8 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
         <Row className="justify-content-md-center">
           <Col
             className="row d-flex flex-wrap d-inline-flex w-100"
-            xs={6}
-            sm="auto"
+            xs={12}
+            sm={12}
             lg={8}
             md="auto"
           >
@@ -89,8 +89,8 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
           </Col>
           <Col
             className="row d-flex flex-wrap d-inline-flex offset-md-1"
-            xs={5}
-            sm="auto"
+            xs={12}
+            sm={12}
             lg={3}
             md="auto"
           >
