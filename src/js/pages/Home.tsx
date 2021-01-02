@@ -21,7 +21,7 @@ import Footer from "../layouts/Footer";
 import CookieAlert from "../layouts/CookieAlert";
 import Waiting from "../components/Waiting";
 //Layouts
-const RecipeTemplate = React.lazy(() => import("../layouts/RecipeView"));
+const RecipeTemplate = React.lazy(() => import("./RecipeInfo"));
 //Pages
 const About = React.lazy(() => import("./About"));
 const Front = React.lazy(() => import("./Main"));
@@ -188,6 +188,8 @@ class Home extends React.Component<HomeProps, OwnStates> {
                       "1970-01-01T00:00:00Z",
                       [],
                       "",
+                      [],
+                      0,
                       []
                     );
                     for (const r of this.props.recipes) {

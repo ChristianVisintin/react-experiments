@@ -29,9 +29,31 @@ const RecipeTitle = styled(Card.Title)`
   font-size: 2.5em;
 `;
 
+const RecipeSection = styled(Card.Title)`
+  font-size: 1.8em;
+  color: #404040;
+`;
+
 const RecipeDate = styled(Card.Title)`
   font-size: 0.8em;
   color: #808080;
+`;
+
+const IngredientList = styled.ul`
+  list-style-type:circle;
+`;
+
+const IngredientName = styled.h4`
+  font-size: 1.2em;
+  color: #404040;
+  display: inline-block;
+  margin-right: 1ch;
+`;
+
+const IngredientQuantity = styled.h5`
+  font-size: 0.9em;
+  color: #606060;
+  display: inline-block;
 `;
 
 export interface RecipeViewProps {
@@ -70,6 +92,22 @@ export default class RecipeView extends React.Component<RecipeViewProps, {}> {
         &nbsp;
       </React.Fragment>
     ));
+    // Prepare ingredients
+    const ingredients = this.props.recipe.ingredients.map(
+      (ingredient, index) => {
+        const translationKey = "recipes.ingredients." + ingredient.name;
+        return (
+          <li>
+            <IngredientName>
+              <FormattedMessage id={translationKey} />
+            </IngredientName>
+            <IngredientQuantity>
+              {ingredient.quantity}&nbsp;{ingredient.measure}
+            </IngredientQuantity>
+          </li>
+        );
+      }
+    );
     return (
       <div className="row align-items-center">
         <RecipeCard className="col-md-6 offset-md-3">
@@ -87,6 +125,13 @@ export default class RecipeView extends React.Component<RecipeViewProps, {}> {
             {recipePictures}
           </Carousel>
           <Card.Body>
+            <RecipeSection>
+              <FormattedMessage id="recipes.ingredientsKey" />
+            </RecipeSection>
+            <IngredientList>{ingredients}</IngredientList>
+            <RecipeSection>
+              <FormattedMessage id="recipes.preparation" />
+            </RecipeSection>
             <Card.Text>{recipe.body}</Card.Text>
           </Card.Body>
           <hr />
