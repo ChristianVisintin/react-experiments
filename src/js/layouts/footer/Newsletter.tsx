@@ -39,12 +39,12 @@ export default function Newsletter() {
   return (
     <Container>
       <Row>
-        <Col className="d-none d-md-block">
+        <Col xs={12}>
           <Header>Newsletter</Header>
         </Col>
       </Row>
       <Row>
-        <Col className="d-none d-md-block">
+        <Col xs={12}>
           <NewsletterForm />
         </Col>
       </Row>

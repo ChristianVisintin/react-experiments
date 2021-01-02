@@ -24,7 +24,7 @@ import Waiting from "../components/Waiting";
 const RecipeTemplate = React.lazy(() => import("../layouts/RecipeView"));
 //Pages
 const About = React.lazy(() => import("./About"));
-const Front = React.lazy(() => import("./Front"));
+const Front = React.lazy(() => import("./Main"));
 const Recipes = React.lazy(() => import("./Recipes"));
 const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 

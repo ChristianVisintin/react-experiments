@@ -46,13 +46,13 @@ export default function Footer(props: FooterProps) {
           {/* Row 1 is made up of 3 columns */}
           <Row>
             {/* Contacts, Recent projects, Newsletter and social */}
-            <Col className="d-none d-md-block" xs={4}>
+            <Col lg={3} xs={12}>
               <Contact />
             </Col>
-            <Col className="d-none d-md-block" xs={4}>
+            <Col lg={4} xs={12}>
               <Recents recipes={props.recipes} />
             </Col>
-            <Col md={4} xs={12}>
+            <Col lg={5} md={4} xs={12}>
               <Newsletter />
             </Col>
           </Row>
