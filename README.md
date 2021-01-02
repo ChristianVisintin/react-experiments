@@ -1,4 +1,4 @@
-# React Experiments
+# Veeso's Kitchen
 
 Developed by Christian Visintin
 
