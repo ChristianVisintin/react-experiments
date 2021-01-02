@@ -8,6 +8,7 @@ import { Dispatch } from "redux";
 import axios from "axios";
 
 import Recipe from "../lib/data/recipe";
+import Ingredient from "../lib/data/ingredient";
 
 // Action names
 export const FETCH_RECIPES: string = "FETCH_RECIPES";
@@ -21,8 +22,14 @@ export const fetchRecipes = () => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get("http://localhost:3000/recipes");
     const recipesData = response.data;
-    let recipes: Array<Recipe> = [];
+    let recipes: Array<Recipe> = new Array();
     for (const recipe of recipesData) {
+      // Get ingredients
+      const ingredients: Array<Ingredient> = new Array();
+      for (const ingredient of recipe.ingredients) {
+        ingredients.push(new Ingredient(ingredient.name, ingredient.quantity, ingredient.measure));
+      }
+      // Create recipe
       recipes.push(
         new Recipe(
           recipe.id,
@@ -31,6 +38,8 @@ export const fetchRecipes = () => async (dispatch: Dispatch) => {
           recipe.date,
           recipe.img,
           recipe.body,
+          ingredients,
+          recipe.persons,
           recipe.tags
         )
       );

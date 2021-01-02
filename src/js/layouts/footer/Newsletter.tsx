@@ -50,16 +50,16 @@ export default function Newsletter() {
       </Row>
       <Row>
         <Col>
-          <SocialIcon href="https://github.com/ChristianVisintin/react-experiments">
+          <SocialIcon href="https://github.com/Veeso/react-experiments">
             <FontAwesomeIcon icon={faFacebook} />
           </SocialIcon>
-          <SocialIcon href="https://github.com/ChristianVisintin/react-experiments">
+          <SocialIcon href="https://github.com/Veeso/react-experiments">
             <FontAwesomeIcon icon={faInstagram} />
           </SocialIcon>
           <SocialIcon href="https://www.linkedin.com/in/christian-visintin/">
             <FontAwesomeIcon icon={faLinkedin} />
           </SocialIcon>
-          <SocialIcon href="https://github.com/ChristianVisintin">
+          <SocialIcon href="https://github.com/Veeso">
             <FontAwesomeIcon icon={faGithub} />
           </SocialIcon>
         </Col>

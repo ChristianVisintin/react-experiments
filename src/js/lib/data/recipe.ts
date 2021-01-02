@@ -4,18 +4,22 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import Ingredient from "./ingredient";
+
 /**
- * Recipe represents a Recipe entity as stored in the server
+ * @description Recipe represents a Recipe entity as stored in the server
  */
 
 export default class Recipe {
-  id: string;
-  title: string;
-  category: Array<string>;
-  date: Date;
-  img: Array<string>;
-  body: string;
-  tags: Array<string>;
+  public id: string;
+  public title: string;
+  public category: Array<string>;
+  public date: Date;
+  public img: Array<string>;
+  public body: string;
+  public ingredients: Array<Ingredient>;
+  public persons: number;
+  public tags: Array<string>;
 
   /**
    * @description Recipe class constructor
@@ -25,6 +29,8 @@ export default class Recipe {
    * @param date: date must be formatted as ISO8601
    * @param img
    * @param body
+   * @param ingredients
+   * @param persons
    * @param tags
    */
 
@@ -35,6 +41,8 @@ export default class Recipe {
     date: string,
     img: Array<string>,
     body: string,
+    ingredients: Array<Ingredient>,
+    persons: number,
     tags: Array<string>
   ) {
     this.id = id;
@@ -43,6 +51,8 @@ export default class Recipe {
     this.date = new Date(date);
     this.img = img;
     this.body = body;
+    this.ingredients = ingredients;
+    this.persons = persons;
     this.tags = tags;
   }
 }
