@@ -8,7 +8,9 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { Facebook } from 'react-content-loader'
+import { Facebook } from "react-content-loader";
+import styled from "styled-components";
+import { FormattedMessage } from "react-intl";
 
 //Layouts
 import HomeSlideshow from "../components/HomeSlideshow";
@@ -19,6 +21,12 @@ import { fetchTweets } from "../actions/twitterActions";
 import { RootState } from "../store/index";
 import TweetCard from "../components/TweetCard";
 import TweetLoader from "../components/TweetLoader";
+import TweetsList from "../layouts/TweetsList";
+
+const LatestTweets = styled.h2`
+  font-size: 1.5em;
+  color: #606060;
+`;
 
 interface OwnProps {
   recipes: Array<Recipe>;
@@ -60,12 +68,13 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
 
   render() {
     // Prepare tweets
-    const tweets = this.state.tweetsLoaded ? this.props.tweets.map((tweet) => (
-      <Row className="w-100" key={tweet.uuid}>
-        <TweetCard tweet={tweet} />
-      </Row>
-    )) : this.createDummyContentLoader(4);
-    console.log(tweets);
+    const tweets = this.state.tweetsLoaded
+      ? this.props.tweets.map((tweet) => (
+          <Row className="w-100" key={tweet.uuid}>
+            <TweetCard tweet={tweet} />
+          </Row>
+        ))
+      : this.createDummyContentLoader(4);
     return (
       <Container fluid className="w-100">
         <Row className="justify-content-md-center">
@@ -78,8 +87,17 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
           >
             <HomeSlideshow recipes={this.props.recipes} />
           </Col>
-          <Col className="row d-flex flex-wrap d-inline-flex offset-md-1" xs={5} sm="auto" lg={3} md="auto">
-            {tweets}
+          <Col
+            className="row d-flex flex-wrap d-inline-flex offset-md-1"
+            xs={5}
+            sm="auto"
+            lg={3}
+            md="auto"
+          >
+            <LatestTweets>
+              <FormattedMessage id="home.tweets" />
+            </LatestTweets>
+            <TweetsList items={tweets} />
           </Col>
         </Row>
       </Container>
@@ -88,22 +106,22 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
 
   /**
    * @description create a list of Facebook content loaders
-   * @param {number} size 
+   * @param {number} size
    * @return {Array<typeof Facebook>}
    */
 
   createDummyContentLoader(size: number): Array<typeof Facebook> {
     let container = new Array();
     for (let i = 0; i < size; i++) {
-      container.push(<Row className="w-100" key={i}>
+      container.push(
+        <Row className="w-100" key={i}>
           <TweetLoader />
-        </Row>);
+        </Row>
+      );
     }
     return container;
   }
-
 }
-
 
 const mapStateToProps = (state: RootState): StateProps => ({
   tweets: state.tweets.items,
