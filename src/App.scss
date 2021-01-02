@@ -6,11 +6,11 @@
 
 body {
   min-width: 100vw;
-  min-height: 100vh;
-  max-height: fit-content;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 main {
@@ -19,12 +19,13 @@ main {
 }
 
 #root {
-  min-height: 100vh;
-  max-height: fit-content;
-  height: fit-content;
+  min-height: 100%;
 }
 
-.page-content {
+footer {
+  position: relative;
+  margin-top: -5rem;
+  height: 5rem;
+  clear: both;
   width: 100%;
-  overflow-y: scroll;
 }

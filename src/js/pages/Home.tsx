@@ -9,6 +9,7 @@ import { HashRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import { injectIntl } from "react-intl";
+import styled from "styled-components";
 
 //Actions
 import { fetchRecipes } from "../actions/recipeActions";
@@ -32,6 +33,14 @@ import Recipe from "../lib/data/recipe";
 import CookieStorage from "../lib/misc/cookie_storage";
 import { RootState } from "../store/index";
 
+//Components
+
+const PageWrapper = styled.div`
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 5rem; /* Must match footer height */
+`;
+
 interface OwnProps {}
 
 interface DispatchProps {
@@ -52,7 +61,6 @@ interface StateProps {
 type HomeProps = StateProps & OwnProps & DispatchProps;
 
 class Home extends React.Component<HomeProps, OwnStates> {
-
   constructor(props: HomeProps) {
     super(props);
     this.state = {
@@ -140,77 +148,82 @@ class Home extends React.Component<HomeProps, OwnStates> {
         <Menu searchHnd={this.search} />
         {/* HashRouter for page to display */}
         <HashRouter>
-          <main className="page-content">
-            <React.Suspense fallback={<Waiting />}>
-              <Route path="/about" component={About} />
-              <Route path="/cookies" component={CookiePolicy} />
-              <Route
-                path="/home"
-                render={(props) => <Front recipes={this.props.recipes} />}
-              />
-              <Route
-                exact
-                path="/"
-                render={(props) => <Front recipes={this.props.recipes} />}
-              />
-              <Route
-                path="/recipes"
-                render={(props) => (
-                  <Recipes
-                    recipes={this.props.recipes}
-                    searchHnd={this.search}
-                    search={this.state.userSearch}
-                    resetSearch={this.resetSearch}
-                  />
-                )}
-              />
-              <Route
-                path="/recipe/"
-                render={(props) => {
-                  //If recipes are not loaded yet, return Waiting
-                  if (!this.state.recipesLoaded) {
-                    return <Waiting />;
-                  }
-                  const recipeId = this.getHash(props.location.pathname);
-                  let recipe: Recipe = new Recipe(
-                    "-1",
-                    "",
-                    [],
-                    "1970-01-01T00:00:00Z",
-                    [],
-                    "",
-                    []
-                  );
-                  for (const r of this.props.recipes) {
-                    if (recipeId === r.id.toString()) {
-                      recipe = r;
+          <main>
+            <PageWrapper>
+              <React.Suspense fallback={<Waiting />}>
+                <Route path="/about" component={About} />
+                <Route path="/cookies" component={CookiePolicy} />
+                <Route
+                  path="/home"
+                  render={(props) => <Front recipes={this.props.recipes} />}
+                />
+                <Route
+                  exact
+                  path="/"
+                  render={(props) => <Front recipes={this.props.recipes} />}
+                />
+                <Route
+                  path="/recipes"
+                  render={(props) => (
+                    <Recipes
+                      recipes={this.props.recipes}
+                      searchHnd={this.search}
+                      search={this.state.userSearch}
+                      resetSearch={this.resetSearch}
+                    />
+                  )}
+                />
+                <Route
+                  path="/recipe/"
+                  render={(props) => {
+                    //If recipes are not loaded yet, return Waiting
+                    if (!this.state.recipesLoaded) {
+                      return <Waiting />;
                     }
-                  }
-                  //Get related recipes (NOTE: max 3 recipes with at least one category in common)
-                  let relatedRecipes = [];
-                  for (const r of this.props.recipes) {
-                    if (recipe === null) {
-                      break;
-                    }
-                    if (r.id === recipe.id) {
-                      continue;
-                    }
-                    const found = r.category.some(
-                      (i) => recipe.category.indexOf(i) >= 0
+                    const recipeId = this.getHash(props.location.pathname);
+                    let recipe: Recipe = new Recipe(
+                      "-1",
+                      "",
+                      [],
+                      "1970-01-01T00:00:00Z",
+                      [],
+                      "",
+                      []
                     );
-                    if (found) {
-                      relatedRecipes.push(r);
+                    for (const r of this.props.recipes) {
+                      if (recipeId === r.id.toString()) {
+                        recipe = r;
+                      }
                     }
-                    if (relatedRecipes.length === 3) {
-                      break;
+                    //Get related recipes (NOTE: max 3 recipes with at least one category in common)
+                    let relatedRecipes = [];
+                    for (const r of this.props.recipes) {
+                      if (recipe === null) {
+                        break;
+                      }
+                      if (r.id === recipe.id) {
+                        continue;
+                      }
+                      const found = r.category.some(
+                        (i) => recipe.category.indexOf(i) >= 0
+                      );
+                      if (found) {
+                        relatedRecipes.push(r);
+                      }
+                      if (relatedRecipes.length === 3) {
+                        break;
+                      }
                     }
-                  }
-                  return (
-                    <RecipeTemplate recipe={recipe} related={relatedRecipes} />
-                  );
-                }}
-              />
-            </React.Suspense>
+                    return (
+                      <RecipeTemplate
+                        recipe={recipe}
+                        related={relatedRecipes}
+                      />
+                    );
+                  }}
+                />
+              </React.Suspense>
+            </PageWrapper>
           </main>
         </HashRouter>
         {/*Footer is visible for all pages in / */}

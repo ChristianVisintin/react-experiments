@@ -57,7 +57,7 @@ export default function Contact() {
       </Row>
       <Row>
         <Col>
-          <Line>Email: christian.visintin@gmail.com</Line>
+          <Line>Email: foo.bar@gmail.com</Line>
         </Col>
       </Row>
       <Row>

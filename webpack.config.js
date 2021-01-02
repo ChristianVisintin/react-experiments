@@ -1,15 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const path = require('path');
+const path = require("path");
 
 module.exports = {
   entry: {
-    main: "./src/index.tsx"
+    main: "./src/index.tsx",
   },
   output: {
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: "[name].bundle.js",
+    chunkFilename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         loader: "ts-loader",
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.html$/,
@@ -40,13 +40,10 @@ module.exports = {
       {
         test: /\.s(a|c)ss$/,
         use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: { modules: true }
-          },
-          'sass-loader'
-        ]
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
       },
       {
         test: /\.(jpg|png|svg|gif|woff|woff2|ttf|otf)$/,
@@ -68,9 +65,7 @@ module.exports = {
       filename: "./index.html",
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: "src/assets", to: "assets/" }
-      ]
+      patterns: [{ from: "src/assets", to: "assets/" }],
     }),
   ],
   optimization: {

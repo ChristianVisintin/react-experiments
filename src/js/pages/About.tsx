@@ -5,7 +5,7 @@
  */
 
 import React, { useRef } from "react";
-import { Col, Container, Form } from "react-bootstrap";
+import { Col, Container } from "react-bootstrap";
 import styled from "styled-components";
 import { animated, useSpring, useChain } from "react-spring";
 import { easeCubicInOut } from "d3-ease";

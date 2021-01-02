@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 //Classes
 import Profile from "../lib/misc/profile";
 
-import "../../../css/DarkCarousel.css";
+import "../../css/DarkCarousel.scss";
 
 //Profile components
 

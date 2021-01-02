@@ -22,16 +22,22 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 //Resources
-import LogoPath from "../../../assets/images/icons/logo.svg";
+import LogoPath from "../../assets/images/icons/logo.svg";
 
 const HomeTitle = styled.h1`
   font-size: 1.3em;
-  color: charcoal;
+  color: #404040;
+  :hover, :active {
+    color: green;
+  }
 `;
 
 const HomeRef = styled.h2`
   font-size: 1.3em;
-  color: #606060;
+  color: #808080;
+  :hover, :active {
+    color: green;
+  }
 `;
 
 const MenuBar = styled(Navbar)`
