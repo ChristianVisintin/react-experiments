@@ -5,43 +5,19 @@
  */
 
 import React from "react";
-import { Badge, Card, Nav, Row } from "react-bootstrap";
+import { Badge, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FormattedDate, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 //Classes
 import Recipe from "../lib/data/recipe";
+import RecipeCard from "../components/RecipeCard";
 
 //Components
-
-const CardLink = styled.a`
-  text-decoration: none;
-  color: #303030;
-  :hover {
-    text-decoration: none;
-    color: #303030;
-  }
-`;
-
 const CardContainer = styled.div`
   padding-left: 1em;
   padding-right: 1em;
-`;
-
-const RecipeCard = styled(Card)`
-  margin-top: 2em;
-`;
-
-const RecipeHashTagContainer = styled(Row)`
-  margin-left: 1em;
-  padding-bottom: 0.5em;
-`;
-
-const RecipeHashTag = styled(Badge)`
-  cursor: pointer;
-  padding: 0.5em;
-  font-size: 0.8em;
 `;
 
 export interface RecipesProps {
@@ -102,47 +78,13 @@ export default class Recipes extends React.Component<
       });
     }
     //Prepare recipe cards
-    const recipeCards = filteredRecipes.map((recipe) => {
-      const isNew =
-        new Date().getTime() - new Date(recipe.date).getTime() < 2592000000;
-      const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
-      //Build hash tags
-      const hashtags = recipe.tags.map((tag, index) => (
-        <CardLink key={index}>
-          <RecipeHashTag
-            value={tag}
-            onClick={() => this.handleHashtagSearch(tag)}
-            variant="secondary"
-          >
-            #{tag}
-          </RecipeHashTag>
-          &nbsp;
-        </CardLink>
-      ));
-      return (
-        <div key={recipe.id.toString()} className="col-sm-4">
-          <RecipeCard className="border">
-            <CardLink href={"/#/recipe/" + recipe.id}>
-              <Card.Img className="border" variant="top" src={recipe.img[0]} />
-              <Card.Body>
-                <Card.Title>
-                  {recipe.title}&nbsp;{dateEx}
-                </Card.Title>
-                <Card.Text>
-                  <FormattedDate
-                    value={recipe.date}
-                    year="numeric"
-                    month="long"
-                    day="numeric"
-                  />
-                </Card.Text>
-              </Card.Body>
-            </CardLink>
-            <RecipeHashTagContainer>{hashtags}</RecipeHashTagContainer>
-          </RecipeCard>
-        </div>
-      );
-    });
+    const recipeCards = filteredRecipes.map((recipe) => (
+      <RecipeCard
+        key={recipe.id}
+        handleHashtagSearch={this.handleHashtagSearch}
+        recipe={recipe}
+      />
+    ));
     return (
       <React.Fragment>
         <Nav

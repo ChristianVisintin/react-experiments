@@ -8,18 +8,8 @@
  * @description Ingredient describes an Ingredient in a recipe
  */
 
-export default class Ingredient {
-  public name: string;
-  public quantity: number | undefined;
-  public measure: string | undefined;
-
-  public constructor(
-    name: string,
-    quantity: number | undefined,
-    measure: string | undefined
-  ) {
-    this.name = name;
-    this.quantity = quantity;
-    this.measure = measure;
-  }
+export default interface Ingredient {
+  name: string;
+  quantity: number | undefined;
+  measure: string | undefined;
 }

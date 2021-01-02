@@ -94,7 +94,7 @@ export default class RecipeView extends React.Component<RecipeViewProps, {}> {
     ));
     // Prepare ingredients
     const ingredients = this.props.recipe.ingredients.map(
-      (ingredient, index) => {
+      (ingredient, _) => {
         const translationKey = "recipes.ingredients." + ingredient.name;
         return (
           <li>
