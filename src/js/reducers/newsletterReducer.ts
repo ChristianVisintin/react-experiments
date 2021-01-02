@@ -4,7 +4,8 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
-import { ActionMessage, NEWSLETTER_SUBSCRIBE } from "../actions/types";
+import { ActionMessage } from "../actions/types";
+import { NEWSLETTER_SUBSCRIBE } from "../actions/newsletterActions";
 
 import { StoreState } from "./types";
 

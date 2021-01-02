@@ -14,8 +14,8 @@ export default class CookieStorage {
 
   /**
    * @description CookieStorage class constructor
-   * @param lang 
-   * @param cookiePolicyAccepted  
+   * @param lang
+   * @param cookiePolicyAccepted
    */
 
   constructor(lang: string, cookiePolicyAccepted: boolean) {

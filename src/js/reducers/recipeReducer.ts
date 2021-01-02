@@ -4,7 +4,7 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
-import { FETCH_RECIPES } from "../actions/types";
+import { FETCH_RECIPES } from "../actions/recipeActions";
 import { StoreState } from "./types";
 import Recipe from "../lib/data/recipe";
 

@@ -8,7 +8,7 @@ import {
   ACCEPT_COOKIE_POLICY,
   GET_COOKIES,
   SET_LANGUAGE,
-} from "../actions/types";
+} from "../actions/cookiesActions";
 import { StoreState } from "./types";
 import CookieStorage from "../lib/misc/cookie_storage";
 

@@ -1,3 +1,9 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React, { useState } from "react";
 import {
   Navbar,
@@ -7,7 +13,11 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  WrappedComponentProps,
+} from "react-intl";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -26,15 +36,14 @@ const HomeRef = styled.h2`
 
 const MenuBar = styled(Navbar)`
   padding-right: 2em;
-`
+`;
 
 export interface MenuProps {
-  searchHnd: Function
+  searchHnd: Function;
 }
 
 function Menu(props: MenuProps & WrappedComponentProps) {
-
-  const [searched, setSearch] = useState('');
+  const [searched, setSearch] = useState("");
 
   const search = () => {
     //Save subject
@@ -45,8 +54,8 @@ function Menu(props: MenuProps & WrappedComponentProps) {
     //Set searched to empty
     //Call Home search hnd
     props.searchHnd(subject);
-    setSearch('');
-  }
+    setSearch("");
+  };
 
   return (
     <header>
@@ -78,7 +87,13 @@ function Menu(props: MenuProps & WrappedComponentProps) {
             </Nav.Link>
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder={props.intl.formatMessage({id: "home.menu.search"})} className="mr-sm-2" value={searched} onChange={(ev) => setSearch(ev.target.value)} />
+            <FormControl
+              type="text"
+              placeholder={props.intl.formatMessage({ id: "home.menu.search" })}
+              className="mr-sm-2"
+              value={searched}
+              onChange={(ev) => setSearch(ev.target.value)}
+            />
             <Button variant="outline-success" onClick={search}>
               <FormattedMessage id="home.menu.search" />
             </Button>
@@ -90,7 +105,7 @@ function Menu(props: MenuProps & WrappedComponentProps) {
 }
 
 Menu.propTypes = {
-  searchHnd: PropTypes.func.isRequired
+  searchHnd: PropTypes.func.isRequired,
 };
 
 export default injectIntl(Menu);

@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from "react";
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from "react-intl";
 import { flatten } from "flat";
 
 //Css
@@ -36,7 +36,7 @@ export default class App extends Component<{}, {}> {
   render() {
     return (
       <Provider store={Store}>
-        <IntlProvider locale='it' messages={translations.it}>
+        <IntlProvider locale="it" messages={translations.it}>
           <Home />
         </IntlProvider>
       </Provider>

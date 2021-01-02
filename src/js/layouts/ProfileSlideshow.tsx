@@ -1,12 +1,18 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React, { useState } from "react";
 import { Card, Carousel, Image } from "react-bootstrap";
 import { animated, useSpring, useTransition } from "react-spring";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 
 //Classes
-import Profile from '../lib/misc/profile';
+import Profile from "../lib/misc/profile";
 
 import "../../../css/DarkCarousel.css";
 
@@ -40,8 +46,8 @@ const ProfileDesc = styled(Card.Text)`
 `;
 
 export interface ProfileSlideshowProps {
-  profiles: Array<Profile>
-};
+  profiles: Array<Profile>;
+}
 
 export default function ProfileSlideshow(props: ProfileSlideshowProps) {
   const [animatedProfile, setAnimatedProfile] = useState(0);
@@ -55,10 +61,17 @@ export default function ProfileSlideshow(props: ProfileSlideshowProps) {
       trail: 250,
       reset: animatedProfile === p.id,
       reverse: animatedProfile !== p.id,
-      config: { duration: 750 }
+      config: { duration: 750 },
     });
-    const descTransition = useSpring({opacity: 1, from: { opacity: 0 }, config: { duration: 700 }, delay: 750, reset: animatedProfile === p.id, reverse: animatedProfile !== p.id});
-    
+    const descTransition = useSpring({
+      opacity: 1,
+      from: { opacity: 0 },
+      config: { duration: 700 },
+      delay: 750,
+      reset: animatedProfile === p.id,
+      reverse: animatedProfile !== p.id,
+    });
+
     //Then return carousel item
     return (
       <Carousel.Item key={p.id.toString()}>
@@ -85,7 +98,11 @@ export default function ProfileSlideshow(props: ProfileSlideshowProps) {
   });
 
   return (
-    <Carousel className="d-block dark-carousel" interval={10000} onSlid={(ev: React.SetStateAction<number>) => setAnimatedProfile(ev)}>
+    <Carousel
+      className="d-block dark-carousel"
+      interval={10000}
+      onSlid={(ev: React.SetStateAction<number>) => setAnimatedProfile(ev)}
+    >
       {profilesObj}
     </Carousel>
   );

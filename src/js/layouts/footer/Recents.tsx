@@ -1,6 +1,12 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -23,14 +29,13 @@ const Line = styled.span`
 `;
 
 export interface RecentsProps {
-  recipes: Array<Recipe>
-};
+  recipes: Array<Recipe>;
+}
 
 export default class Recents extends React.Component<RecentsProps, {}> {
-
   static propTypes = {
     recipes: PropTypes.array.isRequired,
-  };  
+  };
 
   constructor(props: RecentsProps) {
     super(props);
@@ -40,13 +45,15 @@ export default class Recents extends React.Component<RecentsProps, {}> {
     let recentRecipes = [...this.props.recipes];
     //Get first 5 recipes
     recentRecipes = recentRecipes.splice(0, 5);
-    const recipeItems = recentRecipes.map(recipe => 
+    const recipeItems = recentRecipes.map((recipe) => (
       <Row key={recipe.id}>
         <Col>
-        <a href={"/#/recipe/" + recipe.id}><Line>{recipe.title}</Line></a>
+          <a href={"/#/recipe/" + recipe.id}>
+            <Line>{recipe.title}</Line>
+          </a>
         </Col>
       </Row>
-    );
+    ));
     return (
       <Container>
         <Row>
@@ -56,7 +63,7 @@ export default class Recents extends React.Component<RecentsProps, {}> {
             </Header>
           </Col>
         </Row>
-          {recipeItems}
+        {recipeItems}
       </Container>
     );
   }

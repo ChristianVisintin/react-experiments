@@ -1,3 +1,9 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import styled from "styled-components";
@@ -29,8 +35,8 @@ const FooterCopyrightText = styled.h2`
 `;
 
 export interface FooterProps {
-  recipes: Array<Recipe>
-};
+  recipes: Array<Recipe>;
+}
 
 export default function Footer(props: FooterProps) {
   return (

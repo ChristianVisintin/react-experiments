@@ -1,3 +1,9 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React from "react";
 import { Container, Col, Image, Row } from "react-bootstrap";
 import styled from "styled-components";

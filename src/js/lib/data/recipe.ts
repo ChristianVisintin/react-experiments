@@ -19,16 +19,24 @@ export default class Recipe {
 
   /**
    * @description Recipe class constructor
-   * @param id 
-   * @param title 
-   * @param category 
+   * @param id
+   * @param title
+   * @param category
    * @param date: date must be formatted as ISO8601
-   * @param img 
-   * @param body 
-   * @param tags 
+   * @param img
+   * @param body
+   * @param tags
    */
 
-  constructor(id: string, title: string, category: Array<string>, date: string, img: Array<string>, body: string, tags: Array<string>) {
+  constructor(
+    id: string,
+    title: string,
+    category: Array<string>,
+    date: string,
+    img: Array<string>,
+    body: string,
+    tags: Array<string>
+  ) {
     this.id = id;
     this.title = title;
     this.category = category;

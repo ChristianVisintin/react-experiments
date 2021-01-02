@@ -4,9 +4,9 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import rootReducer from "../reducers";
 
 const initialState = {};
 
@@ -19,9 +19,7 @@ export interface RootState {
 const Store = createStore(
   rootReducer,
   initialState,
-  compose(
-    applyMiddleware(...middleware)
-  )
+  compose(applyMiddleware(...middleware))
 );
 
 export default Store;

@@ -17,14 +17,20 @@ export default class Profile {
 
   /**
    * @description Profile class constructor
-   * @param id 
-   * @param name 
-   * @param jobs 
-   * @param body 
-   * @param img 
+   * @param id
+   * @param name
+   * @param jobs
+   * @param body
+   * @param img
    */
 
-  constructor(id: number, name: string, jobs: Array<string>, body: string, img: string) {
+  constructor(
+    id: number,
+    name: string,
+    jobs: Array<string>,
+    body: string,
+    img: string
+  ) {
     this.id = id;
     this.name = name;
     this.jobs = jobs;

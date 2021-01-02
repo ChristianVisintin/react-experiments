@@ -1,23 +1,33 @@
-import React from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
+import React from "react";
+import { Container, Spinner } from "react-bootstrap";
 import styled from "styled-components";
 
 const SpinnerContainer = styled.div`
   text-align: center;
   padding: 3em;
-`
+`;
 
 const BigSpinner = styled(Spinner)`
   width: 5rem;
   height: 5rem;
-`
+`;
 
 export default function Waiting() {
   return (
     <Container className="justify-content-center w-100">
       <SpinnerContainer className="justify-content-center w-100">
-        <BigSpinner className="justify-content-center" animation="border" variant="success" />
+        <BigSpinner
+          className="justify-content-center"
+          animation="border"
+          variant="success"
+        />
       </SpinnerContainer>
     </Container>
-  )
+  );
 }

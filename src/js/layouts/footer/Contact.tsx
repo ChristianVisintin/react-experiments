@@ -1,6 +1,12 @@
+/**
+ * @author Christian Visintin <christian.visintin1997@gmail.com>
+ * @version 0.1.0
+ * @license "please refer to <http://unlicense.org>"
+ */
+
 import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from "react-intl";
 import styled from "styled-components";
 
 const Header = styled.h1`

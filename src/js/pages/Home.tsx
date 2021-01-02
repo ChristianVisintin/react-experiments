@@ -8,7 +8,6 @@ import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import PropTypes from "prop-types";
 import { injectIntl } from "react-intl";
 
 //Actions
