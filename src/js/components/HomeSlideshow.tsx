@@ -62,7 +62,7 @@ export default class HomeSlideshow extends React.Component<
 
     return (
       <Carousel
-        className="border-right border-left border-top d-block w-50"
+        className="border-right border-left border-top d-block w-100"
         interval={5000}
       >
         {slideshow}

@@ -8,9 +8,11 @@ import { combineReducers } from "redux";
 import recipeReducer from "./recipeReducer";
 import newsletterReducer from "./newsletterReducer";
 import cookiesReducer from "./cookiesReducer";
+import twitterReducer from "./twitterReducer";
 
 export default combineReducers({
   recipes: recipeReducer,
   newsletterSubscription: newsletterReducer,
   cookies: cookiesReducer,
+  tweets: twitterReducer,
 });

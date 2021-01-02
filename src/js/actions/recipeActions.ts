@@ -27,7 +27,11 @@ export const fetchRecipes = () => async (dispatch: Dispatch) => {
       // Get ingredients
       const ingredients: Array<Ingredient> = new Array();
       for (const ingredient of recipe.ingredients) {
-        ingredients.push(new Ingredient(ingredient.name, ingredient.quantity, ingredient.measure));
+        ingredients.push({
+          name: ingredient.name, 
+          quantity: ingredient.quantity, 
+          measure: ingredient.measure
+        });
       }
       // Create recipe
       recipes.push(

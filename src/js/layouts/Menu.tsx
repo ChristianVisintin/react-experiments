@@ -79,7 +79,7 @@ function Menu(props: MenuProps & WrappedComponentProps) {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <NavbarBrand href="#home">
-              <HomeTitle>Veeso</HomeTitle>
+              <HomeTitle>Veeso's Kitchen</HomeTitle>
             </NavbarBrand>
             <Nav.Link href="#recipes">
               <HomeRef>

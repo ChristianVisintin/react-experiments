@@ -24,7 +24,7 @@ import Waiting from "../components/Waiting";
 const RecipeTemplate = React.lazy(() => import("./RecipeInfo"));
 //Pages
 const About = React.lazy(() => import("./About"));
-const Front = React.lazy(() => import("./Main"));
+const MainPage = React.lazy(() => import("./MainPage"));
 const Recipes = React.lazy(() => import("./Recipes"));
 const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 
@@ -155,12 +155,12 @@ class Home extends React.Component<HomeProps, OwnStates> {
                 <Route path="/cookies" component={CookiePolicy} />
                 <Route
                   path="/home"
-                  render={(props) => <Front recipes={this.props.recipes} />}
+                  render={(props) => <MainPage recipes={this.props.recipes} />}
                 />
                 <Route
                   exact
                   path="/"
-                  render={(props) => <Front recipes={this.props.recipes} />}
+                  render={(props) => <MainPage recipes={this.props.recipes} />}
                 />
                 <Route
                   path="/recipes"

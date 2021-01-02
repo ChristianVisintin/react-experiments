@@ -579,20 +579,23 @@
   "tweets": [
     {
       "uuid": "57fb5f69-a987-42fd-9003-add2680d286b",
-      "author": "John Doe",
+      "username": "omarthegabber",
+      "author": "OmarTheGabber",
       "date": "2020-12-11T17:17:12",
       "text": "Guys, you should really check out #veesoskitchen",
       "href": "https://twitter.com/"
     },
     {
       "uuid": "16916fbd-3c18-425f-911a-34d29f535134",
-      "author": "Farolito",
+      "username": "liciafarolita",
+      "author": "Farolita",
       "date": "2020-12-31T06:04:19",
       "text": "#veesoskitchen has changed my life, 10/10.",
       "href": "https://twitter.com/"
     },
     {
       "uuid": "d134d8dc-e9ec-4155-aaab-71478d8c9c3f",
+      "username": "gabemaneskiner",
       "date": "2020-12-26T14:28:48Z",
       "author": "Maneskinfan02",
       "text": "@veesoskitchen please make gyozas! #veeso #recipes",
@@ -600,13 +603,15 @@
     },
     {
       "uuid": "b96e8853-d791-46a5-9749-97779d7ae918",
+      "username": "pommeofficial",
       "date": "2020-12-14T20:15:09Z",
-      "author": "ClaireVertPomette",
-      "text": "@veesoskitchen je pense que je vais écrire une chanson sur votre pancakes! #govegan",
+      "author": "Pomme",
+      "text": "@veesoskitchen je pense que je vais écrire une chanson sur votre pancakes!",
       "href": "https://twitter.com/"
     },
     {
       "uuid": "dc3e80a6-2dee-46b7-9c19-f760921132ed",
+      "username": "vladimirpyc97",
       "date": "2020-12-16T19:12:12+0200",
       "author": "Владимиро97",
       "text": "@veesoskitchen я думаю ваше рецепты вкусные",
@@ -614,9 +619,18 @@
     },
     {
       "uuid": "c306cd77-d57c-4204-88fd-1bdb4697ee25",
+      "username": "spegietasHD",
       "date": "2020-12-14T13:43:12Z",
-      "author": "boomerin0",
+      "author": "Spegietas",
       "text": "@veesoskitchen wait, is Sarah actually a cow?",
+      "href": "https://twitter.com/"
+    },
+    {
+      "uuid": "53e9ea9e-cc27-4ae2-838b-d358a7617876",
+      "username": "akontyfatti",
+      "date": "2021-01-01T04:31:35",
+      "author": "Konty",
+      "text": "Pizza pazzesca #veesoskitchen",
       "href": "https://twitter.com/"
     }
   ],
