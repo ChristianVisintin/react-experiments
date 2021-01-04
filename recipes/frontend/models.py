@@ -23,12 +23,3 @@
 # 
 # For more information, please refer to <http://unlicense.org>
 #
-
-from django.db import models
-from uuid import uuid4
-
-class Ingredient(models.Model):
-    """
-    Ingredient represents an ingredient which can be included in a recipe.
-    """
-    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
