@@ -27,6 +27,8 @@
 from django.db import models
 from uuid import uuid4
 
+ASSETS_IMAGES = 'assets/images'
+
 class Tweet(models.Model):
     """
     An imaginary Twitter's tweet entity
@@ -37,7 +39,7 @@ class Tweet(models.Model):
     date = models.DateTimeField(name="date")
     text = models.CharField(name="text", max_length=280) # 280 is the maximum tweet length
     url = models.URLField(name="url")
-    avatar = models.ImageField(name="avatar", upload_to='cache')
+    avatar = models.ImageField(name="avatar", upload_to='%s/cache' % ASSETS_IMAGES)
 
     def __str__(self) -> str:
         return "@%s %s" % (self.date, self.username)
@@ -94,11 +96,11 @@ class RecipeImage(models.Model):
     RecipeImage represents an image related to a certain recipe
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    image = models.ImageField(name="image", upload_to='recipes-images')
+    image = models.ImageField(name="image",  upload_to='%s/recipes' % ASSETS_IMAGES)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.file_path
+        return str(self.id)
 
 class RecipeIngredient(models.Model):
     """
@@ -106,5 +108,5 @@ class RecipeIngredient(models.Model):
     """
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(name="quantity", null=True)
-    measure = models.CharField(name="measure", max_length=32, null=True)
+    quantity = models.PositiveIntegerField(name="quantity", null=True, blank=True)
+    measure = models.CharField(name="measure", max_length=32, null=True, blank=True)
