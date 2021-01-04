@@ -5,6 +5,7 @@ Developed by Christian Visintin
 - [Veeso's Kitchen](#veesos-kitchen)
   - [Introduction](#introduction)
   - [Requirements](#requirements)
+  - [Setup](#setup)
   - [Gallery](#gallery)
   - [API](#api)
     - [Entities](#entities)
@@ -30,7 +31,8 @@ This project is just a React website which I use to improve my React/Django know
 
 for backend:
 
-- python3 (with Django)
+- python3
+- pipenv
 
 or
 
@@ -38,6 +40,17 @@ or
   - Start with `json-server --watch data/server-data.json`
 
 Json-server is no more supported, switch to `json-server` branch if you want to use it.
+
+## Setup
+
+1. Open a terminal and go to `recipes/`
+2. Run `npm install && npm install`
+3. Run `npm run build`
+4. Run `pipenv shell`
+5. Run `pipenv install`
+6. Run `python manage.py runserver`
+
+Website is now available at <http://localhost:8000/>
 
 ---
 
@@ -148,6 +161,7 @@ get an undetailed list of recipes:
 with the following parameters:
 
 - **limit**: maximum amount of records
+- **offset**: start index in the search
 - **sortBy**: sort by field
   - *name*
   - *category*
@@ -251,6 +265,7 @@ returns:
 **GET** `/recipe-api/tweets`
 
 - **limit**: maximum amount of records
+- **offset**: start index in the search
 - **sortBy**: sort by field
   - *date*
   - *username*
