@@ -26,4 +26,30 @@
 
 from django.contrib import admin
 
-# Register your models here.
+from .models import Category, Ingredient, Recipe, RecipeCategory, RecipeImage, RecipeIngredient, Tweet
+
+class RecipeCategoryInline(admin.StackedInline):
+    model = RecipeCategory
+    extra = 2
+
+class RecipeImageInline(admin.StackedInline):
+    model = RecipeImage
+    extra = 2
+
+class RecipeIngredientInline(admin.StackedInline):
+    model = RecipeIngredient
+    extra = 6
+
+class RecipeForm(admin.ModelAdmin):
+    fieldsets = [
+        ('name information', {'fields': ['title_it', 'title_en']}),
+        ('Date information', {'fields': ['date']}),
+        ('Preparation', {'fields': ['body_it', 'body_en', 'persons']}),
+    ]
+    inlines = [RecipeCategoryInline, RecipeImageInline, RecipeIngredientInline]
+
+# Register entities
+admin.site.register(Category)
+admin.site.register(Ingredient)
+admin.site.register(Recipe, RecipeForm)
+admin.site.register(Tweet)

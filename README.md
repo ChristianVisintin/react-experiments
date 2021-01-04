@@ -6,6 +6,7 @@ Developed by Christian Visintin
   - [Introduction](#introduction)
   - [Requirements](#requirements)
   - [Setup](#setup)
+  - [Admin area](#admin-area)
   - [Gallery](#gallery)
   - [API](#api)
     - [Entities](#entities)
@@ -51,6 +52,13 @@ Json-server is no more supported, switch to `json-server` branch if you want to 
 6. Run `python manage.py runserver`
 
 Website is now available at <http://localhost:8000/>
+
+## Admin area
+
+Credentials:
+
+- veeso
+- cvisintin97
 
 ---
 
@@ -122,12 +130,13 @@ Category represents a recipe category
 
 Tweet is made up of the following properties:
 
-- **uuid** (*string*): primary key UUIDv4
+- **id** (*string*): primary key UUIDv4
 - **username** (*string*): Twitter username
 - **nickname** (*string*): Twitter nickname (long name)
 - **date** (*string:ISO8601*): publication date
 - **text** (*string*): tweet's text
 - **url** (*string:URL*): tweet url
+- **avatar** (*string:URL*): avatar url
 
 ### Requests
 
@@ -275,7 +284,7 @@ returns:
 ```json
 [
   {
-    "uuid": "c306cd77-d57c-4204-88fd-1bdb4697ee25",
+    "id": "c306cd77-d57c-4204-88fd-1bdb4697ee25",
     "username": "spegietasHD",
     "nickname": "Spegietas",
     "date": "2020-12-14T13:43:12Z",
@@ -283,7 +292,7 @@ returns:
     "url": "https://twitter.com/"
   },
   {
-    "uuid": "53e9ea9e-cc27-4ae2-838b-d358a7617876",
+    "id": "53e9ea9e-cc27-4ae2-838b-d358a7617876",
     "username": "akontyfatti",
     "nickname": "Konty",
     "date": "2021-01-01T04:31:35",

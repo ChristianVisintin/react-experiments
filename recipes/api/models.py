@@ -32,21 +32,23 @@ class Tweet(models.Model):
     An imaginary Twitter's tweet entity
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    username = models.CharField(max_length=256)
-    nickname = models.CharField(max_length=256)
-    date = models.DateTimeField()
-    text = models.CharField(max_length=280) # 280 is the maximum tweet length
-    url = models.URLField()
-    avatar = models.ImageField(upload_to='cache')
+    username = models.CharField(name="username", max_length=256)
+    nickname = models.CharField(name="nickname",max_length=256)
+    date = models.DateTimeField(name="date")
+    text = models.CharField(name="text", max_length=280) # 280 is the maximum tweet length
+    url = models.URLField(name="url")
+    avatar = models.ImageField(name="avatar", upload_to='cache')
 
+    def __str__(self) -> str:
+        return "@%s %s" % (self.date, self.username)
 
 class Category(models.Model):
     """
     Category represents a recipe category
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    name_it = models.CharField(max_length=256)
-    name_en = models.CharField(max_length=256)
+    name_it = models.CharField(name="name_it", max_length=256)
+    name_en = models.CharField(name="name_en", max_length=256)
 
     def __str__(self) -> str:
         return self.name_en
@@ -56,8 +58,8 @@ class Ingredient(models.Model):
     Ingredient represents an ingredient which can be included in a recipe.
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    name_it = models.CharField(max_length=256)
-    name_en = models.CharField(max_length=256)
+    name_it = models.CharField(name="name_it", max_length=256)
+    name_en = models.CharField(name="name_en", max_length=256)
 
     def __str__(self) -> str:
         return self.name_en
@@ -67,12 +69,13 @@ class Recipe(models.Model):
     Recipe represents a recipe, with all its parameters
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    title_it = models.CharField(max_length=256)
-    title_en = models.CharField(max_length=256)
-    date = models.DateTimeField()
-    body = models.TextField()
-    persons = models.PositiveIntegerField()
-    likes = models.PositiveIntegerField(default=0)
+    title_it = models.CharField(name="title_it", max_length=256)
+    title_en = models.CharField(name="title_en", max_length=256)
+    date = models.DateTimeField(name="date")
+    body_it = models.TextField(name="body_it", default='')
+    body_en = models.TextField(name="body_en", default='')
+    persons = models.PositiveIntegerField("persons")
+    likes = models.PositiveIntegerField("likes", default=0)
 
     def __str__(self) -> str:
         return self.title_en
@@ -91,7 +94,7 @@ class RecipeImage(models.Model):
     RecipeImage represents an image related to a certain recipe
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    file_path = models.ImageField(upload_to='recipes')
+    image = models.ImageField(name="image", upload_to='recipes-images')
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -103,3 +106,5 @@ class RecipeIngredient(models.Model):
     """
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(name="quantity", null=True)
+    measure = models.CharField(name="measure", max_length=32, null=True)
