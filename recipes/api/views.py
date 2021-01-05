@@ -27,10 +27,11 @@
 #from django.shortcuts import render
 from django.db.models import Q
 from django.http.response import HttpResponseBadRequest
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from .models import Category, Recipe, Tweet
-from .serializers import CategorySerializer, PartialRecipeSerializer, TweetSerializer
+from .serializers import CategorySerializer, DetailedRecipeSerializer, PartialRecipeSerializer, TweetSerializer
 
 @api_view(['GET'])
 def get_tweets(request):
@@ -142,4 +143,14 @@ def list_recipes(request):
     if limit:
         recipes = recipes[:limit]
     serializer = PartialRecipeSerializer(recipes, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_recipe(request, recipe_id):
+    """
+    Get a recipe by its ID
+    """
+    # Get recipe by id
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    serializer = DetailedRecipeSerializer(recipe, many=False)
     return Response(serializer.data)

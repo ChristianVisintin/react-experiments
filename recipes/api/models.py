@@ -104,7 +104,7 @@ class RecipeIngredient(models.Model):
     """
     Recipe ingredient is the relation between an Ingredient and a Recipe
     """
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, related_name='recipeIngredients', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, related_name='ingredient_to_recipe', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(name="quantity", null=True, blank=True)
     measure = models.CharField(name="measure", max_length=32, null=True, blank=True)

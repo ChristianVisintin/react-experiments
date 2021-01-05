@@ -202,7 +202,7 @@ returns:
 
 #### get recipe
 
-**GET** `/api/recipe`
+**GET** `/api/recipe/{ID}`
 
 get details for a recipe.
 
@@ -225,42 +225,40 @@ returns:
   "img": [
     "/assets/images/contents/pizza.jpg"
   ],
-  "ingredients": [{
-      "name": "flour",
+  "recipeIngredients": [{
+      "name_it": "farina",
+      "name_en": "flour",
       "quantity": 255,
       "measure": "g"
     },
     {
-      "name": "water",
+      "name_it": "acqua",
+      "name_en": "water",
       "quantity": 150,
       "measure": "g"
     },
     {
-      "name": "salt",
+      "name_it": "sale",
+      "name_en": "salt",
       "quantity": 5,
       "measure": "g"
     },
     {
-      "name": "oliveOil",
+      "name_it": "olio d'oliva",
+      "name_en": "olive oil",
       "quantity": 20,
       "measure": "g"
     },
     {
-      "name": "yeast",
+      "name_it": "lievito",
+      "name_en": "baking powder",
       "quantity": 2.5,
       "measure": "g"
-    },
-    {
-      "name": "mozzarella",
-      "quantity": 120,
-      "measure": "g"
-    },
-    {
-      "name": "basil"
     }
   ],
   "persons": 2,
-  "body": "Lorem ipsum dolor sit amet, consectetur adipscing elit. Morbi malesuada mi non dignissim ornare. Nunc elementum gravida mi. Curabitur bibendum, dolor ac luctus dignissim, eros sapien imperdiet nisi, eget volutpat magna mauris ornare ipsum. Morbi maximus nibh laoreet felis porta, et viverra dui consectetur. Nulla consequat urna ac quam feugiat tincidunt. Vivamus at tempor tortor. Nullam non mi ut risus pretium tempor. Aenean congue et orci in bibendum. Nulla commodo urna blandit ipsum elementum, vitae facilisis sapien varius. Ut rutrum, ipsum faucibus consequat fermentum, lacus mi imperdiet sem, sit amet malesuada lacus orci cursus nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl dui, ornare vel congue ut, ullamcorper ac enim. Donec sit amet tellus aliquam ex fringilla fermentum. Vivamus vel lacinia purus. Quisque vel urna fringilla, pellentesque tortor eget, laoreet libero. Vivamus tristique vehicula enim facilisis condimentum. Sed cursus, massa pellentesque maximus cursus, urna lectus accumsan lectus, vel sagittis eros ligula non purus.Nunc viverra leo sed est iaculis sollicitudin. Nunc consequat sed felis finibus cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed euismod velit sed sem imperdiet dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mattis ex eget nibh euismod viverra. Donec id nisi fermentum, placerat dui eu, commodo sapien. Fusce convallis ligula sed euismod pretium. Integer facilisis, lectus non bibendum mollis, ex tortor vehicula purus, eu scelerisque odio est sed risus. Aenean cursus dui tempus ultricies pulvinar. In egestas pulvinar arcu, a varius diam aliquam non. Nullam in."
+  "body_it": "Lorem ipsum dolor sit amet, consectetur adipscing elit. Morbi malesuada mi non dignissim ornare. Nunc elementum gravida mi. Curabitur bibendum, dolor ac luctus dignissim, eros sapien imperdiet nisi, eget volutpat magna mauris ornare ipsum. Morbi maximus nibh laoreet felis porta, et viverra dui consectetur. Nulla consequat urna ac quam feugiat tincidunt. Vivamus at tempor tortor. Nullam non mi ut risus pretium tempor. Aenean congue et orci in bibendum. Nulla commodo urna blandit ipsum elementum, vitae facilisis sapien varius. Ut rutrum, ipsum faucibus consequat fermentum, lacus mi imperdiet sem, sit amet malesuada lacus orci cursus nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl dui, ornare vel congue ut, ullamcorper ac enim. Donec sit amet tellus aliquam ex fringilla fermentum. Vivamus vel lacinia purus. Quisque vel urna fringilla, pellentesque tortor eget, laoreet libero. Vivamus tristique vehicula enim facilisis condimentum. Sed cursus, massa pellentesque maximus cursus, urna lectus accumsan lectus, vel sagittis eros ligula non purus.Nunc viverra leo sed est iaculis sollicitudin. Nunc consequat sed felis finibus cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed euismod velit sed sem imperdiet dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mattis ex eget nibh euismod viverra. Donec id nisi fermentum, placerat dui eu, commodo sapien. Fusce convallis ligula sed euismod pretium. Integer facilisis, lectus non bibendum mollis, ex tortor vehicula purus, eu scelerisque odio est sed risus. Aenean cursus dui tempus ultricies pulvinar. In egestas pulvinar arcu, a varius diam aliquam non. Nullam in.",
+  "body_en": "Lorem ipsum dolor sit amet, consectetur adipscing elit. Morbi malesuada mi non dignissim ornare. Nunc elementum gravida mi. Curabitur bibendum, dolor ac luctus dignissim, eros sapien imperdiet nisi, eget volutpat magna mauris ornare ipsum. Morbi maximus nibh laoreet felis porta, et viverra dui consectetur. Nulla consequat urna ac quam feugiat tincidunt. Vivamus at tempor tortor. Nullam non mi ut risus pretium tempor. Aenean congue et orci in bibendum. Nulla commodo urna blandit ipsum elementum, vitae facilisis sapien varius. Ut rutrum, ipsum faucibus consequat fermentum, lacus mi imperdiet sem, sit amet malesuada lacus orci cursus nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl dui, ornare vel congue ut, ullamcorper ac enim. Donec sit amet tellus aliquam ex fringilla fermentum. Vivamus vel lacinia purus. Quisque vel urna fringilla, pellentesque tortor eget, laoreet libero. Vivamus tristique vehicula enim facilisis condimentum. Sed cursus, massa pellentesque maximus cursus, urna lectus accumsan lectus, vel sagittis eros ligula non purus.Nunc viverra leo sed est iaculis sollicitudin. Nunc consequat sed felis finibus cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed euismod velit sed sem imperdiet dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mattis ex eget nibh euismod viverra. Donec id nisi fermentum, placerat dui eu, commodo sapien. Fusce convallis ligula sed euismod pretium. Integer facilisis, lectus non bibendum mollis, ex tortor vehicula purus, eu scelerisque odio est sed risus. Aenean cursus dui tempus ultricies pulvinar. In egestas pulvinar arcu, a varius diam aliquam non. Nullam in."
 }
 ```
 

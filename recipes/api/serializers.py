@@ -25,8 +25,8 @@
 #
 
 from rest_framework import serializers
-from rest_framework.relations import StringRelatedField
-from .models import Recipe, Category, Ingredient, Tweet
+from rest_framework.relations import SlugRelatedField, StringRelatedField
+from .models import Recipe, Category, Ingredient, RecipeIngredient, Tweet
 
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,10 +38,39 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'name_it', 'name_en')
 
-class PartialRecipeSerializer(serializers.ModelSerializer):
+class IngredientNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ('name_it', 'name_en')
 
+class RecipeIngredientSerializer(serializers.ModelSerializer):
+    """
+    Serialize recipe ingredients
+    """
+    #ingredient_name_it = SlugRelatedField(slug_field='ingredient_to_recipe.name_it', read_only=True)
+    name_it = serializers.CharField(source='ingredient.name_it')
+    name_en = serializers.CharField(source='ingredient.name_en')
+    class Meta:
+        model = RecipeIngredient
+        fields = ('name_it', 'name_en', 'quantity', 'measure')
+
+# Recipe serializers
+
+class PartialRecipeSerializer(serializers.ModelSerializer):
+    """
+    Partial recipe serializer
+    """
     images = StringRelatedField(many=True)
-    print(images)
     class Meta:
         model = Recipe
         fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'images')
+
+class DetailedRecipeSerializer(serializers.ModelSerializer):
+    """
+    Full recipe serializer
+    """
+    images = StringRelatedField(many=True)
+    recipeIngredients = RecipeIngredientSerializer(many=True)
+    class Meta:
+        model = Recipe
+        fields = ('id', 'title_en', 'title_it', 'categories', 'date', 'images', 'recipeIngredients', 'body_en', 'body_it', 'likes', 'persons')
