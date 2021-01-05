@@ -31,6 +31,6 @@ app_name = "api"
 # Specify urls
 urlpatterns = [
     path('list-categories', views.list_categories, name="list_categories"),
-    #path('list-recipes', views.list_recipes, name="list_recipes"),
+    path('list-recipes', views.list_recipes, name="list_recipes"),
     path('tweets', views.get_tweets, name="get_tweets"),
 ]

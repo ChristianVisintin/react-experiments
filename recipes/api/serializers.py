@@ -25,7 +25,8 @@
 #
 
 from rest_framework import serializers
-from .models import Recipe, Category, RecipeImage, Ingredient, Tweet
+from rest_framework.relations import StringRelatedField
+from .models import Recipe, Category, Ingredient, Tweet
 
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,22 +38,10 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'name_it', 'name_en')
 
-"""
-class RecipeCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecipeCategory
-        fields = ('category')
-
-class RecipeImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecipeImage
-        fields = ('image')
-
 class PartialRecipeSerializer(serializers.ModelSerializer):
 
-    categories = RecipeCategorySerializer(many=True)
-    img = RecipeImageSerializer(many=True)
+    images = StringRelatedField(many=True)
+    print(images)
     class Meta:
         model = Recipe
-        fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'img')
-"""
+        fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'images')

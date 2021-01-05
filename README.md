@@ -175,7 +175,8 @@ with the following parameters:
 - **limit**: maximum amount of records
 - **offset**: start index in the search
 - **orderBy**: sort by field
-  - *name*
+  - *title_it*
+  - *title_en*
   - *date*
   - *likes*
 - **category**: search by category

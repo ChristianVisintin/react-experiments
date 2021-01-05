@@ -25,11 +25,12 @@
 #
 
 #from django.shortcuts import render
+from django.db.models import Q
 from django.http.response import HttpResponseBadRequest
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Category, Recipe, Tweet
-from .serializers import CategorySerializer, TweetSerializer
+from .serializers import CategorySerializer, PartialRecipeSerializer, TweetSerializer
 
 @api_view(['GET'])
 def get_tweets(request):
@@ -89,43 +90,56 @@ def list_categories(request):
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
 
-#@api_view(['GET'])
-#def list_recipes(request):
-#    """
-#    List recipes
-#
-#    :param limit: maximum amount of records
-#    :param offset: start index in search
-#    :param orderBy: sort by field (name, date, likes)
-#    :param category: match category
-#    """
-#    # Get parameters
-#    limit = request.GET.get('limit', None)
-#    offset = request.GET.get('offset', None)
-#    order_by = request.GET.get('orderBy', None)
-#    category = request.GET.get('category', None)
-#    # Verify parameters
-#    # Verify orderby by
-#    if order_by:
-#        if not order_by in ('date', 'name', 'likes'):
-#            # Bad request
-#            return HttpResponseBadRequest("orderBy value is not valid")
-#    # Verify offset
-#    if offset:
-#        try:
-#            offset = int(offset)
-#        except ValueError:
-#            # Bad request
-#            return HttpResponseBadRequest("offset is NaN")
-#    # Verify limit
-#    if limit:
-#        try:
-#            limit = int(limit)
-#        except ValueError:
-#            # Bad request
-#            return HttpResponseBadRequest("limit is NaN")
-#    # Get recipes
-#    recipes = Recipe.objects.all()
-#    # TODO: filter data
-#    serializer = PartialRecipeSerializer(recipes, many=True)
-#    return Response(serializer.data)
+@api_view(['GET'])
+def list_recipes(request):
+    """
+    List recipes
+
+    :param limit: maximum amount of records
+    :param offset: start index in search
+    :param orderBy: sort by field (title_it, title_en, date, likes)
+    :param category: match category
+    """
+    # Get parameters
+    limit = request.GET.get('limit', None)
+    offset = request.GET.get('offset', None)
+    order_by = request.GET.get('orderBy', None)
+    category = request.GET.get('category', None)
+    # Verify parameters
+    # Verify orderby by
+    if order_by:
+        if not order_by in ('date', 'title_it', 'title_en', 'likes'):
+            # Bad request
+            return HttpResponseBadRequest("orderBy value is not valid")
+    # Verify offset
+    if offset:
+        try:
+            offset = int(offset)
+        except ValueError:
+            # Bad request
+            return HttpResponseBadRequest("offset is NaN")
+    # Verify limit
+    if limit:
+        try:
+            limit = int(limit)
+        except ValueError:
+            # Bad request
+            return HttpResponseBadRequest("limit is NaN")
+    # Get recipes
+    if category:
+        # Filter by category
+        recipes = Recipe.objects.filter(Q(categories__name_en=category) | Q(categories__name_it=category))
+    else:
+        # Get all recipes    
+        recipes = Recipe.objects.all()
+    # If sort by, sort
+    if order_by:
+        recipes = recipes.order_by(order_by)
+    # If offset, remove first object
+    if offset:
+        recipes = recipes[offset:]
+    # If limit, limit
+    if limit:
+        recipes = recipes[:limit]
+    serializer = PartialRecipeSerializer(recipes, many=True)
+    return Response(serializer.data)

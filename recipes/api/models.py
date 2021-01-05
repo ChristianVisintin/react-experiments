@@ -95,10 +95,10 @@ class RecipeImage(models.Model):
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     image = models.ImageField(name="image",  upload_to='%s/recipes' % ASSETS_IMAGES)
-    recipe = models.ForeignKey(Recipe, related_name='recipe', on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, related_name='images', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return str(self.id)
+        return str(self.image)
 
 class RecipeIngredient(models.Model):
     """
