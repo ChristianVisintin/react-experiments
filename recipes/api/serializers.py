@@ -25,11 +25,34 @@
 #
 
 from rest_framework import serializers
-from .models import Recipe, Category, Ingredient, Tweet
+from .models import Recipe, Category, RecipeImage, Ingredient, Tweet
 
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = ('id', 'username', 'nickname', 'date', 'text', 'url', 'avatar')
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'name_it', 'name_en')
 
+"""
+class RecipeCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeCategory
+        fields = ('category')
+
+class RecipeImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeImage
+        fields = ('image')
+
+class PartialRecipeSerializer(serializers.ModelSerializer):
+
+    categories = RecipeCategorySerializer(many=True)
+    img = RecipeImageSerializer(many=True)
+    class Meta:
+        model = Recipe
+        fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'img')
+"""

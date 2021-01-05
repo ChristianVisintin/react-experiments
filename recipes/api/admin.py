@@ -26,11 +26,7 @@
 
 from django.contrib import admin
 
-from .models import Category, Ingredient, Recipe, RecipeCategory, RecipeImage, RecipeIngredient, Tweet
-
-class RecipeCategoryInline(admin.StackedInline):
-    model = RecipeCategory
-    extra = 2
+from .models import Category, Ingredient, Recipe, RecipeImage, RecipeIngredient, Tweet
 
 class RecipeImageInline(admin.StackedInline):
     model = RecipeImage
@@ -44,9 +40,10 @@ class RecipeForm(admin.ModelAdmin):
     fieldsets = [
         ('name information', {'fields': ['title_it', 'title_en']}),
         ('Date information', {'fields': ['date']}),
+        ('Categories', {'fields': ['categories']}),
         ('Preparation', {'fields': ['body_it', 'body_en', 'persons']}),
     ]
-    inlines = [RecipeCategoryInline, RecipeImageInline, RecipeIngredientInline]
+    inlines = [RecipeImageInline, RecipeIngredientInline]
 
 # Register entities
 admin.site.register(Category)

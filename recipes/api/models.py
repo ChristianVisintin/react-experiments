@@ -66,6 +66,8 @@ class Ingredient(models.Model):
     def __str__(self) -> str:
         return self.name_en
 
+# Recipe
+
 class Recipe(models.Model):
     """
     Recipe represents a recipe, with all its parameters
@@ -78,18 +80,14 @@ class Recipe(models.Model):
     body_en = models.TextField(name="body_en", default='')
     persons = models.PositiveIntegerField("persons")
     likes = models.PositiveIntegerField("likes", default=0)
+    # Many to many
+    categories = models.ManyToManyField(Category)
+    ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient')
 
     def __str__(self) -> str:
         return self.title_en
 
 # Recipe relations
-
-class RecipeCategory(models.Model):
-    """
-    RecipeCategory represents a relation between a Category and a Recipe
-    """
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 class RecipeImage(models.Model):
     """
@@ -97,7 +95,7 @@ class RecipeImage(models.Model):
     """
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     image = models.ImageField(name="image",  upload_to='%s/recipes' % ASSETS_IMAGES)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, related_name='recipe', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return str(self.id)

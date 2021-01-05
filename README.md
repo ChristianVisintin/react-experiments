@@ -153,13 +153,13 @@ returns:
 [
   {
     "id": 0,
-    "nameIt": "pranzi",
-    "nameEn": "lunch"
+    "name_it": "pranzi",
+    "name_en": "lunch"
   },
   {
     "id": 1,
-    "nameIt": "colazioni",
-    "nameEn": "breakfast"
+    "name_it": "colazioni",
+    "name_en": "breakfast"
   }
 ]
 ```
@@ -176,9 +176,9 @@ with the following parameters:
 - **offset**: start index in the search
 - **orderBy**: sort by field
   - *name*
-  - *category*
   - *date*
   - *likes*
+- **category**: search by category
 
 returns:
 
@@ -186,9 +186,9 @@ returns:
 [
   {
     "id": "a8fb4a0b-af17-4e99-96bb-cb8c7ec375d9",
-    "titleIt": "pasta alla carbonara",
-    "titleEn": "pasta carbonara",
-    "category": [
+    "title_it": "pasta alla carbonara",
+    "title_en": "pasta carbonara",
+    "categories": [
       "ad8fd528-5e40-47ff-8572-a74874d3c5bf",
     ],
     "date": "2019-05-28T12:30:40+0200",
@@ -214,10 +214,10 @@ returns:
 ```json
 {
   "id": "a8fb4a0b-af17-4e99-96bb-cb8c7ec375d9",
-  "titleIt": "pizza margherita",
-  "titleEn": "pizza margherita"
+  "title_it": "pizza margherita",
+  "title_en": "pizza margherita",
   "likes": 24,
-  "category": [
+  "categories": [
     "ad8fd528-5e40-47ff-8572-a74874d3c5bf"
   ],
   "date": "2019-12-14T14:30:40+0200",
