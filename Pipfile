@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-webpack-loader = "*"
+pillow = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
