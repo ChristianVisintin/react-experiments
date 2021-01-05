@@ -91,14 +91,14 @@ Credentials:
 Recipe is made up of the following properties:
 
 - **id** (*string*): primary key UUIDv4
-- **title** (*string*): recipe title
+- **titleIt** (*string*): recipe title (it)
+- **titleEn** (*string*): recipe title (en)
 - **category** (*Array::Category*): recipe categories
 - **date** (*string:ISO8601*): publication date
 - **img** (*Array::string:URL*): array of associated images
 - **body** (*string*): procedure
 - **ingredients** (*Array::Ingredient*): recipe ingredients
 - **persons** (*number*): persons the ingredients are for
-- **tags** (*Array::string*): tags associated to recipe
 - **likes** (*number*): recipe likes
 
 #### Ingredient
@@ -123,7 +123,7 @@ RecipeIngredient represents an ingredient in a certain recipe. This entity is bo
 
 Category represents a recipe category
 
-- **id** (*number*): category id
+- **id** (*uuidv4*): category id
 - **name** (*string*): category name
 
 #### Tweet
@@ -152,11 +152,13 @@ returns:
 [
   {
     "id": 0,
-    "name": "lunch"
+    "nameIt": "pranzi",
+    "nameEn": "lunch"
   },
   {
     "id": 1,
-    "name": "breakfast"
+    "nameIt": "colazioni",
+    "nameEn": "breakfast"
   }
 ]
 ```
@@ -175,7 +177,6 @@ with the following parameters:
   - *name*
   - *category*
   - *date*
-  - *tags*
   - *likes*
 
 returns:
@@ -184,17 +185,14 @@ returns:
 [
   {
     "id": "a8fb4a0b-af17-4e99-96bb-cb8c7ec375d9",
-    "title": "Pasta carbonara",
+    "titleIt": "pasta alla carbonara",
+    "titleEn": "pasta carbonara",
     "category": [
-      1
+      "ad8fd528-5e40-47ff-8572-a74874d3c5bf",
     ],
     "date": "2019-05-28T12:30:40+0200",
     "img": [
       "/assets/images/contents/carbonara.jpg"
-    ],
-    "tags": [
-      "italian",
-      "pasta"
     ]
   }
 ]
@@ -215,11 +213,11 @@ returns:
 ```json
 {
   "id": "a8fb4a0b-af17-4e99-96bb-cb8c7ec375d9",
-  "title": "Pizza Margherita",
+  "titleIt": "pizza margherita",
+  "titleEn": "pizza margherita"
   "likes": 24,
   "category": [
-    "lunch",
-    "dinner"
+    "ad8fd528-5e40-47ff-8572-a74874d3c5bf"
   ],
   "date": "2019-12-14T14:30:40+0200",
   "img": [
@@ -260,12 +258,7 @@ returns:
     }
   ],
   "persons": 2,
-  "body": "Lorem ipsum dolor sit amet, consectetur adipscing elit. Morbi malesuada mi non dignissim ornare. Nunc elementum gravida mi. Curabitur bibendum, dolor ac luctus dignissim, eros sapien imperdiet nisi, eget volutpat magna mauris ornare ipsum. Morbi maximus nibh laoreet felis porta, et viverra dui consectetur. Nulla consequat urna ac quam feugiat tincidunt. Vivamus at tempor tortor. Nullam non mi ut risus pretium tempor. Aenean congue et orci in bibendum. Nulla commodo urna blandit ipsum elementum, vitae facilisis sapien varius. Ut rutrum, ipsum faucibus consequat fermentum, lacus mi imperdiet sem, sit amet malesuada lacus orci cursus nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl dui, ornare vel congue ut, ullamcorper ac enim. Donec sit amet tellus aliquam ex fringilla fermentum. Vivamus vel lacinia purus. Quisque vel urna fringilla, pellentesque tortor eget, laoreet libero. Vivamus tristique vehicula enim facilisis condimentum. Sed cursus, massa pellentesque maximus cursus, urna lectus accumsan lectus, vel sagittis eros ligula non purus.Nunc viverra leo sed est iaculis sollicitudin. Nunc consequat sed felis finibus cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed euismod velit sed sem imperdiet dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mattis ex eget nibh euismod viverra. Donec id nisi fermentum, placerat dui eu, commodo sapien. Fusce convallis ligula sed euismod pretium. Integer facilisis, lectus non bibendum mollis, ex tortor vehicula purus, eu scelerisque odio est sed risus. Aenean cursus dui tempus ultricies pulvinar. In egestas pulvinar arcu, a varius diam aliquam non. Nullam in.",
-  "tags": [
-    "italian",
-    "pizza",
-    "vegetarian"
-  ]
+  "body": "Lorem ipsum dolor sit amet, consectetur adipscing elit. Morbi malesuada mi non dignissim ornare. Nunc elementum gravida mi. Curabitur bibendum, dolor ac luctus dignissim, eros sapien imperdiet nisi, eget volutpat magna mauris ornare ipsum. Morbi maximus nibh laoreet felis porta, et viverra dui consectetur. Nulla consequat urna ac quam feugiat tincidunt. Vivamus at tempor tortor. Nullam non mi ut risus pretium tempor. Aenean congue et orci in bibendum. Nulla commodo urna blandit ipsum elementum, vitae facilisis sapien varius. Ut rutrum, ipsum faucibus consequat fermentum, lacus mi imperdiet sem, sit amet malesuada lacus orci cursus nunc.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nisl dui, ornare vel congue ut, ullamcorper ac enim. Donec sit amet tellus aliquam ex fringilla fermentum. Vivamus vel lacinia purus. Quisque vel urna fringilla, pellentesque tortor eget, laoreet libero. Vivamus tristique vehicula enim facilisis condimentum. Sed cursus, massa pellentesque maximus cursus, urna lectus accumsan lectus, vel sagittis eros ligula non purus.Nunc viverra leo sed est iaculis sollicitudin. Nunc consequat sed felis finibus cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed euismod velit sed sem imperdiet dignissim. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed mattis ex eget nibh euismod viverra. Donec id nisi fermentum, placerat dui eu, commodo sapien. Fusce convallis ligula sed euismod pretium. Integer facilisis, lectus non bibendum mollis, ex tortor vehicula purus, eu scelerisque odio est sed risus. Aenean cursus dui tempus ultricies pulvinar. In egestas pulvinar arcu, a varius diam aliquam non. Nullam in."
 }
 ```
 
