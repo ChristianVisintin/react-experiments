@@ -24,11 +24,12 @@
 # For more information, please refer to <http://unlicense.org>
 #
 
-from django.urls import path, re_path
-from . import views
+from rest_framework import serializers
+from .models import Recipe, Category, Ingredient, Tweet
 
-app_name = "frontend"
-urlpatterns = [
-  path('', views.index),
-  re_path(r'assets\/(.*)', views.redirect_assets, name="redirect_assets"),
-]
+class TweetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tweet
+        fields = ('id', 'username', 'nickname', 'date', 'text', 'url', 'avatar')
+
+

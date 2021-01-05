@@ -24,6 +24,52 @@
 # For more information, please refer to <http://unlicense.org>
 #
 
-from django.shortcuts import render
+#from django.shortcuts import render
+from django.http.response import HttpResponseBadRequest
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .models import Tweet
+from .serializers import TweetSerializer
 
-# Create your views here.
+@api_view(['GET'])
+def get_tweets(request):
+    """
+    :param limit: maximum amount of records
+    :param offset: start index in the search
+    :param orderBy: sort by field
+      - date
+      - username
+    """
+    # Get parameters
+    limit = request.GET.get('limit', None)
+    offset = request.GET.get('offset', None)
+    order_by = request.GET.get('orderBy', None)
+    # Verify sort by
+    if order_by:
+        if not order_by in ('date', 'username'):
+            # Bad request
+            return HttpResponseBadRequest("orderBy value is not valid")
+    # Get tweets
+    tweets = Tweet.objects.all()
+    # If sort by, sort
+    if order_by:
+        tweets = tweets.order_by(order_by)
+    # If offset, remove first object
+    if offset:
+        try:
+            offset = int(offset)
+        except ValueError:
+            # Bad request
+            return HttpResponseBadRequest("offset is NaN")
+        tweets = tweets[offset:]
+    # If limit, limit
+    if limit:
+        try:
+            limit = int(limit)
+        except ValueError:
+            # Bad request
+            return HttpResponseBadRequest("limit is NaN")
+        tweets = tweets[:limit]
+    # Return tweets
+    serializer = TweetSerializer(tweets, many=True)
+    return Response(serializer.data)

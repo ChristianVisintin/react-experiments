@@ -24,11 +24,11 @@
 # For more information, please refer to <http://unlicense.org>
 #
 
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
-app_name = "frontend"
+app_name = "api"
+# Specify urls
 urlpatterns = [
-  path('', views.index),
-  re_path(r'assets\/(.*)', views.redirect_assets, name="redirect_assets"),
+    path('tweets', views.get_tweets, name="get_tweets"),
 ]

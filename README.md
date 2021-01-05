@@ -19,6 +19,7 @@ Developed by Christian Visintin
       - [list categories](#list-categories)
       - [list recipes](#list-recipes)
       - [get recipe](#get-recipe)
+      - [like recipe](#like-recipe)
       - [get tweets](#get-tweets)
   - [License](#license)
 
@@ -142,7 +143,7 @@ Tweet is made up of the following properties:
 
 #### list categories
 
-**GET** `/recipe-api/list-categories`
+**GET** `/api/list-categories`
 
 Get the list of all the available categories.
 
@@ -165,7 +166,7 @@ returns:
 
 #### list recipes
 
-**GET** `/recipe-api/list-recipes`
+**GET** `/api/list-recipes`
 
 get an undetailed list of recipes:
 
@@ -173,7 +174,7 @@ with the following parameters:
 
 - **limit**: maximum amount of records
 - **offset**: start index in the search
-- **sortBy**: sort by field
+- **orderBy**: sort by field
   - *name*
   - *category*
   - *date*
@@ -200,7 +201,7 @@ returns:
 
 #### get recipe
 
-**GET** `/recipe-api/recipe`
+**GET** `/api/recipe`
 
 get details for a recipe.
 
@@ -262,13 +263,23 @@ returns:
 }
 ```
 
+#### like recipe
+
+**POST** `/api/like-recipe`
+
+increment recipe likes by one.
+
+with the following parameters
+
+- **id**: recipe id
+
 #### get tweets
 
-**GET** `/recipe-api/tweets`
+**GET** `/api/tweets`
 
 - **limit**: maximum amount of records
 - **offset**: start index in the search
-- **sortBy**: sort by field
+- **orderBy**: sort by field
   - *date*
   - *username*
 
@@ -282,7 +293,8 @@ returns:
     "nickname": "Spegietas",
     "date": "2020-12-14T13:43:12Z",
     "text": "@veesoskitchen wait, is Sarah actually a cow?",
-    "url": "https://twitter.com/"
+    "url": "https://twitter.com/",
+    "avatar": "/data/cache/c306cd77-d57c-4204-88fd-1bdb4697ee25.jpg"
   },
   {
     "id": "53e9ea9e-cc27-4ae2-838b-d358a7617876",
@@ -290,7 +302,8 @@ returns:
     "nickname": "Konty",
     "date": "2021-01-01T04:31:35",
     "text": "Pizza pazzesca #veesoskitchen",
-    "url": "https://twitter.com/"
+    "url": "https://twitter.com/",
+    "avatar": "/data/cache/53e9ea9e-cc27-4ae2-838b-d358a7617876.jpg"
   }
 ]
 ```
