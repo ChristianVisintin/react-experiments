@@ -100,12 +100,14 @@ def list_recipes(request):
     :param offset: start index in search
     :param orderBy: sort by field (title_it, title_en, date, likes)
     :param category: match category
+    :param title: match by title
     """
     # Get parameters
     limit = request.GET.get('limit', None)
     offset = request.GET.get('offset', None)
     order_by = request.GET.get('orderBy', None)
     category = request.GET.get('category', None)
+    title = request.GET.get('title', None)
     # Verify parameters
     # Verify orderby by
     if order_by:
@@ -127,9 +129,16 @@ def list_recipes(request):
             # Bad request
             return HttpResponseBadRequest("limit is NaN")
     # Get recipes
+    recipes = None
     if category:
         # Filter by category
         recipes = Recipe.objects.filter(Q(categories__name_en=category) | Q(categories__name_it=category))
+    # Filter by title
+    if title:
+        if recipes:
+            recipes.filter(Q(title_en__contains=title) | Q(title_it__contains=title))
+        else:
+            recipes = Recipe.objects.filter(Q(title_en__contains=title) | Q(title_it__contains=title))
     else:
         # Get all recipes    
         recipes = Recipe.objects.all()

@@ -180,6 +180,7 @@ with the following parameters:
   - *date*
   - *likes*
 - **category**: search by category
+- **title**: search by title
 
 returns:
 
