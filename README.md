@@ -197,7 +197,8 @@ returns:
     "date": "2019-05-28T12:30:40+0200",
     "img": [
       "/assets/images/contents/carbonara.jpg"
-    ]
+    ],
+    "likes": 3
   }
 ]
 ```

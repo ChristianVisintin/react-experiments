@@ -146,7 +146,7 @@ def list_recipes(request):
         recipes = Recipe.objects.all()
     # If sort by, sort
     if order_by:
-        recipes = recipes.order_by(order_by)
+        recipes = recipes.order_by("-%s" % order_by)
     elif shuffle:
         # Order by '?'
         recipes = recipes.order_by('?')

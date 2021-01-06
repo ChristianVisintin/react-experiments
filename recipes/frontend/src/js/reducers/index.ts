@@ -6,12 +6,16 @@
 
 import { combineReducers } from "redux";
 import recipeReducer from "./recipeReducer";
+import reducedRecipeReducer from "./reducedRecipeReducer";
 import newsletterReducer from "./newsletterReducer";
 import cookiesReducer from "./cookiesReducer";
 import twitterReducer from "./twitterReducer";
 
 export default combineReducers({
   recipes: recipeReducer,
+  explorerRecipes: reducedRecipeReducer,
+  latestRecipes: reducedRecipeReducer,
+  relatedRecipes: reducedRecipeReducer,
   newsletterSubscription: newsletterReducer,
   cookies: cookiesReducer,
   tweets: twitterReducer,

@@ -52,21 +52,19 @@ interface DispatchProps {
   getCookies: Function;
 }
 
-interface OwnStates {
-  userSearch: string | null;
-  recipesLoaded: boolean;
-  latestRecipesLoaded: boolean;
-  categoriesLoaded: boolean;
-}
-
 interface StateProps {
   cookies: CookieStorage | undefined;
   categories: Array<Category>;
   recipes: Array<Recipe>;
-  latestRecipes: Array<Recipe>;
 }
 
 type HomeProps = StateProps & OwnProps & DispatchProps;
+
+interface OwnStates {
+  userSearch: string | null;
+  recipesLoaded: boolean;
+  categoriesLoaded: boolean;
+}
 
 class Home extends React.Component<HomeProps, OwnStates> {
   constructor(props: HomeProps) {
@@ -74,7 +72,6 @@ class Home extends React.Component<HomeProps, OwnStates> {
     this.state = {
       recipesLoaded: false,
       userSearch: null,
-      latestRecipesLoaded: false,
       categoriesLoaded: false,
     };
     this.search = this.search.bind(this);
@@ -97,25 +94,11 @@ class Home extends React.Component<HomeProps, OwnStates> {
           undefined,
           3,
           undefined,
-          false
+          true
         ) // shuffle, only 3 results
         .then(() => {
           //Once recipes have been loaded, set recipes loaded to true
           this.setState({ recipesLoaded: true });
-        })
-        .catch(() => {});
-      // Load 5 latest recipes
-      this.props
-        .fetchRecipes(
-          this.props.lang,
-          this.props.categories,
-          undefined,
-          undefined,
-          "date",
-          5
-        ) // Order by 'date', max 5 results
-        .then(() => {
-          this.setState({ latestRecipesLoaded: true });
         })
         .catch(() => {});
     });
@@ -191,12 +174,24 @@ class Home extends React.Component<HomeProps, OwnStates> {
                 <Route path="/cookies" component={CookiePolicy} />
                 <Route
                   path="/home"
-                  render={(props) => <MainPage recipes={this.props.recipes} />}
+                  render={(props) => (
+                    <MainPage
+                      recipes={
+                        this.state.recipesLoaded ? this.props.recipes : []
+                      }
+                    />
+                  )}
                 />
                 <Route
                   exact
                   path="/"
-                  render={(props) => <MainPage recipes={this.props.recipes} />}
+                  render={(props) => (
+                    <MainPage
+                      recipes={
+                        this.state.recipesLoaded ? this.props.recipes : []
+                      }
+                    />
+                  )}
                 />
                 <Route
                   path="/recipes"
@@ -219,8 +214,7 @@ class Home extends React.Component<HomeProps, OwnStates> {
                     if (!this.state.recipesLoaded) {
                       return <Waiting />;
                     }
-                    //const recipeId = this.getHash(props.location.pathname);
-                    const recipeId = props.match.path;
+                    const recipeId = this.getHash(props.location.pathname);
                     return (
                       <RecipeTemplate
                         recipeId={recipeId}
@@ -236,9 +230,8 @@ class Home extends React.Component<HomeProps, OwnStates> {
         </HashRouter>
         {/*Footer is visible for all pages in / */}
         <Footer
-          recipes={
-            this.state.latestRecipesLoaded ? this.props.latestRecipes : []
-          }
+          lang={this.props.lang}
+          categories={this.state.categoriesLoaded ? this.props.categories : []}
         />
         {/*Cookie alert and policy are rendered based on the context value*/}
         {cookieAlert}
@@ -249,7 +242,6 @@ class Home extends React.Component<HomeProps, OwnStates> {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   recipes: state.recipes.items,
-  latestRecipes: state.recipes.items,
   categories: state.recipes.items,
   cookies: state.cookies.items,
 });

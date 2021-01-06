@@ -154,7 +154,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
       .fetchRecipes(
         this.props.lang,
         this.props.categories,
-        this.props.search,
+        //this.props.search,
         this.state.category,
         "date",
         limit,
@@ -169,22 +169,28 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  recipes: state.recipes.items,
+  recipes: state.explorerRecipes.items,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchRecipes: (
     lang: string,
     categories: Array<Category>,
-    title: string | undefined = undefined,
     category: string | undefined = undefined,
     orderBy: string | undefined = undefined,
     limit: number | undefined = undefined,
-    offset: number | undefined = undefined,
-    shuffle: boolean = false,
+    offset: number | undefined = undefined
   ) =>
     dispatch(
-      fetchRecipes(lang, categories, title, category, orderBy, limit, offset, shuffle)
+      fetchRecipes(
+        lang,
+        categories,
+        undefined,
+        category,
+        orderBy,
+        limit,
+        offset
+      )
     ),
 });
 

@@ -79,7 +79,7 @@ export const fetchRecipes = (
       }
       // Create recipe without details
       recipes.push(
-        new Recipe(recipe.id, title, recipeCategories, recipe.date, recipe.images)
+        new Recipe(recipe.id, title, recipeCategories, recipe.date, recipe.images, null, null, null, recipe.likes)
       );
     }
     dispatch({

@@ -122,7 +122,6 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
         //Once recipes have been loaded, set recipe loaded to true
         this.setState({ recipeLoaded: true }, () => {
           // Load related
-          const recipeName = this.props.recipe.title;
           const category: string | undefined = this.props.categories[0]
             ? this.props.categories[0].name
             : undefined;
@@ -131,11 +130,8 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
             .fetchRecipes(
               this.props.lang,
               this.props.categories,
-              recipeName,
               category,
-              undefined,
-              5,
-              undefined,
+              4,
               true
             )
             .then(() => {
@@ -179,13 +175,10 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
     ));
     // Prepare ingredients
     const ingredients = recipe.ingredients
-      ? recipe.ingredients.map((ingredient, _) => {
-          const translationKey = "recipes.ingredients." + ingredient.name;
+      ? recipe.ingredients.map((ingredient, index) => {
           return (
-            <li>
-              <IngredientName>
-                <FormattedMessage id={translationKey} />
-              </IngredientName>
+            <li key={index}>
+              <IngredientName>{ingredient.name}</IngredientName>
               <IngredientQuantity>
                 {ingredient.quantity}&nbsp;{ingredient.measure}
               </IngredientQuantity>
@@ -236,7 +229,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  related: state.recipes.items,
+  related: state.relatedRecipes.items,
   recipe: state.recipes.item,
 });
 
@@ -244,22 +237,19 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   fetchRecipes: (
     lang: string,
     categories: Array<Category>,
-    title: string | undefined = undefined,
     category: string | undefined = undefined,
-    orderBy: string | undefined = undefined,
     limit: number | undefined = undefined,
-    offset: number | undefined = undefined,
     shuffle: boolean = false
   ) =>
     dispatch(
       fetchRecipes(
         lang,
         categories,
-        title,
+        undefined,
         category,
-        orderBy,
+        undefined,
         limit,
-        offset,
+        undefined,
         shuffle
       )
     ),

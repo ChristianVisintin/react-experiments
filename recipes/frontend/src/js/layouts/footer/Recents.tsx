@@ -9,8 +9,13 @@ import { Container, Col, Row } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
 
 import Recipe from "../../lib/data/recipe";
+import { Category } from "../../lib/data/category";
+import { RootState } from "../../store/index";
+import { fetchRecipes } from "../../actions/recipeActions";
 
 const Header = styled.h1`
   font-size: 1.2em;
@@ -28,32 +33,64 @@ const Line = styled.span`
   }
 `;
 
-export interface RecentsProps {
-  recipes: Array<Recipe>;
+interface OwnProps {
+  lang: string;
+  categories: Array<Category>;
 }
 
-export default class Recents extends React.Component<RecentsProps, {}> {
+interface DispatchProps {
+  fetchLatestRecipes: Function;
+}
+
+interface StateProps {
+  latestRecipes: Array<Recipe>;
+}
+
+type RecentsProps = StateProps & OwnProps & DispatchProps;
+
+interface OwnStates {
+  latestRecipesLoaded: boolean;
+}
+
+class Recents extends React.Component<RecentsProps, OwnStates> {
   static propTypes = {
-    recipes: PropTypes.array.isRequired,
+    categories: PropTypes.array.isRequired,
+    lang: PropTypes.string.isRequired,
   };
 
   constructor(props: RecentsProps) {
     super(props);
+    this.state = {
+      latestRecipesLoaded: false,
+    };
+  }
+
+  shouldComponentUpdate() {
+    return !this.state.latestRecipesLoaded;
+  }
+
+  componentDidMount() {
+    this.props
+      .fetchLatestRecipes(this.props.lang, this.props.categories, 5) // Order by 'date', max 5 results
+      .then(() => {
+        this.setState({ latestRecipesLoaded: true });
+      })
+      .catch(() => {});
   }
 
   render() {
-    let recentRecipes = [...this.props.recipes];
     //Get first 5 recipes
-    recentRecipes = recentRecipes.splice(0, 5);
-    const recipeItems = recentRecipes.map((recipe) => (
-      <Row key={recipe.id}>
-        <Col>
-          <a href={"/#/recipe/" + recipe.id}>
-            <Line>{recipe.title}</Line>
-          </a>
-        </Col>
-      </Row>
-    ));
+    const recipeItems = this.state.latestRecipesLoaded
+      ? this.props.latestRecipes.map((recipe) => (
+          <Row key={recipe.id}>
+            <Col>
+              <a href={"/#/recipe/" + recipe.id}>
+                <Line>{recipe.title}</Line>
+              </a>
+            </Col>
+          </Row>
+        ))
+      : null;
     return (
       <Container>
         <Row>
@@ -68,3 +105,23 @@ export default class Recents extends React.Component<RecentsProps, {}> {
     );
   }
 }
+
+const mapStateToProps = (state: RootState): StateProps => ({
+  latestRecipes: state.latestRecipes.items,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchLatestRecipes: (
+    lang: string,
+    categories: Array<Category>,
+    limit: number
+  ) =>
+    dispatch(
+      fetchRecipes(lang, categories, undefined, undefined, "date", limit)
+    ),
+});
+
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Recents);

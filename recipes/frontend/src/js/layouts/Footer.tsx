@@ -14,6 +14,7 @@ import Recents from "./footer/Recents";
 import Newsletter from "./footer/Newsletter";
 
 import Recipe from "../lib/data/recipe";
+import { Category } from "../lib/data/category";
 
 const FooterContainer = styled(Container)`
   background-color: #20242a;
@@ -35,7 +36,8 @@ const FooterCopyrightText = styled.h2`
 `;
 
 export interface FooterProps {
-  recipes: Array<Recipe>;
+  lang: string;
+  categories: Array<Category>;
 }
 
 export default function Footer(props: FooterProps) {
@@ -50,7 +52,7 @@ export default function Footer(props: FooterProps) {
               <Contact />
             </Col>
             <Col lg={4} xs={12}>
-              <Recents recipes={props.recipes} />
+              <Recents lang={props.lang} categories={props.categories} />
             </Col>
             <Col lg={5} md={4} xs={12}>
               <Newsletter />

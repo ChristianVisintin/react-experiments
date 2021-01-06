@@ -63,7 +63,7 @@ class PartialRecipeSerializer(serializers.ModelSerializer):
     images = StringRelatedField(many=True)
     class Meta:
         model = Recipe
-        fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'images')
+        fields = ('id', 'title_it', 'title_en', 'categories', 'date', 'images', 'likes')
 
 class DetailedRecipeSerializer(serializers.ModelSerializer):
     """
