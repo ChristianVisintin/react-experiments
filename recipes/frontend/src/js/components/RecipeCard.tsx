@@ -58,7 +58,7 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
       new Date().getTime() - new Date(recipe.date).getTime() < 2592000000;
     const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
     //Build hash tags
-    const hashtags = recipe.category.map((category, index) => (
+    const hashtags = recipe.categories.map((category, index) => (
       <CardLink key={index}>
         <RecipeHashTag
           value={category}

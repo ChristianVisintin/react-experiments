@@ -34,20 +34,7 @@ export default class HomeSlideshow extends React.Component<
   }
 
   render() {
-    //Get first 3 (or less) random recipes
-    let recipes = [];
-    let sortedIndex: Array<number> = [];
-    for (let i = 0; i < 3 && i < this.props.recipes.length; i++) {
-      let randomIndex = Math.floor(Math.random() * this.props.recipes.length);
-      //Index can't get sorted twice
-      if (sortedIndex.includes(randomIndex)) {
-        i--;
-        continue;
-      }
-      sortedIndex.push(randomIndex);
-      recipes.push(this.props.recipes[randomIndex]);
-    }
-    const slideshow = recipes.map((recipe) => (
+    const slideshow = this.props.recipes.map((recipe) => (
       <Carousel.Item key={recipe.id}>
         <a href={"/#/recipe/" + recipe.id}>
           <Image className="d-block w-100" src={recipe.img[0]} />

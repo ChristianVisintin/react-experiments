@@ -14,8 +14,8 @@ export default class Tweet {
   public nickname: string;
   public date: Date;
   public text: string;
-  public url: URL;
-  public avatar: URL;
+  public url: string;
+  public avatar: string;
 
   /**
    *
@@ -42,7 +42,7 @@ export default class Tweet {
     this.nickname = nickname;
     this.date = new Date(date);
     this.text = text;
-    this.url = new URL(url);
-    this.avatar = new URL(avatar);
+    this.url = url;
+    this.avatar = avatar;
   }
 }

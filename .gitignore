@@ -339,3 +339,6 @@ dmypy.json
 
 # Prevent frontend lib
 !recipes/frontend/src/js/lib/
+
+# Artifacts
+recipes/frontend/static/frontend/frontend-*.js

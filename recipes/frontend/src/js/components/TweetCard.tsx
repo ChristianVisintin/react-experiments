@@ -74,14 +74,13 @@ export default class TweetCard extends React.Component<OwnProps, {}> {
   }
 
   render() {
-    const avatar = "/assets/images/cache/twitter/" + this.props.tweet.uuid;
     const userUri = "https://twitter.com/" + this.props.tweet.username;
     return (
       <TweetCardDiv>
         <TweetHeader>
-          <TweetPicture src={avatar} roundedCircle />
+          <TweetPicture src={this.props.tweet.avatar} roundedCircle />
           <TweetAuthor>
-            {this.props.tweet.author}
+            {this.props.tweet.nickname}
           </TweetAuthor>
           <TweetUsername href={userUri}>
             @{this.props.tweet.username}

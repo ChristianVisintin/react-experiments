@@ -21,20 +21,18 @@ interface OwnProps {
 }
 
 export default class TweetsList extends React.Component<OwnProps, {}> {
-
   static propTypes = {
     items: PropTypes.array.isRequired,
   };
-  
+
   constructor(props: OwnProps) {
     super(props);
   }
 
   render() {
-    return (
-      <List>
-        {this.props.items}
-      </List>
-    );
+    const items = this.props.items.map((i, index) => (
+      <React.Fragment key={index}>{i}</React.Fragment>
+    ));
+    return <List>{items}</List>;
   }
 }

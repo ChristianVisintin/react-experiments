@@ -8,11 +8,11 @@ import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { injectIntl } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import styled from "styled-components";
 
 //Actions
-import { fetchRecipes } from "../actions/recipeActions";
+import { fetchRecipes, listCategories } from "../actions/recipeActions";
 import { getCookies, acceptCookiePolicy } from "../actions/cookiesActions";
 
 //Components
@@ -32,6 +32,7 @@ const CookiePolicy = React.lazy(() => import("./CookiePolicy"));
 import Recipe from "../lib/data/recipe";
 import CookieStorage from "../lib/misc/cookie_storage";
 import { RootState } from "../store/index";
+import { Category } from "../lib/data/category";
 
 //Components
 
@@ -41,21 +42,28 @@ const PageWrapper = styled.div`
   padding-bottom: 5rem; /* Must match footer height */
 `;
 
-interface OwnProps {}
+interface OwnProps {
+  lang: string;
+}
 
 interface DispatchProps {
   fetchRecipes: Function;
+  listCategories: Function;
   getCookies: Function;
 }
 
 interface OwnStates {
   userSearch: string | null;
-  recipesLoaded: Boolean;
+  recipesLoaded: boolean;
+  latestRecipesLoaded: boolean;
+  categoriesLoaded: boolean;
 }
 
 interface StateProps {
   cookies: CookieStorage | undefined;
+  categories: Array<Category>;
   recipes: Array<Recipe>;
+  latestRecipes: Array<Recipe>;
 }
 
 type HomeProps = StateProps & OwnProps & DispatchProps;
@@ -66,6 +74,8 @@ class Home extends React.Component<HomeProps, OwnStates> {
     this.state = {
       recipesLoaded: false,
       userSearch: null,
+      latestRecipesLoaded: false,
+      categoriesLoaded: false,
     };
     this.search = this.search.bind(this);
     this.resetSearch = this.resetSearch.bind(this);
@@ -73,16 +83,42 @@ class Home extends React.Component<HomeProps, OwnStates> {
   }
 
   componentDidMount() {
-    this.props
-      .fetchRecipes()
-      .then(() => {
-        //Once recipes have been loaded, set recipes loaded to true
-        this.setState({ recipesLoaded: true });
-      })
-      .catch(() => {
-        this.setState({ recipesLoaded: true });
-      });
     this.props.getCookies();
+    // Get categories first
+    this.props.listCategories(this.props.lang).then(() => {
+      this.setState({ categoriesLoaded: true });
+      // Load 3 random recipes for the slideshow
+      this.props
+        .fetchRecipes(
+          this.props.lang,
+          this.props.categories,
+          undefined,
+          undefined,
+          undefined,
+          3,
+          undefined,
+          false
+        ) // shuffle, only 3 results
+        .then(() => {
+          //Once recipes have been loaded, set recipes loaded to true
+          this.setState({ recipesLoaded: true });
+        })
+        .catch(() => {});
+      // Load 5 latest recipes
+      this.props
+        .fetchRecipes(
+          this.props.lang,
+          this.props.categories,
+          undefined,
+          undefined,
+          "date",
+          5
+        ) // Order by 'date', max 5 results
+        .then(() => {
+          this.setState({ latestRecipesLoaded: true });
+        })
+        .catch(() => {});
+    });
   }
 
   /**
@@ -166,7 +202,10 @@ class Home extends React.Component<HomeProps, OwnStates> {
                   path="/recipes"
                   render={(props) => (
                     <Recipes
-                      recipes={this.props.recipes}
+                      lang={this.props.lang}
+                      categories={
+                        this.state.categoriesLoaded ? this.props.categories : []
+                      }
                       searchHnd={this.search}
                       search={this.state.userSearch}
                       resetSearch={this.resetSearch}
@@ -180,46 +219,13 @@ class Home extends React.Component<HomeProps, OwnStates> {
                     if (!this.state.recipesLoaded) {
                       return <Waiting />;
                     }
-                    const recipeId = this.getHash(props.location.pathname);
-                    let recipe: Recipe = new Recipe(
-                      "-1",
-                      "",
-                      [],
-                      "1970-01-01T00:00:00Z",
-                      [],
-                      "",
-                      [],
-                      0,
-                      []
-                    );
-                    for (const r of this.props.recipes) {
-                      if (recipeId === r.id.toString()) {
-                        recipe = r;
-                      }
-                    }
-                    //Get related recipes (NOTE: max 3 recipes with at least one category in common)
-                    let relatedRecipes = [];
-                    for (const r of this.props.recipes) {
-                      if (recipe === null) {
-                        break;
-                      }
-                      if (r.id === recipe.id) {
-                        continue;
-                      }
-                      const found = r.category.some(
-                        (i) => recipe.category.indexOf(i) >= 0
-                      );
-                      if (found) {
-                        relatedRecipes.push(r);
-                      }
-                      if (relatedRecipes.length === 3) {
-                        break;
-                      }
-                    }
+                    //const recipeId = this.getHash(props.location.pathname);
+                    const recipeId = props.match.path;
                     return (
                       <RecipeTemplate
-                        recipe={recipe}
-                        related={relatedRecipes}
+                        recipeId={recipeId}
+                        lang={this.props.lang}
+                        categories={this.props.categories}
                       />
                     );
                   }}
@@ -229,7 +235,11 @@ class Home extends React.Component<HomeProps, OwnStates> {
           </main>
         </HashRouter>
         {/*Footer is visible for all pages in / */}
-        <Footer recipes={this.props.recipes} />
+        <Footer
+          recipes={
+            this.state.latestRecipesLoaded ? this.props.latestRecipes : []
+          }
+        />
         {/*Cookie alert and policy are rendered based on the context value*/}
         {cookieAlert}
       </React.Fragment>
@@ -239,16 +249,40 @@ class Home extends React.Component<HomeProps, OwnStates> {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   recipes: state.recipes.items,
+  latestRecipes: state.recipes.items,
+  categories: state.recipes.items,
   cookies: state.cookies.items,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchRecipes: () => dispatch(fetchRecipes()),
+  fetchRecipes: (
+    lang: string,
+    categories: Array<Category>,
+    title: string | undefined = undefined,
+    category: string | undefined = undefined,
+    orderBy: string | undefined = undefined,
+    limit: number | undefined = undefined,
+    offset: number | undefined = undefined,
+    shuffle: boolean = false
+  ) =>
+    dispatch(
+      fetchRecipes(
+        lang,
+        categories,
+        title,
+        category,
+        orderBy,
+        limit,
+        offset,
+        shuffle
+      )
+    ),
+  listCategories: (lang: string) => dispatch(listCategories(lang)),
   getCookies: () => dispatch(getCookies()),
 });
 
 export default injectIntl(
-  connect<StateProps, DispatchProps, OwnProps>(
+  connect<StateProps, DispatchProps, OwnProps & WrappedComponentProps>(
     mapStateToProps,
     mapDispatchToProps
   )(Home)

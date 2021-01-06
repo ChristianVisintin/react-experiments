@@ -13,7 +13,7 @@ import Ingredient from "./ingredient";
 export default class Recipe {
   public id: string; // UUID v4
   public title: string;
-  public category: Array<string>;
+  public categories: Array<string>;
   public date: Date;
   public img: Array<string>;
   public persons: number | null;
@@ -25,7 +25,7 @@ export default class Recipe {
    * 
    * @param {string} id 
    * @param {string} title translated title
-   * @param {Array<string>} category 
+   * @param {Array<string>} categories 
    * @param {Date} date 
    * @param {Array<string>} img 
    * @param {number | null} persons 
@@ -37,7 +37,7 @@ export default class Recipe {
   constructor(
     id: string,
     title: string,
-    category: Array<string>,
+    categories: Array<string>,
     date: string,
     img: Array<string>,
     persons: number | null = null,
@@ -47,7 +47,7 @@ export default class Recipe {
   ) {
     this.id = id;
     this.title = title;
-    this.category = category;
+    this.categories = categories;
     this.date = new Date(date);
     this.img = img;
     this.persons = persons;

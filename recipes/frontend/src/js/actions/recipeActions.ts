@@ -39,7 +39,8 @@ export const fetchRecipes = (
   category: string | undefined = undefined,
   orderBy: string | undefined = undefined,
   limit: number | undefined = undefined,
-  offset: number | undefined = undefined
+  offset: number | undefined = undefined,
+  shuffle: boolean = false,
 ) => async (dispatch: Dispatch) => {
   try {
     // Build url
@@ -59,6 +60,9 @@ export const fetchRecipes = (
     if (offset) {
       url += "offset=" + offset + "&";
     }
+    if (shuffle) {
+      url += "shuffle=1&";
+    }
     const response = await axios.get(url);
     const recipesData = response.data;
     let recipes: Array<Recipe> = new Array();
@@ -75,7 +79,7 @@ export const fetchRecipes = (
       }
       // Create recipe without details
       recipes.push(
-        new Recipe(recipe.id, title, recipeCategories, recipe.date, recipe.img)
+        new Recipe(recipe.id, title, recipeCategories, recipe.date, recipe.images)
       );
     }
     dispatch({
@@ -134,7 +138,7 @@ export const getRecipe = (
       title,
       recipeCategories,
       data.date,
-      data.img,
+      data.images,
       data.persons,
       ingredients,
       body,

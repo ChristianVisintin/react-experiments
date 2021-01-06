@@ -180,10 +180,11 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     category: string | undefined = undefined,
     orderBy: string | undefined = undefined,
     limit: number | undefined = undefined,
-    offset: number | undefined = undefined
+    offset: number | undefined = undefined,
+    shuffle: boolean = false,
   ) =>
     dispatch(
-      fetchRecipes(lang, categories, title, category, orderBy, limit, offset)
+      fetchRecipes(lang, categories, title, category, orderBy, limit, offset, shuffle)
     ),
 });
 
