@@ -40,7 +40,7 @@ export const fetchRecipes = (
   orderBy: string | undefined = undefined,
   limit: number | undefined = undefined,
   offset: number | undefined = undefined,
-  shuffle: boolean = false,
+  shuffle: boolean = false
 ) => async (dispatch: Dispatch) => {
   try {
     // Build url
@@ -66,20 +66,32 @@ export const fetchRecipes = (
     const response = await axios.get(url);
     const recipesData = response.data;
     let recipes: Array<Recipe> = new Array();
-    const title_key = "title_" + lang;
+    const titleKey = "title_" + lang;
     for (const recipe of recipesData) {
       // Get title
-      const title = recipe[title_key];
+      const title = recipe[titleKey];
       // Get categories
       let recipeCategories: Array<string> = new Array();
       for (const c of recipe.categories) {
-        if (categories.includes(c)) {
-          recipeCategories.push(categories[c].name);
+        for (const cat of categories) {
+          if (cat.id === c) {
+            recipeCategories.push(cat.name);
+          }
         }
       }
       // Create recipe without details
       recipes.push(
-        new Recipe(recipe.id, title, recipeCategories, recipe.date, recipe.images, null, null, null, recipe.likes)
+        new Recipe(
+          recipe.id,
+          title,
+          recipeCategories,
+          recipe.date,
+          recipe.images,
+          null,
+          null,
+          null,
+          recipe.likes
+        )
       );
     }
     dispatch({
@@ -123,8 +135,10 @@ export const getRecipe = (
     // Get categories
     let recipeCategories: Array<string> = new Array();
     for (const c of data.categories) {
-      if (categories.includes(c)) {
-        recipeCategories.push(categories[c].name);
+      for (const cat of categories) {
+        if (cat.id === c) {
+          recipeCategories.push(cat.name);
+        }
       }
     }
     const title_key = "title_" + lang;
