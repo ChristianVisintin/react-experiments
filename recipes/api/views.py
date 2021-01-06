@@ -99,6 +99,7 @@ def list_recipes(request):
     :param limit: maximum amount of records
     :param offset: start index in search
     :param orderBy: sort by field (title_it, title_en, date, likes)
+    :param shuffle: shuffle result set (ignored if orderby)
     :param category: match category
     :param title: match by title
     """
@@ -106,6 +107,7 @@ def list_recipes(request):
     limit = request.GET.get('limit', None)
     offset = request.GET.get('offset', None)
     order_by = request.GET.get('orderBy', None)
+    shuffle = request.GET.get('shuffle', False)
     category = request.GET.get('category', None)
     title = request.GET.get('title', None)
     # Verify parameters
@@ -145,6 +147,9 @@ def list_recipes(request):
     # If sort by, sort
     if order_by:
         recipes = recipes.order_by(order_by)
+    elif shuffle:
+        # Order by '?'
+        recipes = recipes.order_by('?')
     # If offset, remove first object
     if offset:
         recipes = recipes[offset:]

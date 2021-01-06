@@ -179,6 +179,7 @@ with the following parameters:
   - *title_en*
   - *date*
   - *likes*
+- **shuffle**: shuffle result set (doesn't make any sense combined with order by)
 - **category**: search by category
 - **title**: search by title
 
