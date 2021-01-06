@@ -88,6 +88,7 @@ type RecipeProps = StateProps & OwnProps & DispatchProps;
 interface OwnStates {
   recipeLoaded: boolean;
   relatedLoaded: boolean;
+  recipeId: string;
 }
 
 class RecipeView extends React.Component<RecipeProps, OwnStates> {
@@ -102,6 +103,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
     this.state = {
       recipeLoaded: false,
       relatedLoaded: false,
+      recipeId: props.recipeId,
     };
   }
 
@@ -116,31 +118,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
 
   componentDidMount() {
     // Load recipe
-    this.props
-      .getRecipe(this.props.lang, this.props.categories, this.props.recipeId)
-      .then(() => {
-        //Once recipes have been loaded, set recipe loaded to true
-        this.setState({ recipeLoaded: true }, () => {
-          // Load related
-          const category: string | undefined = this.props.categories[0]
-            ? this.props.categories[0].name
-            : undefined;
-          // Related recipe: title likes recipe, has the same first category, shuffle, limit 5
-          this.props
-            .fetchRecipes(
-              this.props.lang,
-              this.props.categories,
-              category,
-              4,
-              true
-            )
-            .then(() => {
-              this.setState({ relatedLoaded: true });
-            })
-            .catch(() => {});
-        });
-      })
-      .catch(() => {});
+    this.getRecipe();
   }
 
   /**
@@ -154,7 +132,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
       ? related.map((recipe) => (
           <React.Fragment key={recipe.id}>
             <Card.Text>&nbsp;•&nbsp;</Card.Text>
-            <Card.Link href={"/#/recipe/" + recipe.id}>
+            <Card.Link href={"/#/recipe/" + recipe.id} onClick={() => this.newRecipe(recipe.id)}>
               {recipe.title}
             </Card.Link>
           </React.Fragment>
@@ -226,6 +204,49 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
       </div>
     );
   }
+
+  /**
+   * @description change recipe
+   * @param {string} id 
+   */
+
+  newRecipe(id: string) {
+    this.setState({relatedLoaded: false, recipeLoaded: false, recipeId: id}, this.getRecipe);
+  }
+
+  /**
+   * @description get recipe and related and save them to state
+   */
+
+  getRecipe() {
+    // Load recipe
+    this.props
+      .getRecipe(this.props.lang, this.props.categories, this.state.recipeId)
+      .then(() => {
+        //Once recipes have been loaded, set recipe loaded to true
+        this.setState({ recipeLoaded: true }, () => {
+          // Load related
+          const category: string | undefined = this.props.categories[0]
+            ? this.props.categories[0].name
+            : undefined;
+          // Related recipe: title likes recipe, has the same first category, shuffle, limit 5
+          this.props
+            .fetchRecipes(
+              this.props.lang,
+              this.props.categories,
+              category,
+              4,
+              true
+            )
+            .then(() => {
+              this.setState({ relatedLoaded: true });
+            })
+            .catch(() => {});
+        });
+      })
+      .catch(() => {});
+  }
+
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
