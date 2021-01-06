@@ -154,3 +154,15 @@ def get_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     serializer = DetailedRecipeSerializer(recipe, many=False)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def like_recipe(request, recipe_id):
+    """
+    Like recipe by its ID
+    """
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
+    recipe.likes += 1
+    recipe.save()
+    # Return updated recipe
+    serializer = DetailedRecipeSerializer(recipe, many=False)
+    return Response(serializer.data)

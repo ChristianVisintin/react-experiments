@@ -264,13 +264,9 @@ returns:
 
 #### like recipe
 
-**POST** `/api/like-recipe`
+**POST** `/api/like-recipe/{ID}`
 
 increment recipe likes by one.
-
-with the following parameters
-
-- **id**: recipe id
 
 #### get tweets
 
