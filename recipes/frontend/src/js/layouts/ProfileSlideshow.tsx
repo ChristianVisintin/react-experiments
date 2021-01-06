@@ -52,9 +52,9 @@ export interface ProfileSlideshowProps {
 export default function ProfileSlideshow(props: ProfileSlideshowProps) {
   const [animatedProfile, setAnimatedProfile] = useState(0);
 
-  const profilesObj = props.profiles.map((p, index) => {
+  const profilesObj = props.profiles.map((p, _) => {
     //Build job transition first
-    const jobsTransitions = useTransition(p.jobs, index, {
+    const jobsTransitions = useTransition(p.jobs, p => p, {
       from: { overflow: "hidden", height: 0, opacity: 0 },
       enter: { height: 50, opacity: 1 },
       leave: { height: 0, opacity: 0 },
