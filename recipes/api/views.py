@@ -70,7 +70,7 @@ def get_tweets(request):
     tweets = Tweet.objects.all()
     # If sort by, sort
     if order_by:
-        tweets = tweets.order_by(order_by)
+        tweets = tweets.order_by("-%s" % order_by)
     # If offset, remove first object
     if offset:
         tweets = tweets[offset:]
@@ -141,7 +141,7 @@ def list_recipes(request):
             recipes.filter(Q(title_en__contains=title) | Q(title_it__contains=title))
         else:
             recipes = Recipe.objects.filter(Q(title_en__contains=title) | Q(title_it__contains=title))
-    else:
+    elif not recipes:
         # Get all recipes    
         recipes = Recipe.objects.all()
     # If sort by, sort
