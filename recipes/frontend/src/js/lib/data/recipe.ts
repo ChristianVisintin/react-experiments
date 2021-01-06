@@ -11,27 +11,27 @@ import Ingredient from "./ingredient";
  */
 
 export default class Recipe {
-  public id: string;
+  public id: string; // UUID v4
   public title: string;
   public category: Array<string>;
   public date: Date;
   public img: Array<string>;
-  public body: string;
-  public ingredients: Array<Ingredient>;
-  public persons: number;
-  public tags: Array<string>;
+  public persons: number | null;
+  public ingredients: Array<Ingredient> | null;
+  public body: string | null;
+  public likes: number | null;
 
   /**
-   * @description Recipe class constructor
-   * @param id
-   * @param title
-   * @param category
-   * @param date: date must be formatted as ISO8601
-   * @param img
-   * @param body
-   * @param ingredients
-   * @param persons
-   * @param tags
+   * 
+   * @param {string} id 
+   * @param {string} title translated title
+   * @param {Array<string>} category 
+   * @param {Date} date 
+   * @param {Array<string>} img 
+   * @param {number | null} persons 
+   * @param {Array<Ingredient> | null} ingredients 
+   * @param {string | null} body 
+   * @param {number | null} likes 
    */
 
   constructor(
@@ -40,19 +40,19 @@ export default class Recipe {
     category: Array<string>,
     date: string,
     img: Array<string>,
-    body: string,
-    ingredients: Array<Ingredient>,
-    persons: number,
-    tags: Array<string>
+    persons: number | null = null,
+    ingredients: Array<Ingredient> | null = null,
+    body: string | null = null,
+    likes: number | null = null,
   ) {
     this.id = id;
     this.title = title;
     this.category = category;
     this.date = new Date(date);
     this.img = img;
-    this.body = body;
-    this.ingredients = ingredients;
     this.persons = persons;
-    this.tags = tags;
+    this.ingredients = ingredients;
+    this.body = body;
+    this.likes = likes;
   }
 }

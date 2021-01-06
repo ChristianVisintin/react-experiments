@@ -14,6 +14,9 @@ import "./App.scss";
 import { Provider } from "react-redux";
 import Store from "./js/store/index";
 
+// Utils
+import { getNavigatorLanguage } from "./js/lib/utils/utils";
+
 //Bootstrap CSS (@! Use CDN instead - see index.html)
 //import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -32,11 +35,21 @@ const translations: Translations = {
   it: flatten(itTranslations),
 };
 
+// Get language
+const language = (() => {
+  let lang = getNavigatorLanguage();
+  if (lang in translations) {
+    return lang;
+  } else {
+    return 'en';
+  }
+})();
+
 export default class App extends Component<{}, {}> {
   render() {
     return (
       <Provider store={Store}>
-        <IntlProvider locale="it" messages={translations.it}>
+        <IntlProvider locale={language} messages={translations[language]}>
           <Home />
         </IntlProvider>
       </Provider>

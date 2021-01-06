@@ -11,34 +11,38 @@
 export default class Tweet {
   public uuid: string; // UUID v4
   public username: string;
-  public author: string;
+  public nickname: string;
   public date: Date;
   public text: string;
-  public href: URL;
+  public url: URL;
+  public avatar: URL;
 
   /**
    *
-   * @param uuid
-   * @param username
-   * @param author
-   * @param date
-   * @param text
-   * @param href
+   * @param {string} uuid
+   * @param {string} username
+   * @param {string} nickname
+   * @param {string} date
+   * @param {string} text
+   * @param {string} url
+   * @param {string} avatar
    */
 
   public constructor(
     uuid: string,
     username: string,
-    author: string,
+    nickname: string,
     date: string,
     text: string,
-    href: string
+    url: string,
+    avatar: string
   ) {
     this.uuid = uuid;
     this.username = username;
-    this.author = author;
+    this.nickname = nickname;
     this.date = new Date(date);
     this.text = text;
-    this.href = new URL(href);
+    this.url = new URL(url);
+    this.avatar = new URL(avatar);
   }
 }
