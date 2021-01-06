@@ -35,22 +35,29 @@ const translations: Translations = {
   it: flatten(itTranslations),
 };
 
-// Get language
-const language = (() => {
+/**
+ * @description get default language
+ * @returns {string} lang ISO639
+ */
+
+export function getDefaultLanguage() {
   let lang = getNavigatorLanguage();
   if (lang in translations) {
     return lang;
   } else {
     return 'en';
   }
-})();
+}
+
+// Get language
+const language = getDefaultLanguage();
 
 export default class App extends Component<{}, {}> {
   render() {
     return (
       <Provider store={Store}>
         <IntlProvider locale={language} messages={translations[language]}>
-          <Home />
+          <Home lang={language} />
         </IntlProvider>
       </Provider>
     );

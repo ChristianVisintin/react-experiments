@@ -8,11 +8,18 @@ import React from "react";
 import { Badge, Nav } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+
+//Actions
+import { fetchRecipes } from "../actions/recipeActions";
 
 //Classes
 import Recipe from "../lib/data/recipe";
 import RecipeCard from "../components/RecipeCard";
+import RecipeLoader from "../components/RecipeLoader";
+import { Category } from "../lib/data/category";
+import { RootState } from "../store/index";
 
 //Components
 const CardContainer = styled.div`
@@ -20,23 +27,35 @@ const CardContainer = styled.div`
   padding-right: 1em;
 `;
 
-export interface RecipesProps {
-  recipes: Array<Recipe>;
+// Props
+interface OwnProps {
+  lang: string;
+  categories: Array<Category>;
   search: string | null;
   searchHnd: Function;
   resetSearch: Function;
 }
 
-export interface RecipesStates {
-  category: string;
+interface DispatchProps {
+  fetchRecipes: Function;
 }
 
-export default class Recipes extends React.Component<
-  RecipesProps,
-  RecipesStates
-> {
+interface StateProps {
+  recipes: Array<Recipe>;
+}
+
+type RecipesProps = StateProps & OwnProps & DispatchProps;
+
+// States
+interface OwnStates {
+  category: string | undefined;
+  recipesLoaded: Boolean;
+}
+
+class Recipes extends React.Component<RecipesProps, OwnStates> {
   static propTypes = {
-    recipes: PropTypes.array.isRequired,
+    lang: PropTypes.string.isRequired,
+    categories: PropTypes.array.isRequired,
     resetSearch: PropTypes.func.isRequired,
     searchHnd: PropTypes.func.isRequired,
     search: PropTypes.string,
@@ -44,46 +63,40 @@ export default class Recipes extends React.Component<
 
   constructor(props: RecipesProps) {
     super(props);
-    this.state = { category: "all" };
+    this.state = { category: "all", recipesLoaded: false };
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
-    this.handleHashtagSearch = this.handleHashtagSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  componentDidMount() {
+    this.reloadRecipes();
   }
 
   handleCategorySelect(e: string) {
-    this.setState({ category: e });
+    // Set category and reload recipes
+    this.setState({ category: e }, this.reloadRecipes);
   }
 
-  handleHashtagSearch(hashtag: string) {
-    this.props.searchHnd(hashtag);
+  handleSearch(title: string) {
+    this.props.searchHnd(title);
   }
 
   render() {
-    //Prepare recipes to display
-    let filteredRecipes = this.props.recipes.filter((item) => {
-      //If category is all, don't check, otherwise check if category is in recipe category list
-      return this.state.category === "all"
-        ? item
-        : item.category.includes(this.state.category);
-    });
-    //If search is NOT null, search for a recipe
-    if (this.props.search) {
-      const searched = this.props.search.startsWith("#")
-        ? this.props.search.substring(1)
-        : this.props.search;
-      filteredRecipes = filteredRecipes.filter((item) => {
-        //Check if search is contained in name or in tags
-        const name = item.title.toLowerCase();
-        const inHashTags = item.tags.includes(searched);
-        return name.includes(searched) || inHashTags;
-      });
-    }
     //Prepare recipe cards
-    const recipeCards = filteredRecipes.map((recipe) => (
-      <RecipeCard
-        key={recipe.id}
-        handleHashtagSearch={this.handleHashtagSearch}
-        recipe={recipe}
-      />
+    const recipeCards = this.state.recipesLoaded
+      ? this.props.recipes.map((recipe) => (
+          <RecipeCard
+            key={recipe.id}
+            handleSearch={this.handleSearch}
+            recipe={recipe}
+          />
+        ))
+      : this.createDummyContentLoader(18);
+    // Prepare categories
+    const categoriesNav = this.props.categories.map((category) => (
+      <Nav.Item key={category.id}>
+        <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
+      </Nav.Item>
     ));
     return (
       <React.Fragment>
@@ -96,31 +109,7 @@ export default class Recipes extends React.Component<
             }
           }}
         >
-          <Nav.Item>
-            <Nav.Link eventKey="all">
-              <FormattedMessage id="recipes.categories.all" />
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="breakfast">
-              <FormattedMessage id="recipes.categories.breakfast" />
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="lunch">
-              <FormattedMessage id="recipes.categories.lunch" />
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="dinner">
-              <FormattedMessage id="recipes.categories.dinner" />
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="dessert">
-              <FormattedMessage id="recipes.categories.dessert" />
-            </Nav.Link>
-          </Nav.Item>
+          {categoriesNav}
           <Nav.Item>
             <Nav.Link
               hidden={this.props.search === null}
@@ -137,4 +126,68 @@ export default class Recipes extends React.Component<
       </React.Fragment>
     );
   }
+
+  /**
+   * @description create a list of Recipe content loaders
+   * @param {number} size
+   * @return {Array<typeof RecipeLoader>}
+   */
+
+  createDummyContentLoader(size: number): Array<typeof RecipeLoader> {
+    let container = new Array();
+    for (let i = 0; i < size; i++) {
+      container.push(<RecipeLoader key={i} />);
+    }
+    return container;
+  }
+
+  /**
+   * @description reload recipes
+   */
+
+  reloadRecipes() {
+    const limit = this.state.recipesLoaded
+      ? this.props.recipes.length + 18
+      : 18; // FIXME: should always be 18, but append to array
+    const offset = this.state.recipesLoaded ? this.props.recipes.length : 0;
+    this.props
+      .fetchRecipes(
+        this.props.lang,
+        this.props.categories,
+        this.props.search,
+        this.state.category,
+        "date",
+        limit,
+        offset
+      )
+      .then(() => {
+        //Once recipes have been loaded, set recipes loaded to true
+        this.setState({ recipesLoaded: true });
+      })
+      .catch(() => {});
+  }
 }
+
+const mapStateToProps = (state: RootState): StateProps => ({
+  recipes: state.recipes.items,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
+  fetchRecipes: (
+    lang: string,
+    categories: Array<Category>,
+    title: string | undefined = undefined,
+    category: string | undefined = undefined,
+    orderBy: string | undefined = undefined,
+    limit: number | undefined = undefined,
+    offset: number | undefined = undefined
+  ) =>
+    dispatch(
+      fetchRecipes(lang, categories, title, category, orderBy, limit, offset)
+    ),
+});
+
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Recipes);

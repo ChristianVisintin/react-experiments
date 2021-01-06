@@ -38,13 +38,13 @@ const CardLink = styled.a`
 
 interface OwnProps {
   recipe: Recipe;
-  handleHashtagSearch: Function;
+  handleSearch: Function;
 }
 
 export default class RecipeCard extends React.Component<OwnProps, {}> {
   static propTypes = {
     recipe: PropTypes.object.isRequired,
-    handleHashtagSearch: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired,
   };
 
   constructor(props: OwnProps) {
@@ -58,14 +58,14 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
       new Date().getTime() - new Date(recipe.date).getTime() < 2592000000;
     const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
     //Build hash tags
-    const hashtags = recipe.tags.map((tag, index) => (
+    const hashtags = recipe.category.map((category, index) => (
       <CardLink key={index}>
         <RecipeHashTag
-          value={tag}
-          onClick={() => this.props.handleHashtagSearch(tag)}
+          value={category}
+          onClick={() => this.props.handleSearch(category)}
           variant="secondary"
         >
-          #{tag}
+          #{category}
         </RecipeHashTag>
         &nbsp;
       </CardLink>

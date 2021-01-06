@@ -107,10 +107,10 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
   /**
    * @description create a list of Facebook content loaders
    * @param {number} size
-   * @return {Array<typeof Facebook>}
+   * @return {Array<typeof TweetLoader>}
    */
 
-  createDummyContentLoader(size: number): Array<typeof Facebook> {
+  createDummyContentLoader(size: number): Array<typeof TweetLoader> {
     let container = new Array();
     for (let i = 0; i < size; i++) {
       container.push(
