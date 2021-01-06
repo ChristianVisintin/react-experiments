@@ -7,7 +7,6 @@
 import {
   FETCH_RECIPES,
   GET_RECIPE,
-  LIST_CATEGORIES,
   LIKE_RECIPE,
 } from "../actions/recipeActions";
 import { StoreState } from "./types";
@@ -34,11 +33,6 @@ export default function (
       return {
         ...state,
         item: action.payload,
-      };
-    case LIST_CATEGORIES:
-      return {
-        ...state,
-        items: action.payload,
       };
     case LIKE_RECIPE:
       return {

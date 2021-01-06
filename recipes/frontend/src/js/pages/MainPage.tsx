@@ -8,7 +8,6 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { Facebook } from "react-content-loader";
 import styled from "styled-components";
 import { FormattedMessage } from "react-intl";
 
@@ -56,7 +55,7 @@ class MainPage extends React.Component<MainPageProps, OwnStates> {
 
   componentDidMount() {
     this.props
-      .fetchTweets()
+      .fetchTweets(6, 0, "date")
       .then(() => {
         // Set state
         this.setState({ tweetsLoaded: true });
@@ -128,7 +127,11 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchTweets: () => dispatch(fetchTweets()),
+  fetchTweets: (
+    limit: number | undefined = undefined,
+    offset: number | undefined = undefined,
+    orderBy: string | undefined = undefined
+  ) => dispatch(fetchTweets(limit, offset, orderBy)),
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(

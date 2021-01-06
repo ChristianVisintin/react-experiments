@@ -177,9 +177,15 @@ export const listCategories = (lang: string) => async (dispatch: Dispatch) => {
         name: name,
       });
     }
+    // Sort categories by name
+    categories.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    });
     dispatch({
-      type: GET_RECIPE,
-      payload: categories,
+      type: LIST_CATEGORIES,
+      categories: categories,
     });
   } catch (error) {
     console.error("Could not get categories", error.message);

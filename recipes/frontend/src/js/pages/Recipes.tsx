@@ -18,6 +18,7 @@ import { fetchRecipes } from "../actions/recipeActions";
 import Recipe from "../lib/data/recipe";
 import RecipeCard from "../components/RecipeCard";
 import RecipeLoader from "../components/RecipeLoader";
+import CategoryNav from "../components/CategoryNav";
 import { Category } from "../lib/data/category";
 import { RootState } from "../store/index";
 
@@ -92,36 +93,12 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
           />
         ))
       : this.createDummyContentLoader(18);
-    // Prepare categories
-    const categoriesNav = this.props.categories.map((category) => (
-      <Nav.Item key={category.id}>
-        <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
-      </Nav.Item>
-    ));
     return (
       <React.Fragment>
-        <Nav
-          className="justify-content-center"
-          activeKey="all"
-          onSelect={(ev) => {
-            if (ev) {
-              this.handleCategorySelect(ev);
-            }
-          }}
-        >
-          {categoriesNav}
-          <Nav.Item>
-            <Nav.Link
-              hidden={this.props.search === null}
-              onClick={(ev: any) => this.props.resetSearch()}
-            >
-              <Badge variant="secondary">
-                {this.props.search}&nbsp;
-                <Badge variant="light">X</Badge>
-              </Badge>
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
+        <CategoryNav
+          categories={this.props.categories}
+          onCategorySelect={this.handleCategorySelect}
+        />
         <CardContainer className="row">{recipeCards}</CardContainer>
       </React.Fragment>
     );
@@ -145,11 +122,10 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
    * @description reload recipes
    */
 
-  reloadRecipes() {
+  reloadRecipes(offset: number = 0) {
     const limit = this.state.recipesLoaded
       ? this.props.recipes.length + 18
       : 18; // FIXME: should always be 18, but append to array
-    const offset = this.state.recipesLoaded ? this.props.recipes.length : 0;
     this.props
       .fetchRecipes(
         this.props.lang,

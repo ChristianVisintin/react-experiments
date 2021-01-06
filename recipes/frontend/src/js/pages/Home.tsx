@@ -100,7 +100,6 @@ class Home extends React.Component<HomeProps, OwnStates> {
           //Once recipes have been loaded, set recipes loaded to true
           this.setState({ recipesLoaded: true });
         })
-        .catch(() => {});
     });
   }
 
@@ -242,7 +241,7 @@ class Home extends React.Component<HomeProps, OwnStates> {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   recipes: state.recipes.items,
-  categories: state.recipes.items,
+  categories: state.categories.items,
   cookies: state.cookies.items,
 });
 
