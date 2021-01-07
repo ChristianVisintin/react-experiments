@@ -4,11 +4,7 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
-import {
-  FETCH_RECIPES,
-  GET_RECIPE,
-  LIKE_RECIPE,
-} from "../actions/recipeActions";
+import { GET_RECIPE, LIKE_RECIPE } from "../actions/recipeActions";
 import { StoreState } from "./types";
 import Recipe from "../lib/data/recipe";
 
@@ -24,11 +20,6 @@ export default function (
   action: RecipeMessage
 ) {
   switch (action.type) {
-    case FETCH_RECIPES:
-      return {
-        ...state,
-        items: action.payload,
-      };
     case GET_RECIPE:
       return {
         ...state,

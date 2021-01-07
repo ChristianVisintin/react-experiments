@@ -12,7 +12,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import styled from "styled-components";
 
 //Actions
-import { fetchRecipes, listCategories } from "../actions/recipeActions";
+import { getCarouselRecipes, listCategories } from "../actions/recipeActions";
 import { getCookies, acceptCookiePolicy } from "../actions/cookiesActions";
 
 //Components
@@ -47,7 +47,7 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  fetchRecipes: Function;
+  getCarouselRecipes: Function;
   listCategories: Function;
   getCookies: Function;
 }
@@ -86,20 +86,11 @@ class Home extends React.Component<HomeProps, OwnStates> {
       this.setState({ categoriesLoaded: true });
       // Load 3 random recipes for the slideshow
       this.props
-        .fetchRecipes(
-          this.props.lang,
-          this.props.categories,
-          undefined,
-          undefined,
-          undefined,
-          3,
-          undefined,
-          true
-        ) // shuffle, only 3 results
+        .getCarouselRecipes(this.props.lang, this.props.categories, 3) // shuffle, only 3 results
         .then(() => {
           //Once recipes have been loaded, set recipes loaded to true
           this.setState({ recipesLoaded: true });
-        })
+        });
     });
   }
 
@@ -240,34 +231,17 @@ class Home extends React.Component<HomeProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  recipes: state.recipes.items,
+  recipes: state.homeRecipes.items,
   categories: state.categories.items,
   cookies: state.cookies.items,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchRecipes: (
+  getCarouselRecipes: (
     lang: string,
     categories: Array<Category>,
-    title: string | undefined = undefined,
-    category: string | undefined = undefined,
-    orderBy: string | undefined = undefined,
-    limit: number | undefined = undefined,
-    offset: number | undefined = undefined,
-    shuffle: boolean = false
-  ) =>
-    dispatch(
-      fetchRecipes(
-        lang,
-        categories,
-        title,
-        category,
-        orderBy,
-        limit,
-        offset,
-        shuffle
-      )
-    ),
+    limit: number
+  ) => dispatch(getCarouselRecipes(lang, categories, limit)),
   listCategories: (lang: string) => dispatch(listCategories(lang)),
   getCookies: () => dispatch(getCookies()),
 });

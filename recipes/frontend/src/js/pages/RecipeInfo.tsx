@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 
 //Actions
-import { fetchRecipes, getRecipe, likeRecipe } from "../actions/recipeActions";
+import { getRelatedRecipes, getRecipe, likeRecipe } from "../actions/recipeActions";
 
 //Classes
 import Recipe from "../lib/data/recipe";
@@ -74,7 +74,7 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  fetchRecipes: Function;
+  getRelatedRecipes: Function;
   getRecipe: Function;
   likeRecipe: Function;
 }
@@ -237,7 +237,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
             : undefined;
           // Related recipe: title likes recipe, has the same first category, shuffle, limit 5
           this.props
-            .fetchRecipes(
+            .getRelatedRecipes(
               this.props.lang,
               this.props.categories,
               category,
@@ -264,26 +264,23 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
 
 const mapStateToProps = (state: RootState): StateProps => ({
   related: state.relatedRecipes.items,
-  recipe: state.recipes.item,
+  recipe: state.recipe.item,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchRecipes: (
+  getRelatedRecipes: (
     lang: string,
     categories: Array<Category>,
     category: string | undefined = undefined,
-    limit: number | undefined = undefined,
+    limit: number,
     shuffle: boolean = false
   ) =>
     dispatch(
-      fetchRecipes(
+      getRelatedRecipes(
         lang,
         categories,
-        undefined,
         category,
-        undefined,
         limit,
-        undefined,
         shuffle
       )
     ),

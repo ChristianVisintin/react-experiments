@@ -15,7 +15,7 @@ import { ThunkDispatch } from "redux-thunk";
 import Recipe from "../../lib/data/recipe";
 import { Category } from "../../lib/data/category";
 import { RootState } from "../../store/index";
-import { fetchRecipes } from "../../actions/recipeActions";
+import { getLatestRecipes } from "../../actions/recipeActions";
 
 const Header = styled.h1`
   font-size: 1.2em;
@@ -117,7 +117,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     limit: number
   ) =>
     dispatch(
-      fetchRecipes(lang, categories, undefined, undefined, "date", limit)
+      getLatestRecipes(lang, categories, limit)
     ),
 });
 

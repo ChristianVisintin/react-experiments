@@ -5,19 +5,20 @@
  */
 
 import { combineReducers } from "redux";
-import categoryReducer from "./categoryReducer";
+import categoryReducer from "./categoryReducer"
 import recipeReducer from "./recipeReducer";
-import reducedRecipeReducer from "./reducedRecipeReducer";
+import partialRecipeReducer from "./partialRecipeReducer";
 import newsletterReducer from "./newsletterReducer";
 import cookiesReducer from "./cookiesReducer";
 import twitterReducer from "./twitterReducer";
 
 export default combineReducers({
   categories: categoryReducer,
-  recipes: recipeReducer,
-  explorerRecipes: reducedRecipeReducer,
-  latestRecipes: reducedRecipeReducer,
-  relatedRecipes: reducedRecipeReducer,
+  homeRecipes: partialRecipeReducer,
+  recipe: recipeReducer,
+  explorerRecipes: partialRecipeReducer,
+  latestRecipes: partialRecipeReducer,
+  relatedRecipes: partialRecipeReducer,
   newsletterSubscription: newsletterReducer,
   cookies: cookiesReducer,
   tweets: twitterReducer,

@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 
 //Actions
-import { fetchRecipes } from "../actions/recipeActions";
+import { exploreRecipes } from "../actions/recipeActions";
 
 //Classes
 import Recipe from "../lib/data/recipe";
@@ -30,7 +30,7 @@ const CardContainer = styled.div`
   padding-right: 1em;
 `;
 
-const RECIPES_LOADED = 18;
+const RECIPES_LOADED = 9;
 
 // Props
 interface OwnProps {
@@ -42,7 +42,7 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  fetchRecipes: Function;
+  exploreRecipes: Function;
 }
 
 interface StateProps {
@@ -95,7 +95,6 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 
   handleOrderBySelect(e: string) {
     // Set order by and reload recipes
-    console.log("NEW CHOICE", e);
     this.setState({ orderBy: e }, this.reloadRecipes);
   }
 
@@ -155,13 +154,12 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
    */
 
   reloadRecipes(offset: number = 0) {
-    const limit = this.state.recipesLoaded
-      ? this.props.recipes.length + RECIPES_LOADED
-      : RECIPES_LOADED;
+    const limit = RECIPES_LOADED; // NOTE: new recipes are appended to the end of the array
     this.props
-      .fetchRecipes(
+      .exploreRecipes(
         this.props.lang,
         this.props.categories,
+        undefined, // TODO: add search
         //this.props.search,
         this.state.category,
         this.state.orderBy,
@@ -181,19 +179,20 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  fetchRecipes: (
+  exploreRecipes: (
     lang: string,
     categories: Array<Category>,
+    title: string | undefined = undefined,
     category: string | undefined = undefined,
     orderBy: string | undefined = undefined,
-    limit: number | undefined = undefined,
-    offset: number | undefined = undefined
+    limit: number,
+    offset: number
   ) =>
     dispatch(
-      fetchRecipes(
+      exploreRecipes(
         lang,
         categories,
-        undefined,
+        title,
         category,
         orderBy,
         limit,
