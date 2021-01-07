@@ -17,6 +17,10 @@ const RecipeCardDiv = styled(Card)`
   margin-top: 2em;
 `;
 
+const RecipeTitle = styled(Card.Title)`
+  text-transform: capitalize;
+`;
+
 const RecipeHashTagContainer = styled(Row)`
   margin-left: 1em;
   padding-bottom: 0.5em;
@@ -56,7 +60,7 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
     const recipe = this.props.recipe;
     // Check if new
     const isNew =
-      new Date().getTime() - new Date(recipe.date).getTime() < 2592000000;
+      new Date().getTime() - new Date(recipe.date).getTime() < 604800000; // 7 days
     const dateEx = isNew ? <Badge variant="danger">New</Badge> : null;
     //Build hash tags
     const hashtags = recipe.categories.map((category, index) => (
@@ -77,9 +81,9 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
           <CardLink href={"/#/recipe/" + recipe.id}>
             <Card.Img className="border" variant="top" src={recipe.img[0]} />
             <Card.Body>
-              <Card.Title>
+              <RecipeTitle>
                 {recipe.title}&nbsp;{dateEx}
-              </Card.Title>
+              </RecipeTitle>
               <Card.Text>
                 <FormattedDate
                   value={recipe.date}
