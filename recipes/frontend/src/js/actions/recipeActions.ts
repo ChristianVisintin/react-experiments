@@ -211,12 +211,15 @@ export const listCategories = (lang: string) => async (dispatch: Dispatch) => {
  * @function likeRecipe
  * @description like provided recipe; return updated recipe record
  * @param {string} lang current language ISO639
+ * @param {Array<Category>} categories
  * @param {string} id recipe id
  */
 
-export const likeRecipe = (lang: string, id: string) => async (
-  dispatch: Dispatch
-) => {
+export const likeRecipe = (
+  lang: string,
+  categories: Array<Category>,
+  id: string
+) => async (dispatch: Dispatch) => {
   try {
     // Build url
     let url = API_URL + "/like-recipe/" + id;
@@ -231,6 +234,15 @@ export const likeRecipe = (lang: string, id: string) => async (
         measure: ingredient.measure,
       });
     }
+    // Get categories
+    let recipeCategories: Array<string> = new Array();
+    for (const c of data.categories) {
+      for (const cat of categories) {
+        if (cat.id === c) {
+          recipeCategories.push(cat.name);
+        }
+      }
+    }
     const title_key = "title_" + lang;
     const body_key = "body_" + lang;
     // Get title
@@ -240,9 +252,9 @@ export const likeRecipe = (lang: string, id: string) => async (
     const recipe: Recipe = new Recipe(
       data.id,
       title,
-      data.category,
+      recipeCategories,
       data.date,
-      data.img,
+      data.images,
       data.persons,
       ingredients,
       body,
