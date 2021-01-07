@@ -30,7 +30,12 @@ import GoTopArrow from "../components/GoTopArrow";
 const CardContainer = styled.div`
   padding-left: 1em;
   padding-right: 1em;
+  overflow-x: hidden !important;
 `;
+
+const hiddenScrollStyle = {
+  overflowX: 'hidden' as 'hidden'
+};
 
 const RECIPES_LOADED = 9;
 
@@ -128,17 +133,16 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
           </Col>
         </Row>
         <Row>
-          <CardContainer className="row">
-            <InfiniteScroll
-              dataLength={recipeCards.length}
-              next={this.loadMoreRecipes}
-              hasMore={!this.state.recipesLoadedAll}
-              loader={<RecipeLoader />}
-              endMessage={<GoTopArrow />}
-            >
-              {recipeCards}
-            </InfiniteScroll>
-          </CardContainer>
+          <InfiniteScroll
+            dataLength={recipeCards.length}
+            next={this.loadMoreRecipes}
+            hasMore={!this.state.recipesLoadedAll}
+            loader={<RecipeLoader />}
+            endMessage={<GoTopArrow />}
+            style={hiddenScrollStyle}
+          >
+            <CardContainer className="row">{recipeCards}</CardContainer>
+          </InfiniteScroll>
         </Row>
       </Container>
     );

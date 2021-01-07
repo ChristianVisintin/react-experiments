@@ -13,8 +13,8 @@ import { faRedo } from "@fortawesome/free-solid-svg-icons";
 const GoTopIcon = styled(Button)`
   background-color: transparent;
   border-color: transparent;
-  padding: 0;
-  font-size: 2em;
+  margin: 1em;
+  font-size: 3em;
   color: #808080;
   text-align: center;
   transition: transform 0.4s ease-in-out;
@@ -24,13 +24,13 @@ const GoTopIcon = styled(Button)`
     color: #404040;
   }
   :hover {
-    transform: rotate(180deg);
+    transform: rotate(270deg);
   }
 `;
 
 export default function GoTopArrow() {
   return (
-    <Container fluid className="justify-content-center w-100">
+    <Container fluid className="text-center justify-content-center w-100">
       <GoTopIcon onClick={() => window.scrollTo(0, 0)}>
         <FontAwesomeIcon icon={faRedo} />
       </GoTopIcon>
