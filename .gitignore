@@ -343,3 +343,4 @@ dmypy.json
 # Artifacts
 recipes/frontend/static/frontend/frontend-*.js
 recipes/frontned/static/frontend/assets
+recipes/webpack-stats.json
