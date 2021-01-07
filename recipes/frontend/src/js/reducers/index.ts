@@ -7,18 +7,13 @@
 import { combineReducers } from "redux";
 import categoryReducer from "./categoryReducer"
 import recipeReducer from "./recipeReducer";
-import partialRecipeReducer from "./partialRecipeReducer";
 import newsletterReducer from "./newsletterReducer";
 import cookiesReducer from "./cookiesReducer";
 import twitterReducer from "./twitterReducer";
 
 export default combineReducers({
   categories: categoryReducer,
-  homeRecipes: partialRecipeReducer,
-  recipe: recipeReducer,
-  explorerRecipes: partialRecipeReducer,
-  latestRecipes: partialRecipeReducer,
-  relatedRecipes: partialRecipeReducer,
+  recipes: recipeReducer,
   newsletterSubscription: newsletterReducer,
   cookies: cookiesReducer,
   tweets: twitterReducer,

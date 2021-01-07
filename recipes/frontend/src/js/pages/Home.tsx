@@ -231,7 +231,7 @@ class Home extends React.Component<HomeProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  recipes: state.homeRecipes.items,
+  recipes: state.recipes.carouselRecipes,
   categories: state.categories.items,
   cookies: state.cookies.items,
 });

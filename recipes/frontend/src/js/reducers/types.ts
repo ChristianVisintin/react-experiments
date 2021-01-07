@@ -4,6 +4,7 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import Recipe from "../lib/data/recipe";
 import OpenType from "../lib/utils/opentype";
 
 export class StoreState {
@@ -13,6 +14,28 @@ export class StoreState {
   constructor(items: any, item: any) {
     this.items = items;
     this.item = item;
+  }
+}
+
+export class RecipeStoreState {
+  recipes: Array<Recipe>;
+  recipe: Recipe;
+  latestRecipes: Array<Recipe>;
+  relatedRecipes: Array<Recipe>;
+  carouselRecipes: Array<Recipe>;
+
+  constructor(
+    recipes: Array<Recipe>,
+    recipe: Recipe,
+    latestRecipes: Array<Recipe>,
+    relatedRecipes: Array<Recipe>,
+    carouselRecipes: Array<Recipe>
+  ) {
+    this.recipes = recipes;
+    this.recipe = recipe;
+    this.latestRecipes = latestRecipes;
+    this.relatedRecipes = relatedRecipes;
+    this.carouselRecipes = carouselRecipes;
   }
 }
 

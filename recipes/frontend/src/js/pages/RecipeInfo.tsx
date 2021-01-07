@@ -263,8 +263,8 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  related: state.relatedRecipes.items,
-  recipe: state.recipe.item,
+  related: state.recipes.relatedRecipes,
+  recipe: state.recipes.recipe,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

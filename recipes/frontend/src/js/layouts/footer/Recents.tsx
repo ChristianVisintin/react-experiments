@@ -107,7 +107,7 @@ class Recents extends React.Component<RecentsProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  latestRecipes: state.latestRecipes.items,
+  latestRecipes: state.recipes.latestRecipes,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({

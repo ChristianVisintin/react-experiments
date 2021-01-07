@@ -175,7 +175,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
-  recipes: state.explorerRecipes.items,
+  recipes: state.recipes.recipes,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
