@@ -227,9 +227,10 @@ export const likeRecipe = (
     const data = response.data;
     // Get ingredients
     const ingredients: Array<Ingredient> = new Array();
-    for (const ingredient of data.ingredients) {
+    const ingredient_name_key = "name_" + lang;
+    for (const ingredient of data.recipeIngredients) {
       ingredients.push({
-        name: ingredient.name,
+        name: ingredient[ingredient_name_key],
         quantity: ingredient.quantity,
         measure: ingredient.measure,
       });
