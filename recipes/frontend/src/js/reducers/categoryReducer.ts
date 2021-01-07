@@ -5,10 +5,10 @@
  */
 
 import { LIST_CATEGORIES } from "../actions/recipeActions";
-import { StoreState } from "./types";
+import { GenericStoreState } from "./types";
 import { Category } from "../lib/data/category";
 
-const initialState: StoreState = new StoreState([], {});
+const initialState: GenericStoreState = new GenericStoreState([], {});
 
 export interface CategoryMessage {
   type: string;
@@ -16,7 +16,7 @@ export interface CategoryMessage {
 }
 
 export default function (
-  state: StoreState = initialState,
+  state: GenericStoreState = initialState,
   action: CategoryMessage
 ) {
   switch (action.type) {

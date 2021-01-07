@@ -5,10 +5,10 @@
  */
 
 import { FETCH_TWEETS } from "../actions/twitterActions";
-import { StoreState } from "./types";
+import { GenericStoreState } from "./types";
 import Tweet from "../lib/data/tweet";
 
-const initialState: StoreState = new StoreState([], {});
+const initialState: GenericStoreState = new GenericStoreState([], {});
 
 export interface RecipeMessage {
   type: string;
@@ -16,7 +16,7 @@ export interface RecipeMessage {
 }
 
 export default function (
-  state: StoreState = initialState,
+  state: GenericStoreState = initialState,
   action: RecipeMessage
 ) {
   switch (action.type) {

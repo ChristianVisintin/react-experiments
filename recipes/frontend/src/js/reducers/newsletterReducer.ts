@@ -7,12 +7,12 @@
 import { ActionMessage } from "../actions/types";
 import { NEWSLETTER_SUBSCRIBE } from "../actions/newsletterActions";
 
-import { StoreState } from "./types";
+import { GenericStoreState } from "./types";
 
-const initialState: StoreState = new StoreState({}, {});
+const initialState: GenericStoreState = new GenericStoreState({}, {});
 
 export default function (
-  state: StoreState = initialState,
+  state: GenericStoreState = initialState,
   action: ActionMessage
 ) {
   switch (action.type) {

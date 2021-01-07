@@ -7,7 +7,7 @@
 import Recipe from "../lib/data/recipe";
 import OpenType from "../lib/utils/opentype";
 
-export class StoreState {
+export class GenericStoreState {
   items: any;
   item: any;
 

@@ -9,10 +9,10 @@ import {
   GET_COOKIES,
   SET_LANGUAGE,
 } from "../actions/cookiesActions";
-import { StoreState } from "./types";
+import { GenericStoreState } from "./types";
 import CookieStorage from "../lib/misc/cookie_storage";
 
-const initialState: StoreState = new StoreState({}, {});
+const initialState: GenericStoreState = new GenericStoreState({}, {});
 
 export interface CookiesMessage {
   type: string;
@@ -25,7 +25,7 @@ export interface CookiesMessage {
 }
 
 export default function (
-  state: StoreState = initialState,
+  state: GenericStoreState = initialState,
   action: CookiesMessage
 ) {
   switch (action.type) {
