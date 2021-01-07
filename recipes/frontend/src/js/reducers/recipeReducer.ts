@@ -7,10 +7,11 @@
 import {
   GET_RECIPE,
   LIKE_RECIPE,
-  EXPLORE_RECIPES,
+  SEARCH_RECIPES,
   GET_CAROUSEL_RECIPES,
   GET_LATEST_RECIPES,
   GET_RELATED_RECIPES,
+  LOAD_MORE_RECIPES,
 } from "../actions/recipeActions";
 import { RecipeStoreState } from "./types";
 import Recipe from "../lib/data/recipe";
@@ -48,10 +49,15 @@ export default function (
         ...state,
         relatedRecipes: action.payload,
       };
-    case EXPLORE_RECIPES:
+    case SEARCH_RECIPES:
       return {
         ...state,
         recipes: action.payload,
+      };
+    case LOAD_MORE_RECIPES:
+      return {
+        ...state,
+        recipes: state.recipes.concat(action.payload),
       };
     case GET_RECIPE:
       return {

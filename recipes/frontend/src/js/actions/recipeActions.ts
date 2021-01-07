@@ -16,7 +16,8 @@ import { Category } from "../lib/data/category";
 export const GET_CAROUSEL_RECIPES: string = uuidv4();
 export const GET_LATEST_RECIPES: string = uuidv4();
 export const GET_RELATED_RECIPES: string = uuidv4();
-export const EXPLORE_RECIPES: string = uuidv4();
+export const SEARCH_RECIPES: string = uuidv4();
+export const LOAD_MORE_RECIPES: string = uuidv4();
 export const GET_RECIPE: string = uuidv4();
 export const LIST_CATEGORIES: string = uuidv4();
 export const LIKE_RECIPE: string = uuidv4();
@@ -111,8 +112,39 @@ export const getRelatedRecipes = (
 };
 
 /**
- * @function getLatestRecipes
- * @description get latest n recipes
+ * @function searchRecipes
+ * @description search recipes
+ * @param {string} lang ISO 639
+ * @param {Array<Category>} categories
+ * @param {string | undefined} title
+ * @param {string | undefined} category
+ * @param {number} limit results to...
+ */
+
+export const searchRecipes = (
+  lang: string,
+  categories: Array<Category>,
+  title: string | undefined,
+  category: string | undefined,
+  orderBy: string | undefined,
+  limit: number
+) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: SEARCH_RECIPES,
+    payload: await fetchRecipes(
+      lang,
+      categories,
+      title,
+      category,
+      orderBy,
+      limit,
+    ),
+  });
+};
+
+/**
+ * @function loadMoreRecipes
+ * @description load more recipes (recipes are appended)
  * @param {string} lang ISO 639
  * @param {Array<Category>} categories
  * @param {string | undefined} title
@@ -121,7 +153,7 @@ export const getRelatedRecipes = (
  * @param {number} offset
  */
 
-export const exploreRecipes = (
+export const loadMoreRecipes = (
   lang: string,
   categories: Array<Category>,
   title: string | undefined,
@@ -131,7 +163,7 @@ export const exploreRecipes = (
   offset: number
 ) => async (dispatch: Dispatch) => {
   dispatch({
-    type: EXPLORE_RECIPES,
+    type: LOAD_MORE_RECIPES,
     payload: await fetchRecipes(
       lang,
       categories,

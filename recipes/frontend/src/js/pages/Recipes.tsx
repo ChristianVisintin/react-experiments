@@ -10,9 +10,10 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 //Actions
-import { exploreRecipes } from "../actions/recipeActions";
+import { loadMoreRecipes, searchRecipes } from "../actions/recipeActions";
 
 //Classes
 import Recipe from "../lib/data/recipe";
@@ -23,6 +24,7 @@ import OrderByDropdown from "../components/OrderbyDropdown";
 import { Category } from "../lib/data/category";
 import { RootState } from "../store/index";
 import { recipesOrderBy } from "../lib/misc/orderbychoice";
+import GoTopArrow from "../components/GoTopArrow";
 
 //Components
 const CardContainer = styled.div`
@@ -41,7 +43,8 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  exploreRecipes: Function;
+  searchRecipes: Function;
+  loadMoreRecipes: Function;
 }
 
 interface StateProps {
@@ -53,8 +56,9 @@ type RecipesProps = StateProps & OwnProps & DispatchProps;
 // States
 interface OwnStates {
   category: string | undefined;
-  recipesLoaded: Boolean;
+  recipesLoaded: boolean;
   orderBy: string;
+  recipesLoadedAll: boolean;
 }
 
 class Recipes extends React.Component<RecipesProps, OwnStates> {
@@ -67,10 +71,16 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 
   constructor(props: RecipesProps) {
     super(props);
-    this.state = { category: "all", recipesLoaded: false, orderBy: "date" };
+    this.state = {
+      category: "all",
+      recipesLoaded: false,
+      orderBy: "date",
+      recipesLoadedAll: false,
+    };
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
     this.handleCategoryReset = this.handleCategoryReset.bind(this);
     this.handleOrderBySelect = this.handleOrderBySelect.bind(this);
+    this.loadMoreRecipes = this.loadMoreRecipes.bind(this);
   }
 
   componentDidMount() {
@@ -95,10 +105,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
     //Prepare recipe cards
     const recipeCards = this.state.recipesLoaded
       ? this.props.recipes.map((recipe) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-          />
+          <RecipeCard key={recipe.id} recipe={recipe} />
         ))
       : this.createDummyContentLoader(RECIPES_LOADED);
     return (
@@ -121,7 +128,17 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
           </Col>
         </Row>
         <Row>
-          <CardContainer className="row">{recipeCards}</CardContainer>
+          <CardContainer className="row">
+            <InfiniteScroll
+              dataLength={recipeCards.length}
+              next={this.loadMoreRecipes}
+              hasMore={!this.state.recipesLoadedAll}
+              loader={<RecipeLoader />}
+              endMessage={<GoTopArrow />}
+            >
+              {recipeCards}
+            </InfiniteScroll>
+          </CardContainer>
         </Row>
       </Container>
     );
@@ -145,22 +162,48 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
    * @description reload recipes
    */
 
-  reloadRecipes(offset: number = 0) {
+  reloadRecipes() {
     const limit = RECIPES_LOADED; // NOTE: new recipes are appended to the end of the array
     this.props
-      .exploreRecipes(
+      .searchRecipes(
         this.props.lang,
         this.props.categories,
         this.props.search ? this.props.search : undefined,
-        //this.props.search,
+        this.state.category,
+        this.state.orderBy,
+        limit
+      )
+      .then(() => {
+        //Once recipes have been loaded, set recipes loaded to true
+        this.setState({ recipesLoaded: true, recipesLoadedAll: false });
+      })
+      .catch(() => {});
+  }
+
+  /**
+   * @description load more recipes
+   */
+
+  loadMoreRecipes() {
+    // Calculate offset
+    const offset = this.props.recipes.length;
+    const prevLength = this.props.recipes.length;
+    const limit = RECIPES_LOADED; // NOTE: new recipes are appended to the end of the array
+    this.props
+      .loadMoreRecipes(
+        this.props.lang,
+        this.props.categories,
+        this.props.search ? this.props.search : undefined,
         this.state.category,
         this.state.orderBy,
         limit,
         offset
       )
       .then(() => {
-        //Once recipes have been loaded, set recipes loaded to true
-        this.setState({ recipesLoaded: true });
+        // Check if all recipes has been loaded
+        const allLoaded = prevLength === this.props.recipes.length;
+        // Once recipes have been loaded, set recipes loaded to true
+        this.setState({ recipesLoaded: true, recipesLoadedAll: allLoaded });
       })
       .catch(() => {});
   }
@@ -171,7 +214,16 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  exploreRecipes: (
+  searchRecipes: (
+    lang: string,
+    categories: Array<Category>,
+    title: string | undefined = undefined,
+    category: string | undefined = undefined,
+    orderBy: string | undefined = undefined,
+    limit: number
+  ) =>
+    dispatch(searchRecipes(lang, categories, title, category, orderBy, limit)),
+  loadMoreRecipes: (
     lang: string,
     categories: Array<Category>,
     title: string | undefined = undefined,
@@ -181,15 +233,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     offset: number
   ) =>
     dispatch(
-      exploreRecipes(
-        lang,
-        categories,
-        title,
-        category,
-        orderBy,
-        limit,
-        offset
-      )
+      loadMoreRecipes(lang, categories, title, category, orderBy, limit, offset)
     ),
 });
 
