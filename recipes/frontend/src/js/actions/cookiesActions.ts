@@ -4,6 +4,7 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import { v4 as uuidv4 } from "uuid";
 import { Dispatch } from "redux";
 import Cookies from "js-cookie";
 
@@ -11,9 +12,9 @@ import CookieStorage from "../lib/misc/cookie_storage";
 import { getNavigatorLanguage } from "../lib/utils/utils";
 
 // Action names
-export const ACCEPT_COOKIE_POLICY: string = "ACCEPT_COOKIE_POLICY";
-export const GET_COOKIES: string = "GET_COOKIES";
-export const SET_LANGUAGE: string = "SET_LANGUAGE";
+export const ACCEPT_COOKIE_POLICY: string = uuidv4();
+export const GET_COOKIES: string = uuidv4();
+export const SET_LANGUAGE: string = uuidv4();
 
 // Cookie names
 const policyCookie = "cookiePolicyAccepted";

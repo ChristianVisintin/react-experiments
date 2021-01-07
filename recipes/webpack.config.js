@@ -70,9 +70,4 @@ module.exports = {
       patterns: [{ from: "./frontend/src/assets", to: "./assets/" }],
     }),
   ],
-  //optimization: {
-  //  splitChunks: {
-  //    chunks: "all",
-  //  },
-  //},
 };

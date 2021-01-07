@@ -4,11 +4,12 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import { v4 as uuidv4 } from "uuid";
 import { Dispatch } from "redux";
 import axios from "axios";
 
 // Action names
-export const NEWSLETTER_SUBSCRIBE: string = "NEWSLETTER_SUBSCRIBE";
+export const NEWSLETTER_SUBSCRIBE: string = uuidv4();
 
 /**
  * @function subscribeNewsletter

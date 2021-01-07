@@ -4,13 +4,14 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import { v4 as uuidv4 } from "uuid";
 import { Dispatch } from "redux";
 import axios from "axios";
 
 import Tweet from "../lib/data/tweet";
 
 // Action names
-export const FETCH_TWEETS: string = "FETCH_TWEETS";
+export const FETCH_TWEETS: string = uuidv4();
 
 // API url
 const API_URL = "/api";

@@ -4,6 +4,7 @@
  * @license "please refer to <http://unlicense.org>"
  */
 
+import { v4 as uuidv4 } from "uuid";
 import { Dispatch } from "redux";
 import axios from "axios";
 
@@ -12,96 +13,135 @@ import Ingredient from "../lib/data/ingredient";
 import { Category } from "../lib/data/category";
 
 // Action names
-export const FETCH_RECIPES: string = "FETCH_RECIPES";
-export const GET_RECIPE: string = "GET_RECIPE";
-export const LIST_CATEGORIES: string = "LIST_CATEGORIES";
-export const LIKE_RECIPE: string = "LIKE_RECIPE";
+export const GET_CAROUSEL_RECIPES: string = uuidv4();
+export const GET_LATEST_RECIPES: string = uuidv4();
+export const GET_RELATED_RECIPES: string = uuidv4();
+export const EXPLORE_RECIPES: string = uuidv4();
+export const GET_RECIPE: string = uuidv4();
+export const LIST_CATEGORIES: string = uuidv4();
+export const LIKE_RECIPE: string = uuidv4();
 
 // API url
 const API_URL = "/api";
 
 /**
- * @function fetchRecipes
- * @description fetch recipes on remote server and dispatch to store
+ * @function getCarouselRecipes
+ * @description get recipes for carousel
  * @param {string} lang ISO 639
  * @param {Array<Category>} categories
- * @param {string | undefined} title filter recipe by its title
- * @param {string | undefined} category category to filter result by
- * @param {string | undefined} orderBy order recipes by...
  * @param {number | undefined} limit results to...
- * @param {number | undefined} offset result offsets
  */
 
-export const fetchRecipes = (
+export const getCarouselRecipes = (
   lang: string,
   categories: Array<Category>,
-  title: string | undefined = undefined,
-  category: string | undefined = undefined,
-  orderBy: string | undefined = undefined,
-  limit: number | undefined = undefined,
-  offset: number | undefined = undefined,
-  shuffle: boolean = false
+  limit: number
 ) => async (dispatch: Dispatch) => {
-  try {
-    // Build url
-    let url = API_URL + "/list-recipes?";
-    if (title) {
-      url += "title=" + title + "&";
-    }
-    if (category) {
-      url += "category=" + category + "&";
-    }
-    if (orderBy) {
-      url += "orderBy=" + orderBy + "&";
-    }
-    if (limit) {
-      url += "limit=" + limit + "&";
-    }
-    if (offset) {
-      url += "offset=" + offset + "&";
-    }
-    if (shuffle) {
-      url += "shuffle=1&";
-    }
-    const response = await axios.get(url);
-    const recipesData = response.data;
-    let recipes: Array<Recipe> = new Array();
-    const titleKey = "title_" + lang;
-    for (const recipe of recipesData) {
-      // Get title
-      const title = recipe[titleKey];
-      // Get categories
-      let recipeCategories: Array<string> = new Array();
-      for (const c of recipe.categories) {
-        for (const cat of categories) {
-          if (cat.id === c) {
-            recipeCategories.push(cat.name);
-          }
-        }
-      }
-      // Create recipe without details
-      recipes.push(
-        new Recipe(
-          recipe.id,
-          title,
-          recipeCategories,
-          recipe.date,
-          recipe.images,
-          null,
-          null,
-          null,
-          recipe.likes
-        )
-      );
-    }
-    dispatch({
-      type: FETCH_RECIPES,
-      payload: recipes,
-    });
-  } catch (error) {
-    console.error("Could not fetch recipes", error.message);
-    throw error;
-  }
+  dispatch({
+    type: GET_CAROUSEL_RECIPES,
+    payload: await fetchRecipes(
+      lang,
+      categories,
+      undefined,
+      undefined,
+      undefined,
+      limit,
+      undefined,
+      true
+    ),
+  });
+};
+
+/**
+ * @function getLatestRecipes
+ * @description get latest n recipes
+ * @param {string} lang ISO 639
+ * @param {Array<Category>} categories
+ * @param {number | undefined} limit results to...
+ */
+
+export const getLatestRecipes = (
+  lang: string,
+  categories: Array<Category>,
+  limit: number
+) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: GET_LATEST_RECIPES,
+    payload: await fetchRecipes(
+      lang,
+      categories,
+      undefined,
+      undefined,
+      "date",
+      limit
+    ),
+  });
+};
+
+/**
+ * @function getLatestRecipes
+ * @description get latest n recipes
+ * @param {string} lang ISO 639
+ * @param {Array<Category>} categories
+ * @param {string | undefined} category
+ * @param {number} limit results to...
+ * @param {shuffle} boolean
+ */
+
+export const getRelatedRecipes = (
+  lang: string,
+  categories: Array<Category>,
+  category: string | undefined,
+  limit: number,
+  shuffle: boolean
+) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: GET_RELATED_RECIPES,
+    payload: await fetchRecipes(
+      lang,
+      categories,
+      undefined,
+      category,
+      "date",
+      limit,
+      undefined,
+      shuffle
+    ),
+  });
+};
+
+/**
+ * @function getLatestRecipes
+ * @description get latest n recipes
+ * @param {string} lang ISO 639
+ * @param {Array<Category>} categories
+ * @param {string | undefined} title
+ * @param {string | undefined} category
+ * @param {number} limit results to...
+ * @param {number} offset
+ */
+
+export const exploreRecipes = (
+  lang: string,
+  categories: Array<Category>,
+  title: string | undefined,
+  category: string | undefined,
+  orderBy: string | undefined,
+  limit: number,
+  offset: number
+) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: EXPLORE_RECIPES,
+    payload: await fetchRecipes(
+      lang,
+      categories,
+      title,
+      category,
+      orderBy,
+      limit,
+      offset
+    ),
+  });
 };
 
 /**
@@ -270,3 +310,84 @@ export const likeRecipe = (
     throw error;
   }
 };
+
+/**
+ * @description fetch recipes
+ * @param {string} lang ISO 639
+ * @param {Array<Category>} categories
+ * @param {string | undefined} title filter recipe by its title
+ * @param {string | undefined} category category to filter result by
+ * @param {string | undefined} orderBy order recipes by...
+ * @param {number | undefined} limit results to...
+ * @param {number | undefined} offset result offsets
+ * @param {boolean} shuffle
+ */
+
+async function fetchRecipes(
+  lang: string,
+  categories: Array<Category>,
+  title: string | undefined = undefined,
+  category: string | undefined = undefined,
+  orderBy: string | undefined = undefined,
+  limit: number | undefined = undefined,
+  offset: number | undefined = undefined,
+  shuffle: boolean = false
+) {
+  try {
+    // Build url
+    let url = API_URL + "/list-recipes?";
+    if (title) {
+      url += "title=" + title + "&";
+    }
+    if (category) {
+      url += "category=" + category + "&";
+    }
+    if (orderBy) {
+      url += "orderBy=" + orderBy + "&";
+    }
+    if (limit) {
+      url += "limit=" + limit + "&";
+    }
+    if (offset) {
+      url += "offset=" + offset + "&";
+    }
+    if (shuffle) {
+      url += "shuffle=1&";
+    }
+    const response = await axios.get(url);
+    const recipesData = response.data;
+    let recipes: Array<Recipe> = new Array();
+    const titleKey = "title_" + lang;
+    for (const recipe of recipesData) {
+      // Get title
+      const title = recipe[titleKey];
+      // Get categories
+      let recipeCategories: Array<string> = new Array();
+      for (const c of recipe.categories) {
+        for (const cat of categories) {
+          if (cat.id === c) {
+            recipeCategories.push(cat.name);
+          }
+        }
+      }
+      // Create recipe without details
+      recipes.push(
+        new Recipe(
+          recipe.id,
+          title,
+          recipeCategories,
+          recipe.date,
+          recipe.images,
+          null,
+          null,
+          null,
+          recipe.likes
+        )
+      );
+    }
+    return recipes;
+  } catch (error) {
+    console.error("Could not fetch recipes", error.message);
+    throw error;
+  }
+}
