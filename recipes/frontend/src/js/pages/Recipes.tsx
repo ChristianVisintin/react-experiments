@@ -28,6 +28,8 @@ const CardContainer = styled.div`
   padding-right: 1em;
 `;
 
+const RECIPES_LOADED = 18;
+
 // Props
 interface OwnProps {
   lang: string;
@@ -92,7 +94,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
             recipe={recipe}
           />
         ))
-      : this.createDummyContentLoader(18);
+      : this.createDummyContentLoader(RECIPES_LOADED);
     return (
       <React.Fragment>
         <CategoryNav
@@ -124,8 +126,8 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 
   reloadRecipes(offset: number = 0) {
     const limit = this.state.recipesLoaded
-      ? this.props.recipes.length + 18
-      : 18; // FIXME: should always be 18, but append to array
+      ? this.props.recipes.length + RECIPES_LOADED
+      : RECIPES_LOADED;
     this.props
       .fetchRecipes(
         this.props.lang,

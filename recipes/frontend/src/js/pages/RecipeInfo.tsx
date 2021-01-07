@@ -14,11 +14,12 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 
 //Actions
-import { fetchRecipes, getRecipe } from "../actions/recipeActions";
+import { fetchRecipes, getRecipe, likeRecipe } from "../actions/recipeActions";
 
 //Classes
 import Recipe from "../lib/data/recipe";
 import RecipeLoader from "../components/RecipeLoader";
+import LikeBadge from "../components/LikeBadge";
 import { Category } from "../lib/data/category";
 import { RootState } from "../store/index";
 
@@ -53,7 +54,7 @@ const IngredientList = styled.ul`
 `;
 
 const IngredientName = styled.h4`
-  font-size: 1.2em;
+  font-size: 1em;
   color: #404040;
   display: inline-block;
   margin-right: 1ch;
@@ -75,6 +76,7 @@ interface OwnProps {
 interface DispatchProps {
   fetchRecipes: Function;
   getRecipe: Function;
+  likeRecipe: Function;
 }
 
 interface StateProps {
@@ -105,6 +107,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
       relatedLoaded: false,
       recipeId: props.recipeId,
     };
+    this.likeRecipe = this.likeRecipe.bind(this);
   }
 
   render() {
@@ -191,7 +194,10 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
             <Card.Text>{recipe.body}</Card.Text>
           </Card.Body>
           <hr />
-          <div className="row d-flex flex-row-reverse align-items-end">
+          <Row className="d-flex flex-row-reverse">
+            <LikeBadge likes={this.state.recipeLoaded ? (this.props.recipe.likes ? this.props.recipe.likes : 0) : 0} onLike={this.likeRecipe}/>
+          </Row>
+          <div className="d-flex flex-row-reverse">
             <Row>
               <Card.Link href="/#/recipes">
                 <FormattedMessage id="recipes.recipes" />
@@ -247,6 +253,15 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
       .catch(() => {});
   }
 
+  /**
+   * @description like current recipe
+   */
+  likeRecipe() {
+    this.props.likeRecipe(this.props.lang, this.props.categories, this.props.recipeId).then(() => {
+      console.log("ADESSO LA RICETTA GA LIKES", this.props.recipe.likes);
+    });
+  }
+
 }
 
 const mapStateToProps = (state: RootState): StateProps => ({
@@ -276,6 +291,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
     ),
   getRecipe: (lang: string, categories: Array<Category>, id: string) =>
     dispatch(getRecipe(lang, categories, id)),
+  likeRecipe: (lang: string, categories: Array<Category>, id: string) =>
+    dispatch(likeRecipe(lang, categories, id)),
 });
 
 export default connect<StateProps, DispatchProps, OwnProps>(

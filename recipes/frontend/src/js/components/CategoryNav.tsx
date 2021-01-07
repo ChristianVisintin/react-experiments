@@ -5,8 +5,7 @@
  */
 
 import React from "react";
-import { Badge, Nav } from "react-bootstrap";
-import styled from "styled-components";
+import { Nav } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import { Category } from "../lib/data/category";
