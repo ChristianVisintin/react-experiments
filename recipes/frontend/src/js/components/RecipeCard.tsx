@@ -43,13 +43,11 @@ const CardLink = styled.a`
 
 interface OwnProps {
   recipe: Recipe;
-  handleSearch: Function;
 }
 
 export default class RecipeCard extends React.Component<OwnProps, {}> {
   static propTypes = {
     recipe: PropTypes.object.isRequired,
-    handleSearch: PropTypes.func.isRequired,
   };
 
   constructor(props: OwnProps) {
@@ -65,11 +63,7 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
     //Build hash tags
     const hashtags = recipe.categories.map((category, index) => (
       <CardLink key={index}>
-        <RecipeHashTag
-          value={category}
-          onClick={() => this.props.handleSearch(category)}
-          variant="secondary"
-        >
+        <RecipeHashTag value={category} variant="secondary">
           #{category}
         </RecipeHashTag>
         &nbsp;

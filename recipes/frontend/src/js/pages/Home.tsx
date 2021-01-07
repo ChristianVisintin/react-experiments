@@ -191,7 +191,6 @@ class Home extends React.Component<HomeProps, OwnStates> {
                       categories={
                         this.state.categoriesLoaded ? this.props.categories : []
                       }
-                      searchHnd={this.search}
                       search={this.state.userSearch}
                       resetSearch={this.resetSearch}
                     />

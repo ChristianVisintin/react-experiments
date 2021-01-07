@@ -37,7 +37,6 @@ interface OwnProps {
   lang: string;
   categories: Array<Category>;
   search: string | null;
-  searchHnd: Function;
   resetSearch: Function;
 }
 
@@ -63,7 +62,6 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
     lang: PropTypes.string.isRequired,
     categories: PropTypes.array.isRequired,
     resetSearch: PropTypes.func.isRequired,
-    searchHnd: PropTypes.func.isRequired,
     search: PropTypes.string,
   };
 
@@ -72,7 +70,6 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
     this.state = { category: "all", recipesLoaded: false, orderBy: "date" };
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
     this.handleCategoryReset = this.handleCategoryReset.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
     this.handleOrderBySelect = this.handleOrderBySelect.bind(this);
   }
 
@@ -89,10 +86,6 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
     this.setState({ category: undefined }, this.reloadRecipes);
   }
 
-  handleSearch(title: string) {
-    this.props.searchHnd(title);
-  }
-
   handleOrderBySelect(e: string) {
     // Set order by and reload recipes
     this.setState({ orderBy: e }, this.reloadRecipes);
@@ -104,7 +97,6 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
       ? this.props.recipes.map((recipe) => (
           <RecipeCard
             key={recipe.id}
-            handleSearch={this.handleSearch}
             recipe={recipe}
           />
         ))
@@ -159,7 +151,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
       .exploreRecipes(
         this.props.lang,
         this.props.categories,
-        undefined, // TODO: add search
+        this.props.search ? this.props.search : undefined,
         //this.props.search,
         this.state.category,
         this.state.orderBy,
