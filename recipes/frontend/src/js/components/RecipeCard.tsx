@@ -5,12 +5,13 @@
  */
 
 import React from "react";
-import { Badge, Card, Row } from "react-bootstrap";
+import { Badge, Card, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { FormattedDate } from "react-intl";
 
 import Recipe from "../lib/data/recipe";
+import LikeBadge from "./LikeBadge";
 
 const RecipeCardDiv = styled(Card)`
   margin-top: 2em;
@@ -89,7 +90,14 @@ export default class RecipeCard extends React.Component<OwnProps, {}> {
               </Card.Text>
             </Card.Body>
           </CardLink>
-          <RecipeHashTagContainer>{hashtags}</RecipeHashTagContainer>
+          <Row>
+            <Col md="8">
+              <RecipeHashTagContainer>{hashtags}</RecipeHashTagContainer>
+            </Col>
+            <Col className="d-flex flex-row-reverse" md="4">
+              <LikeBadge likes={recipe.likes ? recipe.likes : 0} />
+            </Col>
+          </Row>
         </RecipeCardDiv>
       </div>
     );

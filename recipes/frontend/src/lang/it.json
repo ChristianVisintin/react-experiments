@@ -67,7 +67,14 @@
   "recipes": {
     "recipes": "Ricette",
     "preparation": "Preparazione",
-    "ingredientsKey": "Ingredienti"
+    "ingredientsKey": "Ingredienti",
+    "viewAll": "tutti",
+    "orderbyKey": "ordina per",
+    "orderby": {
+      "date": "data",
+      "likes": "likes",
+      "name": "nome"
+    }
   },
   "about": {
     "title": "Ciao!",

@@ -7,12 +7,19 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { FormattedMessage } from "react-intl";
+import styled from "styled-components";
 
 import { Category } from "../lib/data/category";
+
+const CategoryLink = styled(Nav.Link)`
+  text-transform: capitalize;
+`;
 
 interface OwnProps {
   categories: Array<Category>;
   onCategorySelect: Function;
+  onCategoryReset: Function;
 }
 
 interface OwnStates {}
@@ -21,6 +28,7 @@ export default class CategoryNav extends React.Component<OwnProps, OwnStates> {
   static propTypes = {
     categories: PropTypes.array.isRequired,
     onCategorySelect: PropTypes.func.isRequired,
+    onCategoryReset: PropTypes.func.isRequired,
   };
 
   constructor(props: OwnProps) {
@@ -31,7 +39,7 @@ export default class CategoryNav extends React.Component<OwnProps, OwnStates> {
   render() {
     const categories = this.props.categories.map((category) => (
       <Nav.Item key={category.id}>
-        <Nav.Link eventKey={category.name}>{category.name}</Nav.Link>
+        <CategoryLink eventKey={category.name}>{category.name}</CategoryLink>
       </Nav.Item>
     ));
     return (
@@ -44,22 +52,13 @@ export default class CategoryNav extends React.Component<OwnProps, OwnStates> {
           }
         }}
       >
+        <CategoryLink key="all"
+          onClick={() => this.props.onCategoryReset()}
+        >
+          <FormattedMessage id="recipes.viewAll"/>
+        </CategoryLink>
         {categories}
       </Nav>
     );
   }
 }
-
-/*
-<Nav.Item>
-        <Nav.Link
-          hidden={this.props.search === null}
-          onClick={(ev: any) => this.props.resetSearch()}
-        >
-          <Badge variant="secondary">
-            {this.props.search}&nbsp;
-            <Badge variant="light">X</Badge>
-          </Badge>
-        </Nav.Link>
-      </Nav.Item>
-      */

@@ -257,9 +257,7 @@ class RecipeView extends React.Component<RecipeProps, OwnStates> {
    * @description like current recipe
    */
   likeRecipe() {
-    this.props.likeRecipe(this.props.lang, this.props.categories, this.props.recipeId).then(() => {
-      console.log("ADESSO LA RICETTA GA LIKES", this.props.recipe.likes);
-    });
+    this.props.likeRecipe(this.props.lang, this.props.categories, this.props.recipeId);
   }
 
 }

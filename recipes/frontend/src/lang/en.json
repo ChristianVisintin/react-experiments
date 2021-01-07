@@ -67,7 +67,14 @@
   "recipes": {
     "recipes": "Recipes",
     "preparation": "Preparation",
-    "ingredientsKey": "Ingredients"
+    "ingredientsKey": "Ingredients",
+    "viewAll": "view all",
+    "orderbyKey": "order by",
+    "orderby": {
+      "date": "date",
+      "likes": "likes",
+      "name": "name"
+    }
   },
   "about": {
     "title": "Hi There!",

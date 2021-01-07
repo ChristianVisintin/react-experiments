@@ -36,7 +36,7 @@ const LikeButton = styled(Button)`
 
 interface OwnProps {
   likes: number;
-  onLike: Function | null;
+  onLike?: Function;
 }
 
 interface OwnStates {}
@@ -44,7 +44,7 @@ interface OwnStates {}
 export default class LikeBadge extends React.Component<OwnProps, OwnStates> {
   static propTypes = {
     likes: PropTypes.number.isRequired,
-    onLike: PropTypes.func.isRequired,
+    onLike: PropTypes.func,
   };
 
   constructor(props: OwnProps) {
@@ -56,7 +56,7 @@ export default class LikeBadge extends React.Component<OwnProps, OwnStates> {
     return (
       <LikeButton
         variant="light"
-        disabled={this.props.onLike === null}
+        disabled={this.props.onLike === undefined}
         onClick={() => (this.props.onLike ? this.props.onLike() : null)}
       >
         <span>{this.props.likes}</span>

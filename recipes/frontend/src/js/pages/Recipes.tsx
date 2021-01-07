@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Badge, Nav } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -19,8 +19,10 @@ import Recipe from "../lib/data/recipe";
 import RecipeCard from "../components/RecipeCard";
 import RecipeLoader from "../components/RecipeLoader";
 import CategoryNav from "../components/CategoryNav";
+import OrderByDropdown from "../components/OrderbyDropdown";
 import { Category } from "../lib/data/category";
 import { RootState } from "../store/index";
+import { recipesOrderBy } from "../lib/misc/orderbychoice";
 
 //Components
 const CardContainer = styled.div`
@@ -53,6 +55,7 @@ type RecipesProps = StateProps & OwnProps & DispatchProps;
 interface OwnStates {
   category: string | undefined;
   recipesLoaded: Boolean;
+  orderBy: string;
 }
 
 class Recipes extends React.Component<RecipesProps, OwnStates> {
@@ -66,9 +69,11 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
 
   constructor(props: RecipesProps) {
     super(props);
-    this.state = { category: "all", recipesLoaded: false };
+    this.state = { category: "all", recipesLoaded: false, orderBy: "date" };
     this.handleCategorySelect = this.handleCategorySelect.bind(this);
+    this.handleCategoryReset = this.handleCategoryReset.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleOrderBySelect = this.handleOrderBySelect.bind(this);
   }
 
   componentDidMount() {
@@ -80,8 +85,18 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
     this.setState({ category: e }, this.reloadRecipes);
   }
 
+  handleCategoryReset() {
+    this.setState({ category: undefined }, this.reloadRecipes);
+  }
+
   handleSearch(title: string) {
     this.props.searchHnd(title);
+  }
+
+  handleOrderBySelect(e: string) {
+    // Set order by and reload recipes
+    console.log("NEW CHOICE", e);
+    this.setState({ orderBy: e }, this.reloadRecipes);
   }
 
   render() {
@@ -96,13 +111,28 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
         ))
       : this.createDummyContentLoader(RECIPES_LOADED);
     return (
-      <React.Fragment>
-        <CategoryNav
-          categories={this.props.categories}
-          onCategorySelect={this.handleCategorySelect}
-        />
-        <CardContainer className="row">{recipeCards}</CardContainer>
-      </React.Fragment>
+      <Container fluid>
+        <Row className="d-flex">
+          <Col xs="12" md="auto" lg="10">
+            <CategoryNav
+              categories={this.props.categories}
+              onCategorySelect={this.handleCategorySelect}
+              onCategoryReset={this.handleCategoryReset}
+            />
+          </Col>
+          <Col xs="12" md="auto" lg="2">
+            <OrderByDropdown
+              choices={recipesOrderBy}
+              choice={this.state.orderBy}
+              name="recipes.orderbyKey"
+              onSelect={this.handleOrderBySelect}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <CardContainer className="row">{recipeCards}</CardContainer>
+        </Row>
+      </Container>
     );
   }
 
@@ -134,7 +164,7 @@ class Recipes extends React.Component<RecipesProps, OwnStates> {
         this.props.categories,
         //this.props.search,
         this.state.category,
-        "date",
+        this.state.orderBy,
         limit,
         offset
       )
