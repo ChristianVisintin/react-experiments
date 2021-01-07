@@ -11,6 +11,13 @@ import { FormattedMessage } from "react-intl";
 import styled from "styled-components";
 import OrderByChoice from "../lib/misc/orderbychoice";
 
+const CapitalizedDropdown = styled(Dropdown.Item)`
+  text-transform: capitalize;
+`;
+const CapitalizedDropdownToggle = styled(Dropdown.Toggle)`
+  text-transform: capitalize;
+`;
+
 interface OwnProps {
   choices: Array<OrderByChoice>;
   choice: string;
@@ -38,19 +45,19 @@ export default class OrderByDropdown extends React.Component<
 
   render() {
     const dropdownItems = this.props.choices.map((choice) => (
-      <Dropdown.Item
+      <CapitalizedDropdown
         active={choice.name === this.props.choice}
         key={choice.name}
         eventKey={choice.name}
       >
         <FormattedMessage id={choice.translation} />
-      </Dropdown.Item>
+      </CapitalizedDropdown>
     ));
     return (
       <Dropdown onSelect={(ev: any) => this.props.onSelect(ev)}>
-        <Dropdown.Toggle variant="light" id="dropdown-basic">
+        <CapitalizedDropdownToggle variant="light" id="dropdown-basic">
           <FormattedMessage id={this.props.name} />
-        </Dropdown.Toggle>
+        </CapitalizedDropdownToggle>
         <Dropdown.Menu>{dropdownItems}</Dropdown.Menu>
       </Dropdown>
     );

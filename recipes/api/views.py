@@ -29,7 +29,8 @@ from django.db.models import Q
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, parser_classes
+from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
 from .models import Category, Recipe, Tweet
 from .serializers import CategorySerializer, DetailedRecipeSerializer, PartialRecipeSerializer, TweetSerializer
 
@@ -170,6 +171,7 @@ def get_recipe(request, recipe_id):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@csrf_exempt
 def like_recipe(request, recipe_id):
     """
     Like recipe by its ID
