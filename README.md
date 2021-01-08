@@ -67,7 +67,8 @@ Credentials:
 
 > Home page
 
-![Home](img/screen1.jpg)
+![Home](img/screen0.jpg)
+![Home1](img/screen1.jpg)
 
 > Recipes navigator
 
