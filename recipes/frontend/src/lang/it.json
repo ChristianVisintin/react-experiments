@@ -25,7 +25,17 @@
         "title": "Ricette recenti"
       }
     },
-    "tweets": "Tweet più recenti"
+    "introduction": {
+      "title": "Abbiamo un progetto",
+      "subtitle": "Divulgare uno stile di vita più sano e sostenibile",
+      "mission": "Cosa facciamo"
+    },
+    "youtube": {
+      "title": "Iscriviti al nostro canale YouTube",
+      "view": "Vedi"
+    },
+    "tweets": "Tweet più recenti",
+    "discoverRecipes": "Scopri le nostre ricette"
   },
   "cookies": {
     "alert": {
